@@ -3,62 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtimaDev | Estudio de Desarrollo</title>
+    <title>ArtimaDev | Estudio de Desarrollo Independiente</title>
+    <!-- Cargamos una fuente premium de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        body {
+        :root {
+            --bg-color: #050505;
+            --text-main: #ffffff;
+            --text-muted: #8892b0;
+            --accent-red: #E50914;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0d1117;
-            color: #c9d1d9;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(229, 9, 20, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(88, 166, 255, 0.05), transparent 25%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Cabecera / Hero Section */
+        header {
+            text-align: center;
+            padding: 6rem 2rem 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .brand-name {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Sección de Aplicaciones */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        /* Tarjeta Glassmorphism */
+        .app-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
             text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
         }
-        .container { max-width: 800px; padding: 2rem; }
-        h1 { color: #ffffff; font-size: 3.5rem; margin-bottom: 0.2rem; letter-spacing: -1px; }
-        p.subtitle { font-size: 1.2rem; color: #8b949e; margin-bottom: 3rem; }
-        
-        .card {
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            transition: transform 0.2s ease;
+
+        /* Brillo sutil rojo dentro de la tarjeta */
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            background: var(--accent-red);
+            filter: blur(80px);
+            opacity: 0.5;
         }
-        .card:hover { transform: translateY(-5px); }
-        
-        .card h2 { color: #e50914; margin-top: 0; font-size: 2rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .card p { font-size: 1.1rem; line-height: 1.5; color: #c9d1d9; margin-bottom: 2rem; }
-        
+
+        .app-icon-placeholder {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 10px 15px rgba(229, 9, 20, 0.3));
+        }
+
+        .app-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .app-title span {
+            color: var(--accent-red);
+        }
+
+        .app-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            max-width: 500px;
+        }
+
+        /* Botón estilo premium */
         .btn {
-            display: inline-block;
-            background-color: #c9d1d9;
-            color: #0d1117;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
+            background: linear-gradient(135deg, var(--accent-red) 0%, #b8070f 100%);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
             font-size: 1rem;
-            transition: background-color 0.2s ease;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .btn:hover { background-color: #ffffff; }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(229, 9, 20, 0.5);
+            background: linear-gradient(135deg, #f0141f 0%, var(--accent-red) 100%);
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: var(--text-main);
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .brand-name { font-size: 3rem; }
+            .app-card { padding: 2rem; }
+            .app-title { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>ArtimaDev</h1>
-        <p class="subtitle">Creando software independiente con propósito.</p>
-        
-        <div class="card">
-            <h2>🎟️ CineMatch</h2>
-            <p>Tu recomendador inteligente de películas y series. Descubre qué ver esta noche sin pasarte horas navegando por catálogos.</p>
+
+    <header>
+        <h1 class="brand-name">ArtimaDev</h1>
+        <p class="tagline">Desarrollo de aplicaciones excepcionales. Código limpio, diseño impecable y herramientas diseñadas para hacerte la vida más fácil.</p>
+    </header>
+
+    <main>
+        <div class="app-card">
+            <div class="app-icon-placeholder">🎟️</div>
+            <h2 class="app-title">Cine<span>Match</span></h2>
+            <p class="app-desc">Tu recomendador inteligente. Encuentra la película o serie perfecta en segundos con filtros avanzados. Se acabó el pasarse horas navegando por el catálogo de las plataformas.</p>
             <a href="#" class="btn">Próximamente en Google Play</a>
         </div>
-    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 ArtimaDev. Todos los derechos reservados.</p>
+        <div style="margin-top: 10px;">
+            <a href="mailto:contacto@artimadev.com">contacto@artimadev.com</a> | 
+            <a href="/privacy">Política de Privacidad</a>
+        </div>
+    </footer>
+
 </body>
 </html>
