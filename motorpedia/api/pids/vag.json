@@ -1,0 +1,26 @@
+[
+  {
+    "id": "VAG_DPF_SOOT",
+    "nombre": "Masa Hollín DPF (Calculada)",
+    "comando": "221066",
+    "formula": "((A*256)+B)/100",
+    "unidad": "gramos",
+    "cabeceraUDS": "7E0"
+  },
+  {
+    "id": "VAG_DSG_TEMP",
+    "nombre": "Temperatura Aceite DSG",
+    "comando": "221B41",
+    "formula": "A-50",
+    "unidad": "°C",
+    "cabeceraUDS": "7E1"
+  },
+  {
+    "id": "VAG_INJ_PRESS",
+    "nombre": "Presión Common Rail",
+    "comando": "221051",
+    "formula": "((A*256)+B)*10",
+    "unidad": "kPa",
+    "cabeceraUDS": "7E0"
+  }
+]
