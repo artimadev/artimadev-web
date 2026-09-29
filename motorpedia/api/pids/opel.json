@@ -1,0 +1,18 @@
+[
+  {
+    "id": "GM_KNOCK_RET",
+    "nombre": "Retraso Picado Biela",
+    "comando": "2211A6",
+    "formula": "A/2",
+    "unidad": "°",
+    "cabeceraUDS": "7E0"
+  },
+  {
+    "id": "GM_MISFIRE_HIST",
+    "nombre": "Historial Misfire Global",
+    "comando": "2211AD",
+    "formula": "(A*256)+B",
+    "unidad": "Fallos",
+    "cabeceraUDS": "7E0"
+  }
+]
