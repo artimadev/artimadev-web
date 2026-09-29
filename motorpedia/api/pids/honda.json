@@ -1,0 +1,26 @@
+[
+  {
+    "id": "HON_OIL_TEMP",
+    "nombre": "Temperatura Aceite Motor",
+    "comando": "2211BD",
+    "formula": "A-40",
+    "unidad": "°C",
+    "cabeceraUDS": "7E0"
+  },
+  {
+    "id": "HON_TRANS_TEMP",
+    "nombre": "Temperatura Transmisión",
+    "comando": "2211B6",
+    "formula": "(A*256+B)/10",
+    "unidad": "°C",
+    "cabeceraUDS": "7E1"
+  },
+  {
+    "id": "HON_VTEC_STATUS",
+    "nombre": "Presión VTEC",
+    "comando": "2211A0",
+    "formula": "A",
+    "unidad": "kPa",
+    "cabeceraUDS": "7E0"
+  }
+]
