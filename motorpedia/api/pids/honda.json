@@ -1,26 +1,42 @@
 [
   {
-    "id": "HON_OIL_TEMP",
-    "nombre": "Temperatura Aceite Motor",
-    "comando": "2211BD",
+    "id": "HONDA_TRANS_TEMP",
+    "nombre": "Temp. Transmisión (ATF)",
+    "comando": "222201",
     "formula": "A-40",
-    "unidad": "°C",
-    "cabeceraUDS": "7E0"
-  },
-  {
-    "id": "HON_TRANS_TEMP",
-    "nombre": "Temperatura Transmisión",
-    "comando": "2211B6",
-    "formula": "(A*256+B)/10",
     "unidad": "°C",
     "cabeceraUDS": "7E1"
   },
   {
-    "id": "HON_VTEC_STATUS",
-    "nombre": "Presión VTEC",
+    "id": "HONDA_KNOCK_RETARD",
+    "nombre": "Retraso por Picado (Knock)",
+    "comando": "2211A6",
+    "formula": "A/2",
+    "unidad": "°",
+    "cabeceraUDS": "7E0"
+  },
+  {
+    "id": "HONDA_MISFIRE_CYL1",
+    "nombre": "Misfire Cilindro 1 (Acumulado)",
+    "comando": "22110C",
+    "formula": "A",
+    "unidad": "Fallos",
+    "cabeceraUDS": "7E0"
+  },
+  {
+    "id": "HONDA_VTEC_OIL_PRES",
+    "nombre": "Estado Presión VTEC",
     "comando": "2211A0",
     "formula": "A",
     "unidad": "kPa",
+    "cabeceraUDS": "7E0"
+  },
+  {
+    "id": "HONDA_AFR_CMD",
+    "nombre": "Ratio Aire/Combustible (Objetivo)",
+    "comando": "22119F",
+    "formula": "A/10",
+    "unidad": "AFR",
     "cabeceraUDS": "7E0"
   }
 ]
