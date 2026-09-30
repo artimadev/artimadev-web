@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- El SEO se actualizará por JavaScript en milisegundos -->
+    <title>Diagnóstico de Avería | Motorpedia Pro</title>
+    <meta name="description" content="Base de datos comunitaria de averías OBD2.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Tailwind CSS para el diseño Premium -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0A0A0A; color: #FFFFFF; }
+        .gradient-text { background: linear-gradient(to right, #1E88E5, #00ACC1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col items-center p-6">
 
+    <header class="w-full max-w-3xl text-center py-8 border-b border-gray-800">
+        <h2 class="text-sm text-gray-400 tracking-widest font-bold mb-2">BASE DE DATOS COMUNITARIA</h2>
+        <h1 class="text-4xl font-black mb-2"><span class="gradient-text" id="ui-codigo">Código ...</span></h1>
+        <h3 class="text-xl text-red-500 font-bold" id="ui-marca">Diagnóstico para ...</h3>
+    </header>
+
+    <main class="w-full max-w-3xl mt-8 space-y-6">
+        
+        <!-- CAJA DE INFORMACIÓN -->
+        <div class="bg-gray-900 border border-gray-700 rounded-xl p-6 shadow-lg">
+            <h4 class="text-lg font-bold text-blue-400 mb-4" id="ui-pregunta">¿Qué significa este error en tu vehículo?</h4>
+            <p class="text-gray-300 leading-relaxed">
+                El código de diagnóstico <strong id="txt-codigo">...</strong> ha sido registrado por la centralita (ECU) de tu vehículo. 
+                Actualmente estamos recopilando los manuales de taller oficiales para este fallo específico. 
+                Nuestra comunidad de mecánicos aporta soluciones diarias para vehículos <strong id="txt-marca">...</strong>.
+            </p>
+        </div>
+
+        <!-- EMBUDO DE MONETIZACIÓN -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Botón YouTube -->
+            <a id="btn-youtube" href="#" target="_blank" class="bg-red-600 hover:bg-red-700 transition rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-md">
+                <svg class="w-8 h-8 text-white mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                <span class="font-bold text-white">Ver tutoriales en YouTube</span>
+                <span class="text-xs text-red-200 mt-1">Busca la reparación en vídeo</span>
+            </a>
+
+            <!-- Botón Afiliado -->
+            <a id="btn-recambios" href="#" target="_blank" class="bg-green-600 hover:bg-green-700 transition rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-md">
+                <svg class="w-8 h-8 text-white mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <span class="font-bold text-white">Comprar Recambios OEM</span>
+                <span class="text-xs text-green-200 mt-1">Encuentra piezas compatibles</span>
+            </a>
+        </div>
+
+        <!-- CAPTACIÓN -->
+        <div class="bg-gray-800 border-l-4 border-yellow-500 rounded-r-xl p-6 mt-8">
+            <h4 class="text-yellow-400 font-bold mb-2">¿Eres mecánico o ya solucionaste este fallo?</h4>
+            <p class="text-sm text-gray-300 mb-4">Ayuda a otros usuarios de Motorpedia compartiendo cuál fue la pieza defectuosa.</p>
+            <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded w-full border border-gray-600 transition">
+                Aportar solución a la base de datos
+            </button>
+        </div>
+    </main>
+
+    <footer class="mt-12 text-center text-gray-600 text-sm">
+        <p>&copy; 2026 ArtimaDev | Motorpedia Pro OBD2</p>
+    </footer>
+
+    <!-- EL CEREBRO DE LA PÁGINA (Se ejecuta al cargar) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Extraemos el Código de la URL (Ej: P0420)
+            const pathSegments = window.location.pathname.split('/').filter(segment => segment !== '');
+            const codigoBruto = pathSegments[pathSegments.length - 1];
+            const codigo = (codigoBruto && codigoBruto !== 'averias') ? codigoBruto.toUpperCase() : 'GENERAL';
+
+            // 2. Extraemos la Marca de los parámetros (Ej: ?marca=Honda)
+            const urlParams = new URLSearchParams(window.location.search);
+            const marcaBruta = urlParams.get('marca') || 'Vehículo';
+            const marca = marcaBruta.charAt(0).toUpperCase() + marcaBruta.slice(1).toLowerCase();
+
+            // 3. Modificamos el SEO de forma dinámica
+            document.title = `Solución al código ${codigo} en ${marca} | Motorpedia Pro`;
+            document.querySelector('meta[name="description"]').setAttribute("content", `Descubre qué significa el código de avería ${codigo} en tu ${marca}, síntomas comunes y cómo solucionarlo paso a paso.`);
+
+            // 4. Actualizamos el diseño HTML (Textos)
+            document.getElementById('ui-codigo').textContent = `Código ${codigo}`;
+            document.getElementById('ui-marca').textContent = `Diagnóstico para ${marca}`;
+            document.getElementById('ui-pregunta').textContent = `¿Qué significa este error en tu ${marca}?`;
+            document.getElementById('txt-codigo').textContent = codigo;
+            document.getElementById('txt-marca').textContent = marca;
+
+            // 5. Generamos los enlaces de monetización inyectando las variables
+            const youtubeQuery = `solucionar averia ${codigo} ${marca}`.replace(/ /g, '+');
+            document.getElementById('btn-youtube').href = `https://www.youtube.com/results?search_query=${youtubeQuery}`;
+            
+            // Aquí pondrás tus enlaces de afiliado reales en el futuro
+            const autodocQuery = `recambios ${marca}`.replace(/ /g, '+');
+            document.getElementById('btn-recambios').href = `https://www.amazon.es/s?k=${autodocQuery}`;
+        });
+    </script>
+</body>
+</html>
