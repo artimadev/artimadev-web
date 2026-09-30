@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- El SEO se actualizará por JavaScript en milisegundos -->
     <title>Diagnóstico de Avería | Motorpedia Pro</title>
     <meta name="description" content="Base de datos comunitaria de averías OBD2.">
     <meta name="robots" content="index, follow">
     
-    <!-- Tailwind CSS para el diseño Premium -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #0A0A0A; color: #FFFFFF; }
@@ -28,10 +26,8 @@
         <!-- CAJA DE INFORMACIÓN -->
         <div class="bg-gray-900 border border-gray-700 rounded-xl p-6 shadow-lg">
             <h4 class="text-lg font-bold text-blue-400 mb-4" id="ui-pregunta">¿Qué significa este error en tu vehículo?</h4>
-            <p class="text-gray-300 leading-relaxed">
-                El código de diagnóstico <strong id="txt-codigo">...</strong> ha sido registrado por la centralita (ECU) de tu vehículo. 
-                Actualmente estamos recopilando los manuales de taller oficiales para este fallo específico. 
-                Nuestra comunidad de mecánicos aporta soluciones diarias para vehículos <strong id="txt-marca">...</strong>.
+            <p class="text-gray-300 leading-relaxed" id="txt-descripcion-caja">
+                El código de diagnóstico <strong id="txt-codigo">...</strong> ha sido registrado por la ECU.
             </p>
         </div>
 
@@ -46,7 +42,7 @@
 
             <!-- Botón Afiliado -->
             <a id="btn-recambios" href="#" target="_blank" class="bg-green-600 hover:bg-green-700 transition rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-md">
-                <svg class="w-8 h-8 text-white mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <svg class="w-8 h-8 text-white mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 <span class="font-bold text-white">Comprar Recambios OEM</span>
                 <span class="text-xs text-green-200 mt-1">Encuentra piezas compatibles</span>
             </a>
@@ -56,47 +52,76 @@
         <div class="bg-gray-800 border-l-4 border-yellow-500 rounded-r-xl p-6 mt-8">
             <h4 class="text-yellow-400 font-bold mb-2">¿Eres mecánico o ya solucionaste este fallo?</h4>
             <p class="text-sm text-gray-300 mb-4">Ayuda a otros usuarios de Motorpedia compartiendo cuál fue la pieza defectuosa.</p>
-            <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded w-full border border-gray-600 transition">
+            <a id="btn-aportar" href="https://forms.google.com/" target="_blank" class="block text-center bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded w-full border border-gray-600 transition">
                 Aportar solución a la base de datos
-            </button>
+            </a>
         </div>
     </main>
 
-    <footer class="mt-12 text-center text-gray-600 text-sm">
+    <footer class="mt-12 mb-6 text-center text-gray-600 text-sm">
         <p>&copy; 2026 ArtimaDev | Motorpedia Pro OBD2</p>
     </footer>
 
-    <!-- EL CEREBRO DE LA PÁGINA (Se ejecuta al cargar) -->
+    <!-- CEREBRO JAVASCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Extraemos el Código de la URL (Ej: P0420)
             const pathSegments = window.location.pathname.split('/').filter(segment => segment !== '');
             const codigoBruto = pathSegments[pathSegments.length - 1];
-            const codigo = (codigoBruto && codigoBruto !== 'averias') ? codigoBruto.toUpperCase() : 'GENERAL';
-
-            // 2. Extraemos la Marca de los parámetros (Ej: ?marca=Honda)
+            const codigo = (codigoBruto && codigoBruto !== 'averias' && !codigoBruto.includes('.html')) ? codigoBruto.toUpperCase() : 'GENERAL';
+            
             const urlParams = new URLSearchParams(window.location.search);
             const marcaBruta = urlParams.get('marca') || 'Vehículo';
             const marca = marcaBruta.charAt(0).toUpperCase() + marcaBruta.slice(1).toLowerCase();
 
-            // 3. Modificamos el SEO de forma dinámica
-            document.title = `Solución al código ${codigo} en ${marca} | Motorpedia Pro`;
-            document.querySelector('meta[name="description"]').setAttribute("content", `Descubre qué significa el código de avería ${codigo} en tu ${marca}, síntomas comunes y cómo solucionarlo paso a paso.`);
+            // EL DICCIONARIO INTELIGENTE
+            const baseDeDatos = {
+                "P0171": { desc: "El sistema de inyección es demasiado pobre (Banco 1). Entra más aire del medido o falta combustible.", pieza: "Caudalimetro MAF" },
+                "P0172": { desc: "El sistema de inyección es demasiado rico (Banco 1). Exceso de combustible o falta de aire.", pieza: "Sensor MAP o Inyectores" },
+                "P0101": { desc: "Problema de rango/rendimiento en el circuito del sensor de flujo de masa de aire (MAF).", pieza: "Caudalimetro MAF" },
+                "P0113": { desc: "Entrada alta en el circuito del sensor de temperatura del aire de admisión (IAT).", pieza: "Sensor temperatura IAT" },
+                "P0300": { desc: "Fallo de encendido aleatorio o múltiple en varios cilindros. Causa temblores en el motor.", pieza: "Bobina de encendido o Bujias" },
+                "P0301": { desc: "Fallo de encendido detectado específicamente en el Cilindro 1.", pieza: "Bobina de encendido" },
+                "P0302": { desc: "Fallo de encendido detectado específicamente en el Cilindro 2.", pieza: "Bobina de encendido" },
+                "P0303": { desc: "Fallo de encendido detectado específicamente en el Cilindro 3.", pieza: "Bobina de encendido" },
+                "P0304": { desc: "Fallo de encendido detectado específicamente en el Cilindro 4.", pieza: "Bobina de encendido" },
+                "P0335": { desc: "Fallo en el circuito del sensor de posición del cigüeñal (CKP). El coche puede no arrancar.", pieza: "Sensor posicion cigueñal" },
+                "P0340": { desc: "Fallo en el circuito del sensor de posición del árbol de levas (CMP).", pieza: "Sensor arbol de levas" },
+                "P0420": { desc: "Eficiencia del sistema catalítico por debajo del umbral (Banco 1). Fallo típico de emisiones.", pieza: "Catalizador" },
+                "P0430": { desc: "Eficiencia del sistema catalítico por debajo del umbral (Banco 2).", pieza: "Catalizador" },
+                "P0401": { desc: "Flujo insuficiente detectado en el sistema de recirculación de gases de escape (EGR).", pieza: "Valvula EGR" },
+                "P0133": { desc: "Respuesta lenta en el circuito del sensor de oxígeno (Banco 1, Sensor 1).", pieza: "Sonda Lambda" },
+                "P0135": { desc: "Fallo en el circuito del calentador del sensor de oxígeno (Banco 1, Sensor 1).", pieza: "Sonda Lambda" },
+                "P0500": { desc: "Fallo en el circuito del sensor de velocidad del vehículo (VSS).", pieza: "Sensor velocidad ABS" },
+                "U0100": { desc: "Pérdida de comunicación con el módulo de control del motor (ECM/PCM).", pieza: "Rele o Fusibles" },
+                "U0101": { desc: "Pérdida de comunicación con el módulo de control de la transmisión (TCM).", pieza: "Conector OBD2" }
+            };
 
-            // 4. Actualizamos el diseño HTML (Textos)
+            const infoAveria = baseDeDatos[codigo] || { 
+                desc: "Fallo registrado en el módulo de control del tren motriz (ECU).", 
+                pieza: "Sensor electrónico de motor" 
+            };
+
+            document.title = `Solución al código ${codigo} en ${marca} | Motorpedia Pro`;
             document.getElementById('ui-codigo').textContent = `Código ${codigo}`;
             document.getElementById('ui-marca').textContent = `Diagnóstico para ${marca}`;
-            document.getElementById('ui-pregunta').textContent = `¿Qué significa este error en tu ${marca}?`;
-            document.getElementById('txt-codigo').textContent = codigo;
-            document.getElementById('txt-marca').textContent = marca;
+            document.getElementById('ui-pregunta').textContent = `¿Qué significa el error ${codigo} en tu ${marca}?`;
+            
+            document.getElementById('txt-descripcion-caja').innerHTML = `
+                El código de diagnóstico <strong>${codigo}</strong> indica: <strong>${infoAveria.desc}</strong>.<br><br>
+                Actualmente estamos recopilando los manuales de taller oficiales. En los vehículos <strong>${marca}</strong>, 
+                este fallo suele requerir la revisión o sustitución de: <strong class="text-yellow-400">${infoAveria.pieza}</strong>.
+            `;
 
-            // 5. Generamos los enlaces de monetización inyectando las variables
-            const youtubeQuery = `solucionar averia ${codigo} ${marca}`.replace(/ /g, '+');
+            const piezaQuery = infoAveria.pieza.split(" o ")[0]; 
+            
+            const youtubeQuery = `solucionar averia ${codigo} ${piezaQuery} ${marca}`.replace(/ /g, '+');
             document.getElementById('btn-youtube').href = `https://www.youtube.com/results?search_query=${youtubeQuery}`;
             
-            // Aquí pondrás tus enlaces de afiliado reales en el futuro
-            const autodocQuery = `recambios ${marca}`.replace(/ /g, '+');
-            document.getElementById('btn-recambios').href = `https://www.amazon.es/s?k=${autodocQuery}`;
+            const amazonQuery = `${piezaQuery} ${marca} recambio`.replace(/ /g, '+');
+            document.getElementById('btn-recambios').href = `https://www.amazon.es/s?k=${amazonQuery}`;
+            
+            // Pon aquí el enlace a tu Google Form cuando lo crees
+            document.getElementById('btn-aportar').href = `https://forms.google.com/`;
         });
     </script>
 </body>
