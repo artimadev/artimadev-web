@@ -1,216 +1,142 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtimaDev | Estudio de Desarrollo Independiente</title>
-    <!-- Cargamos una fuente premium de Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>ArtimaDev | Soluciones de Software y Automoción</title>
+    <meta name="description" content="Desarrollo de aplicaciones Android: Motorpedia Pro y CineMatch. Base de datos global de códigos de avería OBD2.">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --bg-color: #050505;
-            --text-main: #ffffff;
-            --text-muted: #8892b0;
-            --accent-red: #E50914;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(229, 9, 20, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(88, 166, 255, 0.05), transparent 25%);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-
-        /* Cabecera / Hero Section */
-        header {
-            text-align: center;
-            padding: 6rem 2rem 3rem;
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .brand-name {
-            font-size: 4rem;
-            font-weight: 800;
-            letter-spacing: -2px;
-            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            font-weight: 300;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Sección de Aplicaciones */
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-
-        /* Tarjeta Glassmorphism */
-        .app-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 3rem;
-            max-width: 800px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            animation: float 6s ease-in-out infinite;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Brillo sutil rojo dentro de la tarjeta */
-        .app-card::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 100px;
-            background: var(--accent-red);
-            filter: blur(80px);
-            opacity: 0.5;
-        }
-
-        .app-icon-placeholder {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 10px 15px rgba(229, 9, 20, 0.3));
-        }
-
-        .app-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .app-title span {
-            color: var(--accent-red);
-        }
-
-        .app-desc {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-            max-width: 500px;
-        }
-
-        /* Botón estilo premium */
-        .btn {
-            background: linear-gradient(135deg, var(--accent-red) 0%, #b8070f 100%);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(229, 9, 20, 0.5);
-            background: linear-gradient(135deg, #f0141f 0%, var(--accent-red) 100%);
-        }
-
-        /* Pie de página */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--card-border);
-            margin-top: auto;
-        }
-
-        footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.3s;
-            margin: 0 10px;
-        }
-
-        footer a:hover {
-            color: var(--text-main);
-        }
-
-        /* Animaciones */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .brand-name { font-size: 3rem; }
-            .app-card { padding: 2rem; }
-            .app-title { font-size: 2rem; }
-        }
+        body { background-color: #0A0A0A; color: #FFFFFF; font-family: 'Inter', sans-serif; }
+        .gradient-motor { background: linear-gradient(135deg, #1E88E5, #00ACC1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-cine { background: linear-gradient(135deg, #E53935, #FFB300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .bg-glass { background: rgba(26, 26, 26, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid #333; }
     </style>
 </head>
-<body>
+<body class="antialiased min-h-screen flex flex-col">
 
-    <header>
-        <h1 class="brand-name">ArtimaDev</h1>
-        <p class="tagline">Desarrollo de aplicaciones excepcionales. Código limpio, diseño impecable y herramientas diseñadas para hacerte la vida más fácil.</p>
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR (FIJA) -->
+    <header class="fixed top-0 w-full z-50 bg-glass transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl font-black tracking-tighter text-white">Artima<span class="text-blue-500">Dev</span></span>
+                </div>
+                <nav class="hidden md:flex space-x-8 text-sm font-bold tracking-wide text-gray-300">
+                    <a href="#motorpedia" class="hover:text-blue-400 transition">Motorpedia Pro</a>
+                    <a href="#cinematch" class="hover:text-red-400 transition">CineMatch</a>
+                    <a href="#directorio-dtc" class="hover:text-white transition">Directorio DTC</a>
+                    <a href="#soporte" class="hover:text-white transition">Soporte</a>
+                </nav>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <div class="app-card">
-            <div class="app-icon-placeholder">🎟️</div>
-            <h2 class="app-title">Cine<span>Match</span></h2>
-            <p class="app-desc">Tu recomendador inteligente. Encuentra la película o serie perfecta en segundos con filtros avanzados. Se acabó el pasarse horas navegando por el catálogo de las plataformas.</p>
-            <a href="#" class="btn">Próximamente en Google Play</a>
-        </div>
+    <!-- SECCIÓN HERO: BUSCADOR CENTRAL DE AVERÍAS -->
+    <main class="flex-grow pt-24">
+        <section class="relative max-w-5xl mx-auto px-4 py-20 text-center">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight">
+                El ecosistema definitivo de <br><span class="gradient-motor">Diagnóstico Inteligente</span>
+            </h1>
+            <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                Encuentra la solución exacta a la avería de tu vehículo o descubre nuestras aplicaciones de software desarrolladas para Android.
+            </p>
+
+            <!-- BUSCADOR DTC -->
+            <form id="buscador-dtc" class="max-w-xl mx-auto relative shadow-2xl" onsubmit="buscarAveria(event)">
+                <div class="relative flex items-center">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" id="dtc-input" required pattern="[A-Za-z][0-9]{4}" title="Ejemplo: P0420" class="block w-full pl-12 pr-32 py-4 bg-gray-900 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg uppercase transition" placeholder="Ej: P0171, U0100...">
+                    <button type="submit" class="absolute right-2 top-2 bottom-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 rounded-lg transition shadow-lg">
+                        Buscar
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-3 text-left">Busca entre más de 5.000 códigos genéricos y de fabricante.</p>
+            </form>
+        </section>
+
+        <!-- SECCIÓN DE APLICACIONES -->
+        <section id="aplicaciones" class="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- TARJETA MOTORPEDIA -->
+            <div id="motorpedia" class="bg-gray-900 border border-gray-800 rounded-2xl p-8 hover:border-blue-500 transition duration-300">
+                <div class="w-12 h-12 bg-blue-900/50 rounded-lg flex items-center justify-center mb-6 border border-blue-500/30">
+                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">Motorpedia <span class="text-blue-500">Pro</span></h3>
+                <p class="text-gray-400 mb-6 leading-relaxed">Telemetría de competición, análisis forense Modo 06, escáner de averías y grabación de datos en tiempo real mediante OBD2 Bluetooth.</p>
+                <a href="#" class="inline-flex items-center text-blue-400 font-bold hover:text-blue-300 transition">
+                    Ver en Google Play <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+            </div>
+
+            <!-- TARJETA CINEMATCH -->
+            <div id="cinematch" class="bg-gray-900 border border-gray-800 rounded-2xl p-8 hover:border-red-500 transition duration-300">
+                <div class="w-12 h-12 bg-red-900/50 rounded-lg flex items-center justify-center mb-6 border border-red-500/30">
+                    <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-2"><span class="gradient-cine">CineMatch</span></h3>
+                <p class="text-gray-400 mb-6 leading-relaxed">Descubre, organiza y empareja tus películas y series favoritas. Una experiencia social diseñada para cinéfilos exigentes.</p>
+                <a href="#" class="inline-flex items-center text-red-400 font-bold hover:text-red-300 transition">
+                    Ver en Google Play <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- DIRECTORIO DE AVERÍAS -->
+        <section id="directorio-dtc" class="max-w-7xl mx-auto px-4 py-16 border-t border-gray-800 text-center">
+            <h3 class="text-3xl font-bold mb-8">Directorio de Diagnóstico Rápido</h3>
+            <div class="flex flex-wrap justify-center gap-3">
+                <!-- Enlaces generados estáticamente para SEO -->
+                <a href="/motorpedia/averias/P0171" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">P0171 - Mezcla Pobre</a>
+                <a href="/motorpedia/averias/P0420" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">P0420 - Catalizador</a>
+                <a href="/motorpedia/averias/P0300" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">P0300 - Misfire Múltiple</a>
+                <a href="/motorpedia/averias/U0100" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">U0100 - Comunicación ECU</a>
+                <a href="/motorpedia/averias/P0335" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">P0335 - Sensor Cigüeñal</a>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 ArtimaDev. Todos los derechos reservados.</p>
-        <div style="margin-top: 10px;">
-            <a href="mailto:contacto@artimadev.com">contacto@artimadev.com</a> | 
-            <a href="/privacy">Política de Privacidad</a>
+    <!-- FOOTER Y SOPORTE -->
+    <footer id="soporte" class="bg-gray-900 border-t border-gray-800 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h4 class="text-xl font-bold mb-4">¿Necesitas soporte técnico?</h4>
+            <p class="text-gray-400 mb-6">Ponte en contacto con nuestro equipo de desarrollo para consultas sobre Motorpedia o CineMatch.</p>
+            <a href="mailto:artimadev@gmail.com" class="inline-block bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg border border-gray-600 transition">
+                Contactar Soporte
+            </a>
+            <p class="text-sm text-gray-500 mt-12">&copy; 2026 ArtimaDev. Todos los derechos reservados.</p>
+            <div class="mt-4 space-x-4 text-sm text-gray-500">
+                <a href="/privacy.html" class="hover:text-white transition">Política de Privacidad</a>
+            </div>
         </div>
     </footer>
 
+    <!-- LÓGICA DEL BUSCADOR CENTRAL -->
+    <script>
+        function buscarAveria(event) {
+            event.preventDefault();
+            const inputElement = document.getElementById('dtc-input');
+            const codigoRaw = inputElement.value.trim().toUpperCase();
+            
+            // Expresión regular para validar formato (Ej: P0171, U1234, C0045)
+            const regex = /^[A-Z][0-9]{4}$/;
+            
+            if(regex.test(codigoRaw)) {
+                // Redirige usando la estructura de tu archivo _redirects de Cloudflare
+                window.location.href = `/motorpedia/averias/${codigoRaw}`;
+            } else {
+                inputElement.classList.add('border-red-500');
+                inputElement.value = '';
+                inputElement.placeholder = 'Formato inválido. Ej: P0420';
+                setTimeout(() => {
+                    inputElement.classList.remove('border-red-500');
+                    inputElement.placeholder = 'Ej: P0171, U0100...';
+                }, 2000);
+            }
+        }
+    </script>
 </body>
 </html>
