@@ -1,142 +1,155 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtimaDev | Soluciones de Software y Automoción</title>
-    <meta name="description" content="Desarrollo de aplicaciones Android: Motorpedia Pro y CineMatch. Base de datos global de códigos de avería OBD2.">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Motorpedia PRO | Base de Datos de Averías OBD2 y Soluciones OEM</title>
+    <meta name="description" content="Diagnóstico técnico de códigos de avería DTC OBD2, síntomas, comprobaciones de taller, vídeos paso a paso y repuestos OEM.">
     <style>
-        body { background-color: #0A0A0A; color: #FFFFFF; font-family: 'Inter', sans-serif; }
-        .gradient-motor { background: linear-gradient(135deg, #1E88E5, #00ACC1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .gradient-cine { background: linear-gradient(135deg, #E53935, #FFB300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .bg-glass { background: rgba(26, 26, 26, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid #333; }
+        :root {
+            --bg: #050505;
+            --card: #121212;
+            --border: #282828;
+            --cyan: #00ACC1;
+            --blue: #1E88E5;
+            --green: #00E676;
+            --red: #E53935;
+            --amber: #FFB300;
+            --text: #FFFFFF;
+            --muted: #9E9E9E;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 16px; max-width: 780px; margin: 0 auto; line-height: 1.5; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 16px; }
+        .brand { font-weight: 900; letter-spacing: 2px; font-size: 1.1rem; color: var(--text); }
+        .brand span { color: var(--cyan); }
+        .search-box { display: flex; gap: 8px; margin-bottom: 16px; }
+        input { flex: 1; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; border-radius: 10px; font-weight: 700; text-transform: uppercase; }
+        button { background: var(--blue); color: #fff; border: none; padding: 12px 18px; border-radius: 10px; font-weight: 800; cursor: pointer; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; background: rgba(229,57,53,0.2); color: var(--red); border: 1px solid var(--red); }
+        .dtc-title { font-size: 2rem; font-weight: 900; color: var(--text); margin: 6px 0; }
+        .dtc-sub { color: var(--cyan); font-weight: 700; font-size: 1rem; margin-bottom: 10px; }
+        h3 { font-size: 0.85rem; letter-spacing: 1px; color: var(--amber); margin-bottom: 10px; text-transform: uppercase; }
+        ul { padding-left: 18px; color: #E0E0E0; font-size: 0.95rem; }
+        li { margin-bottom: 6px; }
+        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+        .btn-link { display: block; text-align: center; text-decoration: none; padding: 14px; border-radius: 10px; font-weight: 800; font-size: 0.9rem; }
+        .btn-yt { background: #261010; color: #fff; border: 1px solid var(--red); }
+        .btn-amz { background: #261E0A; color: #fff; border: 1px solid var(--amber); }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col">
+<body>
 
-    <!-- BARRA DE NAVEGACIÓN SUPERIOR (FIJA) -->
-    <header class="fixed top-0 w-full z-50 bg-glass transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0 flex items-center gap-2">
-                    <span class="text-2xl font-black tracking-tighter text-white">Artima<span class="text-blue-500">Dev</span></span>
-                </div>
-                <nav class="hidden md:flex space-x-8 text-sm font-bold tracking-wide text-gray-300">
-                    <a href="#motorpedia" class="hover:text-blue-400 transition">Motorpedia Pro</a>
-                    <a href="#cinematch" class="hover:text-red-400 transition">CineMatch</a>
-                    <a href="#directorio-dtc" class="hover:text-white transition">Directorio DTC</a>
-                    <a href="#soporte" class="hover:text-white transition">Soporte</a>
-                </nav>
-            </div>
+    <div class="header">
+        <div class="brand">MOTORPEDIA <span>PRO</span></div>
+        <div id="marcaTag" style="font-size: 0.8rem; font-weight: 800; color: var(--cyan);">DIVISIÓN OEM</div>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="inputCodigo" placeholder="Buscar código DTC (ej: P0171, P0420, P0301)...">
+        <button onclick="buscarManual()">ANALIZAR</button>
+    </div>
+
+    <div class="card">
+        <span class="badge" id="gravedadDtc">DIAGNÓSTICO VERIFICADO</span>
+        <div class="dtc-title" id="codigoDtc">P0171</div>
+        <div class="dtc-sub" id="descDtc">Sistema demasiado pobre (Banco 1)</div>
+        <p style="color: var(--green); font-family: monospace; font-weight: 700; font-size: 0.9rem;" id="piezaOem"></p>
+        <div class="actions">
+            <a id="linkYoutube" href="#" target="_blank" class="btn-link btn-yt">▶ VER VÍDEO EN YOUTUBE</a>
+            <a id="linkAmazon" href="#" target="_blank" class="btn-link btn-amz">🛒 BUSCAR REPUESTO OEM</a>
         </div>
-    </header>
+    </div>
 
-    <!-- SECCIÓN HERO: BUSCADOR CENTRAL DE AVERÍAS -->
-    <main class="flex-grow pt-24">
-        <section class="relative max-w-5xl mx-auto px-4 py-20 text-center">
-            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight">
-                El ecosistema definitivo de <br><span class="gradient-motor">Diagnóstico Inteligente</span>
-            </h1>
-            <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                Encuentra la solución exacta a la avería de tu vehículo o descubre nuestras aplicaciones de software desarrolladas para Android.
-            </p>
+    <div class="card">
+        <h3>🔧 Causas Probables en Taller</h3>
+        <ul id="listaCausas"></ul>
+    </div>
 
-            <!-- BUSCADOR DTC -->
-            <form id="buscador-dtc" class="max-w-xl mx-auto relative shadow-2xl" onsubmit="buscarAveria(event)">
-                <div class="relative flex items-center">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
-                    <input type="text" id="dtc-input" required pattern="[A-Za-z][0-9]{4}" title="Ejemplo: P0420" class="block w-full pl-12 pr-32 py-4 bg-gray-900 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg uppercase transition" placeholder="Ej: P0171, U0100...">
-                    <button type="submit" class="absolute right-2 top-2 bottom-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 rounded-lg transition shadow-lg">
-                        Buscar
-                    </button>
-                </div>
-                <p class="text-xs text-gray-500 mt-3 text-left">Busca entre más de 5.000 códigos genéricos y de fabricante.</p>
-            </form>
-        </section>
+    <div class="card">
+        <h3>⚡ Protocolo de Comprobación Motorpedia PRO</h3>
+        <p id="textoPrueba" style="color: #E0E0E0; font-size: 0.95rem;"></p>
+    </div>
 
-        <!-- SECCIÓN DE APLICACIONES -->
-        <section id="aplicaciones" class="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            <!-- TARJETA MOTORPEDIA -->
-            <div id="motorpedia" class="bg-gray-900 border border-gray-800 rounded-2xl p-8 hover:border-blue-500 transition duration-300">
-                <div class="w-12 h-12 bg-blue-900/50 rounded-lg flex items-center justify-center mb-6 border border-blue-500/30">
-                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </div>
-                <h3 class="text-2xl font-bold mb-2">Motorpedia <span class="text-blue-500">Pro</span></h3>
-                <p class="text-gray-400 mb-6 leading-relaxed">Telemetría de competición, análisis forense Modo 06, escáner de averías y grabación de datos en tiempo real mediante OBD2 Bluetooth.</p>
-                <a href="#" class="inline-flex items-center text-blue-400 font-bold hover:text-blue-300 transition">
-                    Ver en Google Play <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                </a>
-            </div>
-
-            <!-- TARJETA CINEMATCH -->
-            <div id="cinematch" class="bg-gray-900 border border-gray-800 rounded-2xl p-8 hover:border-red-500 transition duration-300">
-                <div class="w-12 h-12 bg-red-900/50 rounded-lg flex items-center justify-center mb-6 border border-red-500/30">
-                    <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path></svg>
-                </div>
-                <h3 class="text-2xl font-bold mb-2"><span class="gradient-cine">CineMatch</span></h3>
-                <p class="text-gray-400 mb-6 leading-relaxed">Descubre, organiza y empareja tus películas y series favoritas. Una experiencia social diseñada para cinéfilos exigentes.</p>
-                <a href="#" class="inline-flex items-center text-red-400 font-bold hover:text-red-300 transition">
-                    Ver en Google Play <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                </a>
-            </div>
-        </section>
-
-        <!-- DIRECTORIO DE AVERÍAS -->
-        <section id="directorio-dtc" class="max-w-7xl mx-auto px-4 py-16 border-t border-gray-800 text-center">
-            <h3 class="text-3xl font-bold mb-8">Directorio de Diagnóstico Rápido</h3>
-            <div class="flex flex-wrap justify-center gap-3">
-                <!-- Enlaces generados estáticamente para SEO -->
-                <a href="/motorpedia/averias/P0171" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">P0171 - Mezcla Pobre</a>
-                <a href="/motorpedia/averias/P0420" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">P0420 - Catalizador</a>
-                <a href="/motorpedia/averias/P0300" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">P0300 - Misfire Múltiple</a>
-                <a href="/motorpedia/averias/U0100" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">U0100 - Comunicación ECU</a>
-                <a href="/motorpedia/averias/P0335" class="px-4 py-2 bg-gray-800 hover:bg-blue-600 rounded-lg text-sm font-bold border border-gray-700 transition">P0335 - Sensor Cigüeñal</a>
-            </div>
-        </section>
-    </main>
-
-    <!-- FOOTER Y SOPORTE -->
-    <footer id="soporte" class="bg-gray-900 border-t border-gray-800 py-12 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h4 class="text-xl font-bold mb-4">¿Necesitas soporte técnico?</h4>
-            <p class="text-gray-400 mb-6">Ponte en contacto con nuestro equipo de desarrollo para consultas sobre Motorpedia o CineMatch.</p>
-            <a href="mailto:artimadev@gmail.com" class="inline-block bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg border border-gray-600 transition">
-                Contactar Soporte
-            </a>
-            <p class="text-sm text-gray-500 mt-12">&copy; 2026 ArtimaDev. Todos los derechos reservados.</p>
-            <div class="mt-4 space-x-4 text-sm text-gray-500">
-                <a href="/privacy.html" class="hover:text-white transition">Política de Privacidad</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- LÓGICA DEL BUSCADOR CENTRAL -->
     <script>
-        function buscarAveria(event) {
-            event.preventDefault();
-            const inputElement = document.getElementById('dtc-input');
-            const codigoRaw = inputElement.value.trim().toUpperCase();
-            
-            // Expresión regular para validar formato (Ej: P0171, U1234, C0045)
-            const regex = /^[A-Z][0-9]{4}$/;
-            
-            if(regex.test(codigoRaw)) {
-                // Redirige usando la estructura de tu archivo _redirects de Cloudflare
-                window.location.href = `/motorpedia/averias/${codigoRaw}`;
-            } else {
-                inputElement.classList.add('border-red-500');
-                inputElement.value = '';
-                inputElement.placeholder = 'Formato inválido. Ej: P0420';
-                setTimeout(() => {
-                    inputElement.classList.remove('border-red-500');
-                    inputElement.placeholder = 'Ej: P0171, U0100...';
-                }, 2000);
+        const baseDatosDtc = {
+            "P0171": {
+                desc: "Sistema demasiado pobre en Banco 1 (Mezcla con exceso de aire o falta de combustible)",
+                pieza: "Sensor Caudalímetro (MAF) / Sonda Lambda B1S1 / Tubos de Vacío",
+                causas: [
+                    "Toma de aire no medida después del sensor MAF (manguito rajado o junta de colector).",
+                    "Filamento del sensor MAF sucio de polvo o aceite.",
+                    "Presión insuficiente en la rampa de inyección o filtro de combustible obstruido.",
+                    "Sonda Lambda Pre-Catalizador fatigada."
+                ],
+                prueba: "Revisa los ajustes de inyección STFT y LTFT en el módulo de Emisiones de Motorpedia PRO. Si al acelerar a 2.500 RPM el valor LTFT mejora y se acerca a 0%, existe una entrada de aire parásita en el colector de admisión."
+            },
+            "P0420": {
+                desc: "Eficiencia del sistema catalítico por debajo del umbral (Banco 1)",
+                pieza: "Catalizador de Tres Vías (TWC) / Sonda Lambda Post-Catalizador (B1S2)",
+                causas: [
+                    "Monolito cerámico del catalizador agotado o saturado.",
+                    "Fuga en el tramo de escape antes de la segunda sonda lambda.",
+                    "Sonda Lambda 2 (Post-Catalizador) defectuosa oscilando al mismo ritmo que la Sonda 1."
+                ],
+                prueba: "Abre Telemetría en Vivo PRO en modo Osciloscopio para las Sondas Lambda 1 y 2 con el motor a 90°C. La Sonda 1 debe oscilar entre 0.1V y 0.8V, y la Sonda 2 debe mantenerse estable cerca de 0.65V."
+            },
+            "U0100": {
+                desc: "Pérdida de comunicación con el Módulo de Control del Motor (ECM/PCM)",
+                pieza: "Red CAN Bus (Líneas CAN-H / CAN-L) / Alimentación y Masas ECU",
+                causas: [
+                    "Caída de tensión de la batería de 12V durante el arranque.",
+                    "Conector de centralita o masa de chasis con sulfatación.",
+                    "Fusible principal de alimentación IG1/ECM abierto."
+                ],
+                prueba: "Verifica el voltaje de batería en la Consola OBD2 con el comando AT RV y comprueba la continuidad de las líneas CAN en los pines 6 y 14 del conector de diagnóstico."
             }
+        };
+
+        function renderizar(codigoRaw, marcaRaw) {
+            const codigo = (codigoRaw || "P0171").toUpperCase().trim();
+            const marca = (marcaRaw || "OEM").trim();
+            document.getElementById("inputCodigo").value = codigo;
+            document.getElementById("marcaTag").innerText = "DIVISIÓN: " + marca.toUpperCase();
+            document.getElementById("codigoDtc").innerText = codigo;
+
+            const info = baseDatosDtc[codigo] || {
+                desc: "Código de diagnóstico registrado en centralita (" + codigo + ")",
+                pieza: "Sensor / Actuador del circuito " + codigo,
+                causas: [
+                    "Señal fuera de umbral en el sensor o actuador asociado al código " + codigo + ".",
+                    "Conector eléctrico sulfatado, cableado rozado o caída de masa.",
+                    "Atasco mecánico por carbonilla o desgaste térmico."
+                ],
+                prueba: "Consulta los datos congelados (Freeze Frame) en Motorpedia PRO y verifica la lectura en tiempo real del sensor desde el Listado de Sensores ECU antes de sustituir el componente."
+            };
+
+            document.title = codigo + " (" + marca + ") - Solución y Diagnóstico | Motorpedia PRO";
+            document.getElementById("descDtc").innerText = info.desc;
+            document.getElementById("piezaOem").innerText = "PIEZA AFECTADA (" + marca.toUpperCase() + "): " + info.pieza;
+            document.getElementById("textoPrueba").innerText = info.prueba;
+
+            const ul = document.getElementById("listaCausas");
+            ul.innerHTML = "";
+            info.causas.forEach(c => {
+                const li = document.createElement("li");
+                li.innerText = c;
+                ul.appendChild(li);
+            });
+
+            document.getElementById("linkYoutube").href = "https://www.youtube.com/results?search_query=" + encodeURIComponent(codigo + " " + marca + " reparacion OBD2");
+            document.getElementById("linkAmazon").href = "https://www.amazon.es/s?k=" + encodeURIComponent(info.pieza + " " + marca + " " + codigo);
         }
+
+        function buscarManual() {
+            const val = document.getElementById("inputCodigo").value;
+            const params = new URLSearchParams(window.location.search);
+            renderizar(val, params.get("marca") || "OEM");
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        renderizar(params.get("codigo") || "P0171", params.get("marca") || "Honda");
     </script>
 </body>
 </html>
