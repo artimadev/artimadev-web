@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtimaDev | Soluciones de Software Android e Ingeniería de Automoción</title>
-    <meta name="description" content="Estudio de desarrollo independiente: Motorpedia Pro (Diagnóstico OBD2, UDS 12V/24V y Telemetría) y CineMatch. Base de datos interactiva de averías DTC.">
+    <title>ArtimaDev | Software Android e Ingeniería de Diagnóstico 12V / 24V</title>
+    <meta name="description" content="Estudio de desarrollo independiente: Motorpedia Pro (Diagnóstico OBD2, UDS, SAE J1939 24V y Sistemas Auxiliares) y CineMatch.">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
             --bg-color: #050505;
             --text-main: #ffffff;
-            --text-muted: #8892b0;
             --accent-red: #E50914;
             --accent-cyan: #00ACC1;
-            --accent-blue: #1E88E5;
             --card-bg: rgba(255, 255, 255, 0.03);
             --card-border: rgba(255, 255, 255, 0.08);
         }
@@ -47,14 +45,13 @@
                 <a href="/" class="flex items-center gap-3">
                     <span class="text-2xl font-black tracking-tighter text-white">Artima<span class="text-blue-500">Dev</span></span>
                     <span class="hidden sm:inline-block px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider bg-cyan-950 text-cyan-400 border border-cyan-700/50 rounded-full">
-                        12V Turismos & 24V Buses
+                        OBD2 • UDS • J1939 • OEM 24V
                     </span>
                 </a>
                 <nav class="hidden md:flex space-x-7 text-sm font-semibold tracking-wide text-gray-300">
-                    <a href="#diagnostico" class="hover:text-cyan-400 transition">Buscador DTC</a>
+                    <a href="#diagnostico" class="hover:text-cyan-400 transition">Buscador Averías</a>
                     <a href="#motorpedia" class="hover:text-blue-400 transition">Motorpedia Pro</a>
                     <a href="#cinematch" class="hover:text-red-400 transition">CineMatch</a>
-                    <a href="#directorio-dtc" class="hover:text-white transition">Directorio</a>
                     <a href="#soporte" class="hover:text-white transition">Soporte</a>
                 </nav>
             </div>
@@ -62,18 +59,18 @@
     </header>
 
     <main class="flex-grow pt-24">
-        <section id="diagnostico" class="relative max-w-5xl mx-auto px-4 pt-10 pb-8 text-center">
+        <section id="diagnostico" class="relative max-w-5xl mx-auto px-4 pt-10 pb-6 text-center">
             <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight leading-tight">
-                Ingeniería de Software y <br><span class="gradient-motor">Diagnóstico Automotriz 12V / 24V</span>
+                Ingeniería de Software y <br><span class="gradient-motor">Diagnóstico Multimarca 12V / 24V</span>
             </h1>
-            <p class="text-base md:text-lg text-gray-400 mb-8 max-w-2xl mx-auto font-light">
-                Enciclopedia forense de averías OBD2, UDS y Euro VI con valores de comprobación con polímetro y acceso directo a distribuidores de recambio OEM.
+            <p class="text-base md:text-lg text-gray-400 mb-8 max-w-3xl mx-auto font-light">
+                Enciclopedia forense compatible con códigos OBD2, UDS, SAE J1939 (SPN/FMI), códigos de cuadro OEM (MAN EDC/ZBR/EBS, Mercedes MR/BS) y sistemas auxiliares (Masats, Bode, Hispacold, Alta Tensión HV).
             </p>
 
-            <form id="buscador-dtc" class="max-w-2xl mx-auto glass-card p-3 sm:p-4" onsubmit="buscarAveria(event)">
+            <form id="buscador-dtc" class="max-w-3xl mx-auto glass-card p-3 sm:p-4" onsubmit="buscarAveria(event)">
                 <div class="flex flex-col sm:flex-row gap-3">
                     <select id="marca-select" class="bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3.5 text-xs font-bold text-cyan-400 focus:outline-none">
-                        <optgroup label="Turismos 12V">
+                        <optgroup label="Turismos y Furgones 12V">
                             <option value="Honda">HONDA (VTEC / PGM-FI)</option>
                             <option value="VAG">GRUPO VAG (TSI / TDI / DSG)</option>
                             <option value="Toyota">TOYOTA / LEXUS (HSD)</option>
@@ -82,26 +79,41 @@
                             <option value="Hyundai">HYUNDAI / KIA (T-GDI)</option>
                             <option value="PSA">PSA STELLANTIS (PURETECH / HDI)</option>
                         </optgroup>
-                        <optgroup label="Autobuses, Microbuses y Pesados 24V">
-                            <option value="MAN">MAN (LION'S CITY / EFFICIENTHYBRID)</option>
-                            <option value="Mercedes">MERCEDES (CITARO / SPRINTER)</option>
-                            <option value="Iveco">IVECO (DAILY MINIBÚS / F1C)</option>
-                            <option value="Volvo">VOLVO (7900 HYBRID / D5K)</option>
-                            <option value="Solaris">SOLARIS (URBINO HYBRID / ELECTRIC)</option>
-                            <option value="Vectia">VECTIA (VERIS HYBRID SERIE)</option>
-                            <option value="BYD">BYD (EBUS 100% ELÉCTRICO LFP)</option>
-                            <option value="Yutong">YUTONG (E12 ELÉCTRICO)</option>
+                        <optgroup label="Camiones, Autobuses y Auxiliares 24V">
+                            <option value="MAN">MAN (EDC / ZBR / EBS / GNC / 48V)</option>
+                            <option value="Mercedes">MERCEDES / EVOBUS (MR / BS / CITARO / SPRINTER)</option>
+                            <option value="Volvo">VOLVO (I-SAM / I-SHIFT / J1939)</option>
+                            <option value="Solaris">SOLARIS (URBINO EV / H2 / ALLISON)</option>
+                            <option value="Irizar">IRIZAR (ieBUS / ieTRAM / SIEMENS ELFA)</option>
+                            <option value="BYD">BYD (EBUS 750V LFP)</option>
+                            <option value="Iveco">IVECO (DAILY / URBANWAY / CURSOR)</option>
+                            <option value="Caetano">CAETANO (H2.CITY GOLD FUEL CELL)</option>
+                            <option value="Yutong">YUTONG (E12 / E7S ELÉCTRICO)</option>
                         </optgroup>
                     </select>
 
                     <div class="relative flex-1 flex items-center">
-                        <input type="text" id="dtc-input" required pattern="[A-Za-z][0-9A-Za-z]{4}" class="w-full pl-4 pr-28 py-3.5 bg-neutral-900 border border-neutral-700 rounded-xl text-white placeholder-gray-500 text-base font-bold uppercase" placeholder="Ej: P0171, P0420, P20EE, U0100...">
+                        <input type="text" id="dtc-input" required class="w-full pl-4 pr-28 py-3.5 bg-neutral-900 border border-neutral-700 rounded-xl text-white placeholder-gray-500 text-sm sm:text-base font-bold uppercase" placeholder="Ej: P0171, EDC 03779, MR 1818, SPN 3216, SAM E04...">
                         <button type="submit" class="absolute right-1.5 top-1.5 bottom-1.5 bg-blue-600 hover:bg-blue-500 text-white font-extrabold px-5 rounded-lg transition text-sm">
                             ANALIZAR
                         </button>
                     </div>
                 </div>
             </form>
+        </section>
+
+        <section id="directorio-dtc" class="max-w-5xl mx-auto px-4 pb-4 text-center">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="cargarCodigoDirecto('EDC 03779-01', 'MAN')" class="px-3 py-1.5 bg-neutral-900 hover:bg-amber-600 rounded-xl text-xs font-bold border border-neutral-700 transition">EDC 03779 • MAN Rail</button>
+                <button onclick="cargarCodigoDirecto('ZBR 01086', 'MAN')" class="px-3 py-1.5 bg-neutral-900 hover:bg-amber-600 rounded-xl text-xs font-bold border border-neutral-700 transition">ZBR 01086 • MAN Calderines</button>
+                <button onclick="cargarCodigoDirecto('MR 1818', 'Mercedes')" class="px-3 py-1.5 bg-neutral-900 hover:bg-amber-600 rounded-xl text-xs font-bold border border-neutral-700 transition">MR 1818 • MB Turbo</button>
+                <button onclick="cargarCodigoDirecto('SPN 3216 FMI 2', 'Volvo')" class="px-3 py-1.5 bg-neutral-900 hover:bg-amber-600 rounded-xl text-xs font-bold border border-neutral-700 transition">SPN 3216 • J1939 NOx</button>
+                <button onclick="cargarCodigoDirecto('SAM E04', 'MAN')" class="px-3 py-1.5 bg-neutral-900 hover:bg-purple-600 rounded-xl text-xs font-bold border border-neutral-700 transition">SAM E04 • Rampa Masats</button>
+                <button onclick="cargarCodigoDirecto('HIS AL01', 'Mercedes')" class="px-3 py-1.5 bg-neutral-900 hover:bg-purple-600 rounded-xl text-xs font-bold border border-neutral-700 transition">HIS AL01 • Clima Hispacold</button>
+                <button onclick="cargarCodigoDirecto('ELFA F021', 'Irizar')" class="px-3 py-1.5 bg-neutral-900 hover:bg-emerald-600 rounded-xl text-xs font-bold border border-neutral-700 transition">ELFA F021 • Inversor HV</button>
+                <button onclick="cargarCodigoDirecto('P0171', 'Honda')" class="px-3 py-1.5 bg-neutral-900 hover:bg-blue-600 rounded-xl text-xs font-bold border border-neutral-700 transition">P0171 • Mezcla Pobre</button>
+                <button onclick="cargarCodigoDirecto('P0AA6', 'BYD')" class="px-3 py-1.5 bg-neutral-900 hover:bg-blue-600 rounded-xl text-xs font-bold border border-neutral-700 transition">P0AA6 • Aislamiento HV</button>
+            </div>
         </section>
 
         <section id="panel-resultado-dtc" class="max-w-5xl mx-auto px-4 py-6">
@@ -117,11 +129,11 @@
                 <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-1 bg-neutral-900/90 border border-neutral-800 rounded-2xl p-5 flex flex-col justify-between">
                         <div>
-                            <div class="text-xs font-bold text-gray-400 uppercase">Código DTC</div>
-                            <div id="titulo-codigo" class="text-4xl font-black text-white my-1">P0171</div>
+                            <div class="text-xs font-bold text-gray-400 uppercase">Código Diagnóstico</div>
+                            <div id="titulo-codigo" class="text-3xl font-black text-white my-1">P0171</div>
                             <div id="desc-codigo" class="text-sm font-bold text-cyan-400 mb-4">Sistema demasiado pobre (Banco 1)</div>
                             <div class="p-3 rounded-xl bg-black/60 border border-neutral-800 mb-4">
-                                <div class="text-[11px] text-amber-400 font-extrabold uppercase">Recambio / Subsistema OEM:</div>
+                                <div class="text-[11px] text-amber-400 font-extrabold uppercase">Subsistema / Pieza Clave:</div>
                                 <div id="pieza-codigo" class="text-xs text-emerald-400 font-mono font-bold mt-1">Caudalímetro (MAF) / Sonda Lambda</div>
                             </div>
                         </div>
@@ -141,7 +153,7 @@
 
                     <div class="lg:col-span-2 space-y-4">
                         <div class="bg-purple-950/20 border border-purple-500/40 rounded-2xl p-5">
-                            <h3 class="text-xs font-black uppercase tracking-wider text-purple-300 mb-2">⚡ Valores de Referencia con Polímetro / Pinout</h3>
+                            <h3 class="text-xs font-black uppercase tracking-wider text-purple-300 mb-2">⚡ Valores de Referencia con Polímetro / Pinout (12V / 24V / HV)</h3>
                             <ul id="lista-polimetro" class="space-y-1.5 text-xs font-mono text-gray-200 list-disc pl-5"></ul>
                         </div>
                         <div class="bg-neutral-900/60 border border-neutral-800 rounded-2xl p-5">
@@ -157,21 +169,10 @@
             </div>
         </section>
 
-        <section id="directorio-dtc" class="max-w-6xl mx-auto px-4 py-8 text-center">
-            <div class="flex flex-wrap justify-center gap-2">
-                <button onclick="cargarCodigoDirecto('P0171')" class="px-3.5 py-2 bg-neutral-900 hover:bg-blue-600 rounded-xl text-xs font-bold border border-neutral-700 transition">P0171 • Mezcla Pobre</button>
-                <button onclick="cargarCodigoDirecto('P0420')" class="px-3.5 py-2 bg-neutral-900 hover:bg-blue-600 rounded-xl text-xs font-bold border border-neutral-700 transition">P0420 • Catalizador</button>
-                <button onclick="cargarCodigoDirecto('P0300')" class="px-3.5 py-2 bg-neutral-900 hover:bg-blue-600 rounded-xl text-xs font-bold border border-neutral-700 transition">P0300 • Misfire</button>
-                <button onclick="cargarCodigoDirecto('P2002')" class="px-3.5 py-2 bg-neutral-900 hover:bg-blue-600 rounded-xl text-xs font-bold border border-neutral-700 transition">P2002 • Filtro DPF</button>
-                <button onclick="cargarCodigoDirecto('P20EE')" class="px-3.5 py-2 bg-neutral-900 hover:bg-blue-600 rounded-xl text-xs font-bold border border-neutral-700 transition">P20EE • AdBlue SCR Euro VI</button>
-                <button onclick="cargarCodigoDirecto('U0100')" class="px-3.5 py-2 bg-neutral-900 hover:bg-blue-600 rounded-xl text-xs font-bold border border-neutral-700 transition">U0100 • Red CAN Bus</button>
-            </div>
-        </section>
-
         <section id="aplicaciones" class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div id="motorpedia" class="glass-card motor-glow p-8">
                 <h3 class="text-3xl font-extrabold mb-3">Motorpedia <span class="text-cyan-400">Pro</span></h3>
-                <p class="text-gray-300 text-sm mb-6 leading-relaxed">Diagnóstico multimarca 12V (Turismos) y 24V (Autobuses Diésel, Híbridos Serie/Paralelo y 100% Eléctricos), diales analógicos de precisión, osciloscopio, topología UDS de 8 centralitas y Caja Negra CSV.</p>
+                <p class="text-gray-300 text-sm mb-6 leading-relaxed">Diagnóstico multimarca 12V y 24V (Diésel Euro VI, GNC, Híbridos, 100% Eléctricos 750V y Pila de Hidrógeno H2), diales analógicos de precisión, topología de 9 centralitas UDS, Escudo Anti-SGW y Caja Negra CSV.</p>
                 <a href="#diagnostico" class="inline-block py-3.5 px-7 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs">EXPLORAR SISTEMA</a>
             </div>
             <div id="cinematch" class="glass-card cine-glow p-8">
@@ -189,6 +190,133 @@
 
     <script>
         const baseDatosForense = {
+            "EDC 03779-01": {
+                desc: "MAN EDC: Caída de presión en Rail de Alta Presión (Fuga en retorno de inyectores o válvula limitadora DBV)",
+                gravedad: "GRAVEDAD ALTA (DERATING 24V)",
+                pieza: "Unidad Dosificadora ZME (CP3), Válvula DBV e Inyectores Common Rail",
+                termino: "Valvula reguladora presion rail MAN",
+                polimetro: [
+                    "Resistencia bobina Unidad Dosificadora ZME (20°C): 2.6 a 3.4 Ohmios | Corriente ralentí: 1.3A - 1.8A",
+                    "Sensor Presión Rail (3 pines): Pin 1 (+5.0V), Pin 2 (Masa), Pin 3 (~1.2V en ralentí / 450 bar)",
+                    "Retorno válvula limitadora DBV: 0 ml/min en ralentí"
+                ],
+                causas: [
+                    "Exceso de retorno en uno o más inyectores del bloque MAN D15/D20.",
+                    "Válvula limitadora de presión (DBV) abierta o fatigada.",
+                    "Filtros de combustible obstruidos o unidad ZME agarrotada."
+                ],
+                prueba: "En el Módulo de Taller 24V (ECM 7E0), comprueba que la Presión de Rail (PID 0123) supere los 280 bar en el arranque y realiza prueba de retorno de inyectores."
+            },
+            "ZBR 01086": {
+                desc: "MAN ZBR: Presión de reserva insuficiente en Circuito Neumático de Frenos 1 o 2 (<6.5 bar)",
+                gravedad: "SEGURIDAD NEUMÁTICA 24V",
+                pieza: "Secador de Aire Electrónico APU, Válvula Protectora 4 Vías y Transductores C1/C2",
+                termino: "Cartucho secador aire APU WABCO",
+                polimetro: [
+                    "Transductor presión calderines (3 pines): Pin 1 (+5V), Pin 2 (Masa), Pin 3 (0.5V a 4.5V para 0-12 bar)",
+                    "Alimentación calefactor y solenoide regeneración APU: 24.0V - 28.4V"
+                ],
+                causas: [
+                    "Válvula protectora de 4 vías del módulo APU agarrotada o con fuga.",
+                    "Fuga neumática en racores de calderines, suspensión ECAS o cilindros de puerta.",
+                    "Transductor de presión de circuito 1 o 2 defectuoso."
+                ],
+                prueba: "Monitoriza en Telemetría PRO los relojes de Presión Neumática Circuito 1 y 2 (PIDs 22FEAE y 22FEAF) hasta el corte del gobernador (9.5 - 10.5 bar)."
+            },
+            "MR 1818": {
+                desc: "Mercedes MR/PLD: Presión de sobrealimentación del turbocompresor demasiado baja",
+                gravedad: "PÉRDIDA DE POTENCIA 24V",
+                pieza: "Turbocompresor, Actuador VNT, Intercooler y Sensor MAP",
+                termino: "Sensor presion sobrealimentacion Mercedes",
+                polimetro: [
+                    "Sensor presión/temperatura admisión (4 pines): +5.0V Ref, Masa y Señal MAP (0.8V ralentí a 3.9V plena carga)",
+                    "Actuador electrónico de geometría turbo: Alimentación 24V constante y línea CAN limpia"
+                ],
+                causas: [
+                    "Manguito de salida del turbo o intercooler fisurado.",
+                    "Geometría variable o válvula Wastegate atascada por carbonilla.",
+                    "Sensor de presión de sobrealimentación obstruido por hollín de la EGR."
+                ],
+                prueba: "Compara en Telemetría PRO la Presión de Soplado Turbo (PID 010B) bajo carga con la demanda de par motor."
+            },
+            "SPN 3216 FMI 2": {
+                desc: "SAE J1939 (SCR): Sensor de NOx de entrada (Aguas arriba del catalizador SCR) con señal errática",
+                gravedad: "DERATING EURO VI / ADBLUE",
+                pieza: "Sonda Inteligente de NOx Entrada SCR y Línea CAN de Postratamiento",
+                termino: "Sensor NOx Euro 6",
+                polimetro: [
+                    "Alimentación unidad sonda NOx (4 pines): Pin 1 (+24V), Pin 2 (Masa <0.2 Ohmios), Pin 3 (CAN-L 2.3V), Pin 4 (CAN-H 2.7V)",
+                    "Resistencia terminación sub-bus CAN de emisiones: 60 Ohmios"
+                ],
+                causas: [
+                    "Sonda de NOx degradada internamente o con condensación de agua.",
+                    "Cortocircuito o sulfatación en el mazo de cables del chasis junto al escape.",
+                    "Fuga de gases de escape antes del catalizador SCR."
+                ],
+                prueba: "En el módulo de Emisiones Euro VI, verifica los ppm de los sensores NOx de entrada (22F00E) y salida (22F00F) con temperatura SCR >260°C."
+            },
+            "SAM E04": {
+                desc: "Masats SAM 100 (Rampa PMR): Exceso de consumo (>25A) u obstáculo detectado en despliegue",
+                gravedad: "BLOQUEO EN PARADA (PMR)",
+                pieza: "Motor Eléctrico Rampa Masats, Patines Guía y Final de Carrera",
+                termino: "Sensor inductivo final de carrera",
+                polimetro: [
+                    "Alimentación centralita rampa Masats: 24.0V - 28.0V",
+                    "Corriente nominal motor rampa en vacío: 6A a 14A | Umbral de corte por bloqueo: > 25A",
+                    "Sensor inductivo rampa recogida: 24V activo al detectar leva metálica (< 3 mm)"
+                ],
+                causas: [
+                    "Suciedad o grava acumulada en los carriles laterales del casete de la rampa.",
+                    "Desajuste del sensor inductivo de confirmación de plataforma guardada.",
+                    "Falta de lubricación en cadena/correa de tracción de la rampa."
+                ],
+                prueba: "En el Módulo de Taller (BCM 726), observa en vivo la Corriente del Motor Rampa PMR (PID 223002) durante la maniobra de salida y recogida."
+            },
+            "HIS AL01": {
+                desc: "Hispacold HVAC: Corte por presostato de Alta Presión (>26 bar) en compresor de climatización",
+                gravedad: "CLIMATIZACIÓN HVAC",
+                pieza: "Turbinas Condensador Techo, Presostato Alta y Filtro Deshidratador",
+                termino: "Presostato aire acondicionado filtro deshidratador",
+                polimetro: [
+                    "Presión de alta R134a normal: 12 a 18 bar | Disparo presostato de seguridad: > 26 bar",
+                    "Consumo motores turbinas condensador de techo (24V): 12A a 18A por turbina"
+                ],
+                causas: [
+                    "Baterías del condensador de techo obstruidas por suciedad o fallo en los electroventiladores del condensador.",
+                    "Filtro deshidratador taponado o exceso de carga de gas refrigerante."
+                ],
+                prueba: "En el Módulo de Taller (HVAC 784), ejecuta el 'Test Climatización HVAC y Turbinas de Techo' y vigila la Presión de Alta (PID 227801)."
+            },
+            "ELFA F021": {
+                desc: "Siemens ELFA 2/3: Sobretemperatura en inversor de tracción o fallo en electrobomba de refrigeración HV",
+                gravedad: "ALTA TENSIÓN HV (600V-750V)",
+                pieza: "Inversor de Tracción Siemens ELFA y Bomba Eléctrica de Refrigeración BTMS",
+                termino: "Bomba de agua adicional electrica 24V",
+                polimetro: [
+                    "Consumo bomba eléctrica refrigeración inversor (24V): 3.5A a 7.0A constantes",
+                    "Temperatura máxima de trabajo inversor IGBT: < 75°C (Derating a partir de 82°C)"
+                ],
+                causas: [
+                    "Electrobomba de circulación de glicol del circuito del inversor parada o con aire en el circuito.",
+                    "Radiador de baja temperatura del sistema híbrido/eléctrico obstruido."
+                ],
+                prueba: "Monitoriza en Telemetría PRO la Temp. Inversor Tracción (PID 21C6) y la Temp. Circuito BTMS (PID 0105) bajo carga."
+            },
+            "P0AA6": {
+                desc: "Fallo de aislamiento en el sistema de Alta Tensión HV (Pérdida de aislamiento <500 kOhm)",
+                gravedad: "SEGURIDAD ALTA TENSIÓN HV",
+                pieza: "Cableado Alta Tensión (600V-750V), Compresor A/C HV, Calefactor PTC y Baterías",
+                termino: "Contactor bateria alta tension",
+                polimetro: [
+                    "Resistencia de aislamiento exigible (Megóhmetro 1000V DC a chasis): > 1.000 kOhm (Mínimo > 500 kOhm)",
+                    "Verificar siempre ausencia de tensión (< 5V DC) tras retirar el Service Plug MSD"
+                ],
+                causas: [
+                    "Filtración de humedad en conectores de alta tensión, calefactor PTC o compresor eléctrico de A/C.",
+                    "Derivación interna de líquido refrigerante en el paquete de baterías o inversor."
+                ],
+                prueba: "En el Módulo de Taller (BMS 7E2), ejecuta la 'Auditoría de Aislamiento Alta Tensión (PID 224005)' y desconecta por pasos los periféricos HV (A/C, PTC) para aislar el componente derivado."
+            },
             "P0171": {
                 desc: "Sistema demasiado pobre en Banco 1 (Exceso de aire o baja presión de inyección)",
                 gravedad: "GRAVEDAD MEDIA",
@@ -204,77 +332,29 @@
                     "Baja presión de bomba de combustible o filtro obstruido."
                 ],
                 prueba: "Compara el corrector LTFT al ralentí y a 2.500 RPM en el módulo de Emisiones de Motorpedia PRO: si corrige hacia 0% al acelerar, hay una fuga de vacío en admisión."
-            },
-            "P0420": {
-                desc: "Eficiencia del sistema catalítico por debajo del umbral (Banco 1)",
-                gravedad: "RECHAZO DIRECTO ITV",
-                pieza: "Catalizador TWC / Sonda Lambda Post-Catalizador (B1S2)",
-                termino: "Catalizador Sonda Lambda",
-                polimetro: [
-                    "Resistencia calentador Sonda 2 (20°C): 4 a 14 Ohmios",
-                    "Señal Sonda 1: oscila 0.1V-0.85V | Señal Sonda 2 sana: fija 0.60V-0.75V"
-                ],
-                causas: [
-                    "Monolito cerámico del catalizador agotado.",
-                    "Fuga en junta de escape antes de la segunda sonda lambda.",
-                    "Sonda Lambda 2 defectuosa."
-                ],
-                prueba: "Pon las Sondas Lambda 1 y 2 en modo Osciloscopio en Motorpedia PRO con el motor a 90°C: si la Sonda 2 oscila igual que la Sonda 1, el catalizador está degradado."
-            },
-            "P2002": {
-                desc: "Eficiencia del Filtro de Partículas Diésel (DPF/FAP) bajo umbral",
-                gravedad: "GRAVEDAD ALTA (LIMP MODE)",
-                pieza: "Filtro de Partículas DPF y Sensor de Presión Diferencial",
-                termino: "Sensor presion diferencial DPF",
-                polimetro: [
-                    "Sensor Diferencial DPF (3 pines): Pin 1 (+5V), Pin 2 (Masa), Pin 3 (0.50V con motor parado)",
-                    "Presión diferencial ralentí sano: 3 a 12 mbar"
-                ],
-                causas: [
-                    "Tubos del Sensor de Presión Diferencial DPF rajados u obstruidos.",
-                    "Sensor diferencial descalibrado (no marca 0 mbar en KOEO).",
-                    "Saturación de hollín por recorridos cortos."
-                ],
-                prueba: "En el Módulo de Taller (ECM 7E0), verifica que el PID 221152 marque 0 mbar con el contacto dado y el motor apagado."
-            },
-            "P20EE": {
-                desc: "Eficiencia del catalizador SCR de NOx por debajo del umbral (Euro VI)",
-                gravedad: "EURO VI / ADBLUE SCR",
-                pieza: "Inyector Dosificador AdBlue / Sensor de NOx Salida SCR",
-                termino: "Sensor NOx Inyector AdBlue",
-                polimetro: [
-                    "Resistencia bobina inyector AdBlue: 11 a 16 Ohmios",
-                    "Presión módulo dosificador AdBlue: 4.5 a 9.0 bar | Urea: 32.5%"
-                ],
-                causas: [
-                    "Cristalización de urea en la tobera del inyector AdBlue.",
-                    "Deriva de lectura en el Sensor de NOx aguas abajo del SCR.",
-                    "Baja presión en la bomba del módulo AdBlue."
-                ],
-                prueba: "Ejecuta el 'Test Dosificación y Purga AdBlue / SCR' en el Módulo de Taller 24V y compara los ppm de los sensores NOx de entrada y salida."
             }
         };
 
         function actualizarPanelForense(codigoRaw, marcaRaw, hacerScroll = false) {
-            const codigo = (codigoRaw || "P0171").toUpperCase().trim();
+            const codigo = (codigoRaw || "P0171").toUpperCase().trim().replace(/\s+/g, " ");
             const marca = (marcaRaw || document.getElementById("marca-select").value || "Honda").trim();
             document.getElementById("dtc-input").value = codigo;
 
             const datos = baseDatosForense[codigo] || {
-                desc: "Anomalía técnica registrada en centralita (" + codigo + ")",
+                desc: "Anomalía técnica registrada en unidad de control (" + codigo + ")",
                 gravedad: "DIAGNÓSTICO DE TALLER",
-                pieza: "Sensor / Actuador del circuito " + codigo,
+                pieza: "Subsistema / Sensor / Actuador (" + codigo + ")",
                 termino: "Sensor " + codigo,
                 polimetro: [
                     "Sensores 3 hilos: +5.0V Ref, Masa (<0.1V) y Señal (0.2V - 4.8V)",
-                    "Bus CAN (Pines 6 y 14 sin batería): 60 Ohmios exactos"
+                    "Alimentación actuadores: +12V (Turismos) o +24V (Pesados/Buses) | Bus CAN: 60 Ohmios"
                 ],
                 causas: [
                     "Señal fuera de rango en el componente asociado al código " + codigo + ".",
-                    "Conector eléctrico sulfatado o caída de masa.",
+                    "Conector eléctrico sulfatado, pin cedido o caída de masa en chasis.",
                     "Fatiga térmica o bloqueo mecánico del actuador."
                 ],
-                prueba: "Revisa los datos congelados (Freeze Frame) y audita la gráfica en tiempo real del sensor desde Motorpedia PRO antes de pedir el recambio."
+                prueba: "Comprueba la lectura en vivo del sensor desde el Módulo de Taller Multi-ECU de Motorpedia PRO mientras verificas el cableado antes de sustituir el componente."
             };
 
             document.getElementById("titulo-codigo").innerText = codigo;
@@ -308,7 +388,8 @@
             actualizarPanelForense(document.getElementById("dtc-input").value, document.getElementById("marca-select").value, true);
         }
 
-        function cargarCodigoDirecto(codigo) {
+        function cargarCodigoDirecto(codigo, marcaSugerida) {
+            if (marcaSugerida) document.getElementById("marca-select").value = marcaSugerida;
             actualizarPanelForense(codigo, document.getElementById("marca-select").value, true);
         }
 
@@ -317,7 +398,7 @@
             const codigoUrl = params.get("codigo");
             const marcaUrl = params.get("marca") || "Honda";
             if (codigoUrl) actualizarPanelForense(codigoUrl, marcaUrl, true);
-            else actualizarPanelForense("P0171", "Honda", false);
+            else actualizarPanelForense("EDC 03779-01", "MAN", false);
         });
     </script>
 </body>
