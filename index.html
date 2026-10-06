@@ -50,4 +50,567 @@
         .gradient-brand {
             background: linear-gradient(135deg, #60A5FA, #A78BFA);
             -webkit-background-clip: text;
-            -webkit-text-fill
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-motor {
+            background: linear-gradient(135deg, #00E5FF, #00E676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-cine {
+            background: linear-gradient(135deg, #FF1744, #FFB300);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glow-motor::before {
+            content: ''; position: absolute; top: -60px; right: -60px; width: 180px; height: 180px;
+            background: #00ACC1; filter: blur(90px); opacity: 0.25; pointer-events: none;
+        }
+        .glow-cine::before {
+            content: ''; position: absolute; top: -60px; right: -60px; width: 180px; height: 180px;
+            background: #E50914; filter: blur(90px); opacity: 0.25; pointer-events: none;
+        }
+        .glow-support::before {
+            content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 220px; height: 140px;
+            background: #F59E0B; filter: blur(95px); opacity: 0.2; pointer-events: none;
+        }
+        /* Animación suave al cambiar de página */
+        .page-view {
+            display: none;
+            animation: fadeIn 0.35s ease-out forwards;
+        }
+        .page-view.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-btn.active-nav {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <header class="fixed top-0 w-full z-50 bg-glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo ArtimaDev -->
+                <button onclick="navegarA('inicio')" class="flex items-center gap-3 text-left focus:outline-none group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center font-black text-lg shadow-lg shadow-blue-600/30 group-hover:scale-105 transition">
+                        A
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-tight text-white block leading-none">Artima<span class="text-blue-500">Dev</span></span>
+                        <span class="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Software Studio</span>
+                    </div>
+                </button>
+
+                <!-- Menú Central -->
+                <nav class="hidden md:flex items-center space-x-2 text-sm font-semibold text-gray-400">
+                    <button onclick="navegarA('inicio')" id="nav-inicio" class="nav-btn active-nav px-4 py-2 rounded-xl hover:text-white transition">Estudio</button>
+                    <button onclick="navegarA('motorpedia')" id="nav-motorpedia" class="nav-btn px-4 py-2 rounded-xl hover:text-cyan-400 transition">Motorpedia Pro</button>
+                    <button onclick="navegarA('cinematch')" id="nav-cinematch" class="nav-btn px-4 py-2 rounded-xl hover:text-red-400 transition">CineMatch</button>
+                    <button onclick="navegarA('soporte')" id="nav-soporte" class="nav-btn px-4 py-2 rounded-xl hover:text-amber-400 transition">Soporte & Legal</button>
+                </nav>
+
+                <!-- Botón Monetización Rápido -->
+                <div class="flex items-center gap-3">
+                    <button onclick="navegarA('soporte')" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-black font-extrabold text-xs tracking-wide transition shadow-lg shadow-amber-500/20 flex items-center gap-2">
+                        <span>☕</span>
+                        <span>APOYAR ESTUDIO</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menú Móvil Inferior Integrado -->
+            <div class="flex md:hidden justify-around border-t border-white/10 py-2 text-xs font-bold text-gray-400">
+                <button onclick="navegarA('inicio')" class="py-1 px-2 hover:text-white">Inicio</button>
+                <button onclick="navegarA('motorpedia')" class="py-1 px-2 hover:text-cyan-400">Motorpedia</button>
+                <button onclick="navegarA('cinematch')" class="py-1 px-2 hover:text-red-400">CineMatch</button>
+                <button onclick="navegarA('soporte')" class="py-1 px-2 text-amber-400">Apoyar</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-28 md:pt-24 pb-16">
+
+        <!-- ==========================================
+             VISTA 1: PORTADA DEL ESTUDIO (INICIO)
+             ========================================== -->
+        <div id="vista-inicio" class="page-view active">
+            <!-- Hero Principal Neutro de ArtimaDev -->
+            <section class="max-w-5xl mx-auto px-4 pt-10 pb-12 text-center">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/60 border border-blue-800/50 text-blue-400 text-xs font-bold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+                    Ingeniería Android Nativa · Kotlin & Jetpack Compose
+                </div>
+                <h1 class="text-4xl sm:text-6xl font-black mb-6 tracking-tight leading-tight">
+                    Aplicaciones diseñadas con <br><span class="gradient-brand">precisión y rendimiento real</span>
+                </h1>
+                <p class="text-base md:text-lg text-gray-400 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+                    Somos un estudio de desarrollo independiente enfocado en crear herramientas técnicas de alta fiabilidad y experiencias móviles sin fricciones. Explora nuestro ecosistema de aplicaciones.
+                </p>
+            </section>
+
+            <!-- BENTO GRID DE TARJETAS -->
+            <section class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-sm font-extrabold uppercase tracking-widest text-gray-400">Catálogo de Aplicaciones</h2>
+                    <span class="text-xs text-gray-500">Selecciona una tarjeta para abrir su ficha completa</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- TARJETA 1: MOTORPEDIA PRO -->
+                    <div onclick="navegarA('motorpedia')" class="bento-card glow-motor p-8 flex flex-col justify-between cursor-pointer group">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="w-14 h-14 rounded-2xl bg-cyan-950 border border-cyan-700/50 flex items-center justify-center text-2xl shadow-inner">
+                                    🚘
+                                </div>
+                                <span class="px-3 py-1 text-[10px] font-black uppercase tracking-wider bg-cyan-950/80 text-cyan-400 border border-cyan-800/60 rounded-full">
+                                    Diagnóstico & Telemetría
+                                </span>
+                            </div>
+                            <h3 class="text-3xl font-extrabold mb-3 group-hover:text-cyan-400 transition">
+                                Motorpedia <span class="gradient-motor">Pro</span>
+                            </h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                                Suite avanzada de diagnóstico automotriz OBD2/UDS en tiempo real. Incluye análisis Pre-ITV, lectura de sondas, registro de telemetría en Caja Negra y enciclopedia técnica de averías.
+                            </p>
+                        </div>
+
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                            <span class="text-xs font-bold text-cyan-400 group-hover:translate-x-1 transition inline-flex items-center gap-1.5">
+                                Abrir página de Motorpedia <span>→</span>
+                            </span>
+                            <span class="text-[11px] font-semibold text-gray-500">Incluye Buscador DTC Web</span>
+                        </div>
+                    </div>
+
+                    <!-- TARJETA 2: CINEMATCH -->
+                    <div onclick="navegarA('cinematch')" class="bento-card glow-cine p-8 flex flex-col justify-between cursor-pointer group">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="w-14 h-14 rounded-2xl bg-red-950 border border-red-700/50 flex items-center justify-center text-2xl shadow-inner">
+                                    🎬
+                                </div>
+                                <span class="px-3 py-1 text-[10px] font-black uppercase tracking-wider bg-red-950/80 text-red-400 border border-red-800/60 rounded-full">
+                                    Entretenimiento & Social
+                                </span>
+                            </div>
+                            <h3 class="text-3xl font-extrabold mb-3 group-hover:text-red-400 transition">
+                                Cine<span class="gradient-cine">Match</span>
+                            </h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                                Descubre qué película o serie ver sin perder tiempo discutiendo. Algoritmo inteligente con filtros cruzados por plataformas de streaming, género y coincidencia con amigos.
+                            </p>
+                        </div>
+
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                            <span class="text-xs font-bold text-red-400 group-hover:translate-x-1 transition inline-flex items-center gap-1.5">
+                                Abrir página de CineMatch <span>→</span>
+                            </span>
+                            <span class="text-[11px] font-semibold text-gray-500">Android App</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEGUNDA FILA BENTO: COMUNIDAD BETA + MONETIZACIÓN -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Tarjeta Pilares del Estudio -->
+                    <div class="bento-card p-6 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-blue-400">Filosofía ArtimaDev</span>
+                            <h4 class="text-xl font-bold mt-2 mb-2">Sin publicidad intrusiva</h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Priorizamos interfaces limpias, bajo consumo de batería y privacidad total de tus datos en cada aplicación.
+                            </p>
+                        </div>
+                        <div class="mt-4 text-[11px] text-gray-500 font-mono">100% Kotlin · Material Design 3</div>
+                    </div>
+
+                    <!-- Tarjeta Testers / Laboratorio -->
+                    <div class="bento-card p-6 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-purple-400">Acceso Anticipado</span>
+                            <h4 class="text-xl font-bold mt-2 mb-2">Programa de Beta Testers</h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Prueba las nuevas funciones antes de su lanzamiento oficial en Google Play y ayúdanos a pulir cada detalle.
+                            </p>
+                        </div>
+                        <a href="mailto:artimadev@gmail.com?subject=Quiero%20ser%20Beta%20Tester%20de%20ArtimaDev" class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-purple-400 hover:text-purple-300">
+                            Solicitar acceso Beta →
+                        </a>
+                    </div>
+
+                    <!-- Tarjeta Monetización / Impulsar -->
+                    <div onclick="navegarA('soporte')" class="bento-card glow-support p-6 flex flex-col justify-between cursor-pointer border-amber-500/30">
+                        <div>
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-amber-400">Desarrollo Independiente</span>
+                            <h4 class="text-xl font-bold mt-2 mb-2">Impulsa nuestros proyectos</h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Tu apoyo directo nos permite mantener los servidores activos, ampliar bases de datos y crear nuevas funciones.
+                            </p>
+                        </div>
+                        <span class="mt-4 inline-flex items-center gap-1 text-xs font-extrabold text-amber-400">
+                            ☕ Ver opciones de soporte →
+                        </span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==========================================
+             VISTA 2: PÁGINA EXCLUSIVA MOTORPEDIA PRO
+             ========================================== -->
+        <div id="vista-motorpedia" class="page-view">
+            <div class="max-w-6xl mx-auto px-4 pt-6">
+                <!-- Botón Volver -->
+                <button onclick="navegarA('inicio')" class="inline-flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-white mb-6 transition">
+                    <span>←</span> Volver al catálogo de ArtimaDev
+                </button>
+
+                <!-- Cabecera de Producto -->
+                <div class="bento-card glow-motor p-8 md:p-12 mb-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div class="max-w-2xl">
+                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-wider bg-cyan-950 text-cyan-400 border border-cyan-800/60 rounded-full">
+                                Herramienta Automotriz Profesional
+                            </span>
+                            <h1 class="text-4xl md:text-5xl font-black mt-4 mb-4">
+                                Motorpedia <span class="gradient-motor">Pro</span>
+                            </h1>
+                            <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                                Convierte tu teléfono y tu adaptador OBD2 en una estación de diagnóstico de nivel taller. Diseñada para ofrecer lecturas rápidas, precisas y sin configuraciones engorrosas.
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row md:flex-col gap-3 w-full md:w-auto">
+                            <!-- Sustituye el href="#" por el enlace real de Google Play cuando esté listo -->
+                            <a href="#google-play-motorpedia" class="px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-black text-xs tracking-wider text-center transition shadow-lg shadow-cyan-500/20">
+                                ▶ DESCARGAR EN GOOGLE PLAY
+                            </a>
+                            <button onclick="navegarA('soporte')" class="px-6 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-amber-500/40 text-amber-400 font-bold text-xs text-center transition">
+                                ☕ Patrocinar nuevos sensores
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjetas de Características de Motorpedia -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                    <div class="bento-card p-5">
+                        <div class="text-cyan-400 font-black text-sm mb-1">01 · Telemetría en Vivo</div>
+                        <p class="text-xs text-gray-400">Lectura de parámetros PID en tiempo real, correctores de combustible (STFT/LTFT), temperaturas y presiones.</p>
+                    </div>
+                    <div class="bento-card p-5">
+                        <div class="text-cyan-400 font-black text-sm mb-1">02 · Semáforo Pre-ITV</div>
+                        <p class="text-xs text-gray-400">Comprobación de monitores de emisiones I/M, estado MIL y verificación de sondas lambda antes de ir a inspección.</p>
+                    </div>
+                    <div class="bento-card p-5">
+                        <div class="text-cyan-400 font-black text-sm mb-1">03 · Caja Negra CSV</div>
+                        <p class="text-xs text-gray-400">Grabación de sesiones en ruta para analizar fallos intermitentes y exportar gráficas detalladas.</p>
+                    </div>
+                    <div class="bento-card p-5">
+                        <div class="text-cyan-400 font-black text-sm mb-1">04 · Manuales & Pares</div>
+                        <p class="text-xs text-gray-400">Consulta rápida de pares de apriete, especificaciones de mantenimiento y guía de comprobación con polímetro.</p>
+                    </div>
+                </div>
+
+                <!-- ENCICLOPEDIA TÉCNICA DE AVERÍAS (DTC) INTEGRADA EN LA PÁGINA DE MOTORPEDIA -->
+                <div id="averias" class="bento-card p-6 md:p-8 border-cyan-900/40">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-2">
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-wider text-cyan-400">Utilidad Web Gratuita de Motorpedia</span>
+                            <h2 class="text-2xl font-black">Enciclopedia Técnica de Averías (DTC)</h2>
+                        </div>
+                        <p class="text-xs text-gray-400">Consulta la definición oficial, valores de polímetro y protocolo de taller.</p>
+                    </div>
+
+                    <form class="flex flex-col sm:flex-row gap-3 mb-6" onsubmit="buscarAveriaWeb(event)">
+                        <select id="web-marca" class="bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 text-xs font-bold text-cyan-400 focus:outline-none">
+                            <option value="Honda">HONDA (VTEC / PGM-FI)</option>
+                            <option value="VAG">GRUPO VAG (TSI / TDI)</option>
+                            <option value="Toyota">TOYOTA / LEXUS</option>
+                            <option value="Opel">OPEL (ECOTEC / OHC)</option>
+                            <option value="Ford">FORD (ECOBOOST)</option>
+                        </select>
+
+                        <div class="relative flex-1 flex items-center">
+                            <input type="text" id="web-input" required class="w-full pl-4 pr-32 py-3 bg-neutral-900 border border-neutral-700 rounded-xl text-white placeholder-gray-500 text-sm font-bold uppercase focus:outline-none focus:border-cyan-500" value="P0171" placeholder="Ej: P0171, P0420, P0300...">
+                            <button type="submit" class="absolute right-1.5 top-1.5 bottom-1.5 bg-cyan-600 hover:bg-cyan-500 text-black font-extrabold px-5 rounded-lg transition text-xs">
+                                CONSULTAR
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="web-resultado" class="bg-neutral-950/90 border border-neutral-800 rounded-2xl p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span id="web-codigo" class="text-2xl font-black text-cyan-400 font-mono">P0171</span>
+                            <span id="web-gravedad" class="px-2.5 py-1 rounded text-[10px] font-black bg-blue-500/20 text-blue-300 border border-blue-500/30">GRAVEDAD MEDIA</span>
+                        </div>
+                        <div id="web-desc" class="text-sm font-bold text-white mb-4">Sistema demasiado pobre en Banco 1 (Corrector LTFT superando +20%)</div>
+                        <div id="web-pol" class="text-xs text-gray-300 font-mono mb-2 bg-white/5 p-3 rounded-lg">⚡ Valores de referencia: Tensión MAF 1.0V - 1.4V al ralentí | Presión rampa: 3.5 - 4.0 bar</div>
+                        <div id="web-sol" class="text-xs text-gray-300 font-mono bg-white/5 p-3 rounded-lg">🔧 Solución: Revisar posibles tomas de aire no medida (fuga de vacío) en colector y caudalímetro.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             VISTA 3: PÁGINA EXCLUSIVA CINEMATCH
+             ========================================== -->
+        <div id="vista-cinematch" class="page-view">
+            <div class="max-w-6xl mx-auto px-4 pt-6">
+                <button onclick="navegarA('inicio')" class="inline-flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-white mb-6 transition">
+                    <span>←</span> Volver al catálogo de ArtimaDev
+                </button>
+
+                <div class="bento-card glow-cine p-8 md:p-12 mb-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div class="max-w-2xl">
+                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-wider bg-red-950 text-red-400 border border-red-800/60 rounded-full">
+                                Entretenimiento & Descubrimiento
+                            </span>
+                            <h1 class="text-4xl md:text-5xl font-black mt-4 mb-4">
+                                Cine<span class="gradient-cine">Match</span>
+                            </h1>
+                            <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                                El recomendador definitivo de cine y series. Deja de pasar 40 minutos navegando por menús infinitos: filtra tus plataformas, desliza y haz match al instante con lo que realmente te apetece ver.
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row md:flex-col gap-3 w-full md:w-auto">
+                            <a href="#google-play-cinematch" class="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs tracking-wider text-center transition shadow-lg shadow-red-600/20">
+                                ▶ VER EN GOOGLE PLAY
+                            </a>
+                            <button onclick="navegarA('soporte')" class="px-6 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-amber-500/40 text-amber-400 font-bold text-xs text-center transition">
+                                ☕ Apoyar servidores de CineMatch
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjetas de Características de CineMatch -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bento-card p-6">
+                        <div class="text-2xl mb-3">📺</div>
+                        <h3 class="text-lg font-bold mb-2">Filtros por Plataforma</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Selecciona únicamente las suscripciones de streaming que tienes activas para recibir recomendaciones que puedes reproducir al momento.
+                        </p>
+                    </div>
+                    <div class="bento-card p-6">
+                        <div class="text-2xl mb-3">🤝</div>
+                        <h3 class="text-lg font-bold mb-2">Afinidad y Match Social</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Ideal para elegir película en pareja o con amigos: ambos votáis de forma rápida y la app os avisa en cuanto hay coincidencia.
+                        </p>
+                    </div>
+                    <div class="bento-card p-6">
+                        <div class="text-2xl mb-3">⚡</div>
+                        <h3 class="text-lg font-bold mb-2">Fichas Ultrarrápidas</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Sinopsis directa, puntuación real, duración y tráiler en una interfaz fluida diseñada en Jetpack Compose.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             VISTA 4: SOPORTE, MONETIZACIÓN Y PRIVACIDAD
+             ========================================== -->
+        <div id="vista-soporte" class="page-view">
+            <div class="max-w-5xl mx-auto px-4 pt-6">
+                <button onclick="navegarA('inicio')" class="inline-flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-white mb-6 transition">
+                    <span>←</span> Volver al inicio
+                </button>
+
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="px-3 py-1 text-[10px] font-black uppercase tracking-wider bg-amber-950 text-amber-400 border border-amber-800/60 rounded-full">
+                        Monetización & Comunidad
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-black mt-4 mb-3">
+                        Apoya el desarrollo de <span class="text-amber-400">ArtimaDev</span>
+                    </h1>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Mantener aplicaciones independientes sin publicidad invasiva requiere horas de ingeniería, pruebas en vehículos reales y costes de servidores. Si nuestras herramientas te resultan útiles, puedes impulsar el estudio directamente:
+                    </p>
+                </div>
+
+                <!-- TARJETAS DE MONETIZACIÓN -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <!-- Opción 1: Ko-fi -->
+                    <div class="bento-card p-7 flex flex-col justify-between border-amber-500/30">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-2xl">☕</span>
+                                <span class="text-[10px] font-bold px-2.5 py-1 rounded bg-amber-500/10 text-amber-300">0% Comisión</span>
+                            </div>
+                            <h3 class="text-xl font-extrabold mb-2">Invítanos a un Café</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                                Aportación puntual rápida a través de Ko-fi (acepta tarjeta, PayPal, Apple Pay y Google Pay sin necesidad de registrarse).
+                            </p>
+                        </div>
+                        <!-- Reemplaza el enlace por tu URL de Ko-fi: https://ko-fi.com/artimadev -->
+                        <a href="https://ko-fi.com/" target="_blank" rel="noopener" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs text-center tracking-wider transition">
+                            APOYAR EN KO-FI
+                        </a>
+                    </div>
+
+                    <!-- Opción 2: PayPal Directo -->
+                    <div class="bento-card p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-2xl">💳</span>
+                                <span class="text-[10px] font-bold px-2.5 py-1 rounded bg-blue-500/10 text-blue-300">Directo</span>
+                            </div>
+                            <h3 class="text-xl font-extrabold mb-2">Donación vía PayPal</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                                Contribución directa para apoyar la compra de nuevos adaptadores de prueba, licencias y mantenimiento técnico.
+                            </p>
+                        </div>
+                        <!-- Reemplaza el enlace por tu URL de PayPal.me -->
+                        <a href="https://paypal.me/" target="_blank" rel="noopener" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-black text-xs text-center tracking-wider transition">
+                            ENVIAR CON PAYPAL
+                        </a>
+                    </div>
+
+                    <!-- Opción 3: Feedback / Valoración 5 Estrellas -->
+                    <div class="bento-card p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-2xl">⭐</span>
+                                <span class="text-[10px] font-bold px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-300">Gratis y Vital</span>
+                            </div>
+                            <h3 class="text-xl font-extrabold mb-2">Reseña en Google Play</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                                Dejar 5 estrellas y un comentario en Google Play ayuda enormemente a que el algoritmo posicione nuestras apps.
+                            </p>
+                        </div>
+                        <a href="mailto:artimadev@gmail.com?subject=Sugerencia%20para%20ArtimaDev" class="w-full py-3 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-black text-xs text-center tracking-wider transition">
+                            ENVIAR SUGERENCIA
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CONTACTO TÉCNICO Y POLÍTICAS (REQUISITO GOOGLE PLAY) -->
+                <div class="bento-card p-6 md:p-8">
+                    <h3 class="text-lg font-extrabold mb-4">Centro de Soporte y Privacidad</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-400">
+                        <div>
+                            <p class="font-bold text-white mb-1">Soporte al Usuario y Reporte de Bugs</p>
+                            <p class="mb-3">¿Tienes dudas con un adaptador ELM327 en Motorpedia Pro o sugerencias para CineMatch? Escríbenos directamente:</p>
+                            <a href="mailto:artimadev@gmail.com" class="inline-block px-4 py-2 rounded-lg bg-white/10 text-white font-bold hover:bg-white/20 transition">
+                                ✉️ artimadev@gmail.com
+                            </a>
+                        </div>
+                        <div>
+                            <p class="font-bold text-white mb-1">Compromiso de Privacidad (Google Play Policy)</p>
+                            <p>Las aplicaciones de ArtimaDev no venden datos personales a terceros. Los permisos de Bluetooth/Ubicación en Motorpedia Pro se emplean exclusivamente para la comunicación local con la ECU del vehículo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER GLOBAL -->
+    <footer class="bg-neutral-950 border-t border-white/5 py-8 mt-auto text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 <strong class="text-gray-300">ArtimaDev</strong>. Ingeniería de Software Independiente.</p>
+            <div class="flex gap-6">
+                <button onclick="navegarA('inicio')" class="hover:text-white transition">Estudio</button>
+                <button onclick="navegarA('motorpedia')" class="hover:text-cyan-400 transition">Motorpedia Pro</button>
+                <button onclick="navegarA('cinematch')" class="hover:text-red-400 transition">CineMatch</button>
+                <button onclick="navegarA('soporte')" class="hover:text-amber-400 transition">Apoyar / Contacto</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE NAVEGACIÓN MULTI-VISTA Y BUSCADOR DTC -->
+    <script>
+        // Sistema de navegación entre páginas sin recargar
+        function navegarA(vista, actualizarHash = true) {
+            const vistas = ['inicio', 'motorpedia', 'cinematch', 'soporte'];
+            vistas.forEach(v => {
+                const elVista = document.getElementById('vista-' + v);
+                const elNav = document.getElementById('nav-' + v);
+                if (elVista) elVista.classList.remove('active');
+                if (elNav) elNav.classList.remove('active-nav');
+            });
+
+            const vistaActiva = document.getElementById('vista-' + vista);
+            const navActivo = document.getElementById('nav-' + vista);
+            if (vistaActiva) vistaActiva.classList.add('active');
+            if (navActivo) navActivo.classList.add('active-nav');
+
+            if (actualizarHash) {
+                history.pushState(null, null, '#' + vista);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Base de datos DTC mejorada
+        const baseDatosWeb = {
+            "P0171": {
+                desc: "Sistema demasiado pobre en Banco 1 (Corrector LTFT superando +20%)",
+                grav: "GRAVEDAD MEDIA",
+                pol: "Tensión MAF 1.0V - 1.4V al ralentí | Presión rampa: 3.5 - 4.0 bar",
+                sol: "Revisar posibles tomas de aire no medida (fuga de vacío) en colector y caudalímetro."
+            },
+            "P0420": {
+                desc: "Eficiencia del sistema catalítico por debajo del umbral (Banco 1)",
+                grav: "RECHAZO DIRECTO ITV",
+                pol: "Sonda 1 oscilando 0.1-0.85V | Sonda 2 estable en ~0.65V",
+                sol: "Comprobar estado del monolito catalítico y microfugas en el tubo de escape."
+            },
+            "P0300": {
+                desc: "Fallo de encendido aleatorio o en múltiples cilindros (Random Misfire)",
+                grav: "GRAVEDAD ALTA",
+                pol: "Resistencia bobinas COP: 0.8 - 1.2 Ohmios | Pulso IGT 5V",
+                sol: "Revisar estado de bujías, bobinas de encendido y compresión de cilindros."
+            }
+        };
+
+        function buscarAveriaWeb(event) {
+            event.preventDefault();
+            const input = document.getElementById("web-input").value.toUpperCase().trim();
+            const marca = document.getElementById("web-marca").value;
+            const datos = baseDatosWeb[input] || {
+                desc: "Anomalía técnica registrada en la unidad de control " + marca + " (" + input + ")",
+                grav: "DIAGNÓSTICO DE TALLER",
+                pol: "Verificar alimentación de 5.0V, masa electrónica y señal del sensor correspondiente.",
+                sol: "Comprobar estado del cableado, conectores y lecturas en vivo desde Motorpedia Pro."
+            };
+            document.getElementById("web-codigo").innerText = input;
+            document.getElementById("web-gravedad").innerText = datos.grav;
+            document.getElementById("web-desc").innerText = datos.desc;
+            document.getElementById("web-pol").innerText = "⚡ Valores de referencia: " + datos.pol;
+            document.getElementById("web-sol").innerText = "🔧 Solución: " + datos.sol;
+        }
+
+        // Detectar URL al entrar (soporta #motorpedia, #cinematch y ?codigo=P0420 desde la app)
+        window.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const codigoUrl = params.get("codigo");
+            const hash = window.location.hash.replace('#', '');
+
+            if (codigoUrl) {
+                navegarA('motorpedia', false);
+                document.getElementById("web-input").value = codigoUrl.toUpperCase();
+                buscarAveriaWeb({ preventDefault: () => {} });
+                setTimeout(() => {
+                    document.getElementById("averias").scrollIntoView({ behavior: "smooth" });
+                }, 200);
+            } else if (['inicio', 'motorpedia', 'cinematch', 'soporte'].includes(hash)) {
+                navegarA(hash, false);
+            }
+        });
+    </script>
+</body>
+</html>
