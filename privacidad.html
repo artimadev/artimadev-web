@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad | ArtimaDev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #09090b; color: #f4f4f5; }
+        .glass-nav { background: rgba(9, 9, 11, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <header class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-black tracking-tight text-white">Artima<span class="text-blue-500">Dev</span></a>
+            <nav class="hidden md:flex gap-8 text-sm font-semibold text-zinc-400">
+                <a href="index.html" class="hover:text-white transition">Inicio</a>
+                <a href="motorpedia.html" class="hover:text-white transition">Motorpedia Pro</a>
+                <a href="cinematch.html" class="hover:text-white transition">CineMatch</a>
+                <a href="privacidad.html" class="text-white">Privacidad</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-32 pb-20 px-6">
+        <div class="max-w-3xl mx-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-8 md:p-12">
+            <h1 class="text-3xl font-bold mb-2">Política de Privacidad</h1>
+            <p class="text-sm text-zinc-400 mb-8 border-b border-zinc-800 pb-8">Última actualización: Octubre 2026</p>
+
+            <div class="space-y-8 text-zinc-300 leading-relaxed text-sm">
+                <section>
+                    <h2 class="text-xl font-bold text-white mb-3">1. Introducción</h2>
+                    <p>ArtimaDev ("nosotros", "nuestro" o "nuestra") es un estudio independiente ubicado en Horta, Barcelona. Esta Política de Privacidad describe cómo recopilamos, utilizamos y protegemos la información en nuestras aplicaciones Android, incluyendo <strong>Motorpedia OBD2 Pro</strong> y <strong>CineMatch</strong>.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-white mb-3">2. Permisos Críticos: Bluetooth y Ubicación (Motorpedia Pro)</h2>
+                    <p class="mb-2">Para el correcto funcionamiento del diagnóstico automotriz, Motorpedia OBD2 Pro requiere establecer conexión con adaptadores OBD2 (tipo ELM327) vía Bluetooth nativo.</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Permiso de Ubicación:</strong> Las políticas del sistema operativo Android exigen el permiso de ubicación precisa/aproximada (ACCESS_FINE_LOCATION / ACCESS_COARSE_LOCATION) para poder escanear dispositivos Bluetooth Low Energy (BLE) y Bluetooth clásico cercanos.</li>
+                        <li><strong>Uso exclusivo:</strong> Utilizamos este permiso <em>única y exclusivamente</em> para emparejar tu dispositivo con el adaptador del vehículo.</li>
+                        <li><strong>No rastreo:</strong> ArtimaDev NO rastrea tu ubicación geográfica, NO guarda historial de rutas y NO envía información de localización a ningún servidor externo.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-white mb-3">3. Datos del Vehículo y Telemetría</h2>
+                    <p>Toda la información extraída de la Unidad de Control del Motor (ECU), incluyendo códigos de error (DTC), números de bastidor (VIN) y telemetría en vivo, se procesa de forma local en tu dispositivo. No transferimos ni vendemos datos técnicos de tu vehículo a terceros.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-white mb-3">4. Servicios de Terceros (CineMatch)</h2>
+                    <p>CineMatch utiliza la API oficial de The Movie Database (TMDB) para obtener metadatos, pósteres y certificaciones por edad de producciones cinematográficas. Las consultas de búsqueda se realizan desde la aplicación hacia los servidores de TMDB. Para más información, consulta los <a href="https://www.themoviedb.org/privacy-policy" target="_blank" class="text-blue-400 hover:underline">términos de TMDB</a>.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-white mb-3">5. Retención de Datos</h2>
+                    <p>Tus preferencias locales, historial de favoritos (CineMatch) o perfil de garaje (Motorpedia) se almacenan localmente en el almacenamiento encriptado de Android (SharedPreferences/Room). Si desinstalas la aplicación, estos datos se eliminarán de tu dispositivo.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-white mb-3">6. Contacto</h2>
+                    <p>Si tienes cualquier duda técnica o legal acerca de esta Política de Privacidad o del funcionamiento de nuestras aplicaciones, por favor, contacta directamente con el desarrollador principal a través de: <a href="mailto:artimadev@gmail.com" class="text-blue-400 hover:underline font-bold">artimadev@gmail.com</a>.</p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center text-sm text-zinc-500">
+            <p>&copy; 2026 ArtimaDev Studio. Horta, Barcelona. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
