@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baterix | ArtimaDev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #08080a; color: #f4f4f5; }</style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="fixed top-0 w-full z-50 bg-[#08080a]/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-black text-white">Artima<span class="text-blue-500">Dev</span></a>
+            <a href="index.html" class="text-sm font-semibold text-zinc-400 hover:text-white">&larr; Volver al Inicio</a>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-36 pb-20 px-6 max-w-4xl mx-auto text-center">
+        <span class="px-3 py-1 rounded-full text-xs font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimización de Batería</span>
+        <h1 class="text-4xl md:text-6xl font-black text-white mt-4 mb-6">Baterix</h1>
+        <p class="text-zinc-400 text-lg leading-relaxed max-w-2xl mx-auto mb-10">
+            Monitoreo en tiempo real de amperaje (mA), desgaste de celdas y notificaciones personalizadas al alcanzar el 80% para alargar la longevidad de tu dispositivo Android.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left my-12">
+            <div class="bg-[#111116] p-6 rounded-2xl border border-white/10">
+                <h3 class="font-bold text-white mb-2">Umbral del 80%</h3>
+                <p class="text-sm text-zinc-400">Alertas acústicas configurables para evitar el desgaste químico de sobrecarga.</p>
+            </div>
+            <div class="bg-[#111116] p-6 rounded-2xl border border-white/10">
+                <h3 class="font-bold text-white mb-2">Telemetría en Vivo</h3>
+                <p class="text-sm text-zinc-400">Lectura precisa de temperatura, voltaje y corriente de carga directa.</p>
+            </div>
+            <div class="bg-[#111116] p-6 rounded-2xl border border-white/10">
+                <h3 class="font-bold text-white mb-2">Cero Servicios Parásitos</h3>
+                <p class="text-sm text-zinc-400">Optimizado para operar con consumo residual y respetar el modo Doze.</p>
+            </div>
+        </div>
+        <a href="mailto:artimadev@gmail.com?subject=Beta%20Baterix" class="inline-block bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-8 py-3.5 rounded-full transition">
+            Unirse a la lista de Testers
+        </a>
+    </main>
+</body>
+</html>
