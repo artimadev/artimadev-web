@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickMute | ArtimaDev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #08080a; color: #f4f4f5; }</style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="fixed top-0 w-full z-50 bg-[#08080a]/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-black text-white">Artima<span class="text-blue-500">Dev</span></a>
+            <a href="index.html" class="text-sm font-semibold text-zinc-400 hover:text-white">&larr; Volver al Inicio</a>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-36 pb-20 px-6 max-w-4xl mx-auto text-center">
+        <span class="px-3 py-1 rounded-full text-xs font-bold uppercase bg-purple-500/10 text-purple-400 border border-purple-500/20">Utilidades & Sonido</span>
+        <h1 class="text-4xl md:text-6xl font-black text-white mt-4 mb-6">QuickMute</h1>
+        <p class="text-zinc-400 text-lg leading-relaxed max-w-2xl mx-auto mb-10">
+            Silenciamiento táctil instantáneo por canales de audio y control rápido de notificaciones sin bloquear alertas prioritarias.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left my-12">
+            <div class="bg-[#111116] p-6 rounded-2xl border border-white/10">
+                <h3 class="font-bold text-white mb-2">Ajustes Rápidos (Tile)</h3>
+                <p class="text-sm text-zinc-400">Acceso instantáneo desde la cortina de notificaciones con un solo toque.</p>
+            </div>
+            <div class="bg-[#111116] p-6 rounded-2xl border border-white/10">
+                <h3 class="font-bold text-white mb-2">Canales Aislados</h3>
+                <p class="text-sm text-zinc-400">Silencia contenido multimedia manteniendo timbres de llamadas y alarmas intactos.</p>
+            </div>
+            <div class="bg-[#111116] p-6 rounded-2xl border border-white/10">
+                <h3 class="font-bold text-white mb-2">Restauración Automática</h3>
+                <p class="text-sm text-zinc-400">Temporizador inteligente para restablecer el volumen al terminar tu reunión.</p>
+            </div>
+        </div>
+        <a href="mailto:artimadev@gmail.com?subject=Beta%20QuickMute" class="inline-block bg-purple-600 hover:bg-purple-500 text-white font-bold px-8 py-3.5 rounded-full transition">
+            Solicitar Invitación Beta
+        </a>
+    </main>
+</body>
+</html>
