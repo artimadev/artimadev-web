@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArtimaDev | Estudio de Ingeniería Android</title>
-    <meta name="description" content="Estudio de desarrollo de aplicaciones nativas Android de alto rendimiento. Soluciones de diagnosis automotriz OBD2, streaming y utilidades del sistema.">
+    <meta name="description" content="Estudio de desarrollo de aplicaciones nativas Android. Diagnosis OBD2 avanzada, streaming y utilidades de alto rendimiento. Barcelona, España.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -19,51 +19,55 @@
                     },
                     colors: {
                         dark: '#08080a',
-                        card: '#111116',
-                        borderLight: 'rgba(255, 255, 255, 0.08)'
+                        card: '#0f0f14',
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #08080a; color: #f4f4f5; }
-        .glass-nav {
-            background: rgba(8, 8, 10, 0.75);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        body { 
+            background-color: #08080a; 
+            color: #f4f4f5; 
+            background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 28px 28px;
         }
-        .hero-glow {
-            background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .app-card {
-            background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.03) 0%, rgba(17, 17, 22, 0.7) 100%);
+            background: linear-gradient(180deg, rgba(20, 20, 26, 0.8) 0%, rgba(12, 12, 16, 0.9) 100%);
             border: 1px solid rgba(255, 255, 255, 0.07);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .app-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.22);
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8);
         }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
 
-    <!-- BARRA DE NAVEGACIÓN -->
+    <!-- CABECERA GLOBAL -->
     <header class="fixed top-0 w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center font-black text-black text-lg shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center font-black text-black text-lg shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
                     A
                 </div>
-                <span class="text-xl font-extrabold tracking-tight text-white">Artima<span class="text-blue-500">Dev</span></span>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight text-white block leading-none">Artima<span class="text-blue-500">Dev</span></span>
+                    <span class="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">Barcelona &bull; ES</span>
+                </div>
             </a>
 
-            <!-- Menú Escritorio -->
+            <!-- Navegación Desktop -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-zinc-400">
                 <a href="#apps" class="hover:text-white transition">Aplicaciones</a>
-                <a href="#ingenieria" class="hover:text-white transition">Ingeniería</a>
+                <a href="#stack" class="hover:text-white transition">Ingeniería &amp; Stack</a>
                 <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
                 <a href="mailto:artimadev@gmail.com" class="bg-white/10 hover:bg-white/15 text-white px-5 py-2.5 rounded-full border border-white/10 transition font-medium">
                     Contacto
@@ -71,184 +75,216 @@
             </nav>
 
             <!-- Botón Móvil -->
-            <button id="menu-btn" aria-label="Abrir Menú" class="md:hidden text-zinc-300 hover:text-white focus:outline-none p-2">
+            <button id="menu-btn" aria-label="Abrir Menú" class="md:hidden text-zinc-300 hover:text-white p-2">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
         </div>
 
-        <!-- Menú Móvil Desplegable -->
-        <div id="mobile-menu" class="hidden md:hidden border-b border-white/10 bg-dark px-6 py-5 space-y-4">
+        <!-- Menú Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-white/10 bg-[#08080a] px-6 py-5 space-y-4">
             <a href="#apps" class="block text-zinc-300 hover:text-white font-medium py-1">Aplicaciones</a>
-            <a href="#ingenieria" class="block text-zinc-300 hover:text-white font-medium py-1">Ingeniería</a>
-            <a href="privacidad.html" class="block text-zinc-300 hover:text-white font-medium py-1">Privacidad Legal</a>
+            <a href="#stack" class="block text-zinc-300 hover:text-white font-medium py-1">Ingeniería &amp; Stack</a>
+            <a href="privacidad.html" class="block text-zinc-300 hover:text-white font-medium py-1">Política de Privacidad</a>
             <a href="mailto:artimadev@gmail.com" class="block text-blue-400 font-semibold py-1">artimadev@gmail.com</a>
         </div>
     </header>
 
     <!-- HERO SECTION -->
-    <main class="flex-grow hero-glow pt-36 pb-24 px-6">
-        <section class="max-w-4xl mx-auto text-center mb-24">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-8">
-                <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-                Estudio Android Independiente &bull; Barcelona
+    <main class="flex-grow pt-36 pb-20 px-6">
+        <section class="max-w-4xl mx-auto text-center mb-24 relative">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/25 bg-blue-500/10 text-blue-400 text-xs font-bold tracking-wide uppercase mb-8">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Estudio Android Independiente &bull; Barcelona, España
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8 text-white">
-                Ingeniería nativa con foco en <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400">precisión y rendimiento</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.08] mb-8 text-white">
+                Ingeniería Android <br class="hidden sm:inline" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400">
+                    precisa, nativa y eficiente
+                </span>
             </h1>
 
             <p class="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto mb-10">
-                Desarrollo en Kotlin moderno y Jetpack Compose. Desde diagnosis y telemetría OBD2 multimarca hasta optimizadores de sistema y recomendadores inteligentes.
+                Creamos herramientas optimizadas en Kotlin y Jetpack Compose. Desde telemetría automotriz multimarca en tiempo real hasta utilidades críticas del sistema sin consumo residual.
             </p>
 
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a href="#apps" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-blue-600/25 transition">
-                    Explorar Aplicaciones
+                    Ver Aplicaciones
                 </a>
-                <a href="mailto:artimadev@gmail.com" class="bg-card hover:bg-white/5 border border-white/10 text-zinc-300 hover:text-white font-semibold px-8 py-3.5 rounded-full transition">
-                    Canal de Testers & Soporte
+                <a href="mailto:artimadev@gmail.com?subject=Contacto%20ArtimaDev" class="bg-[#111116] hover:bg-white/5 border border-white/10 text-zinc-300 hover:text-white font-semibold px-8 py-3.5 rounded-full transition">
+                    Comunidad de Testers &bull; Contacto
                 </a>
             </div>
         </section>
 
-        <!-- SECCIÓN 4 APLICACIONES -->
+        <!-- SECCIÓN DE LAS 4 APPS -->
         <section id="apps" class="max-w-6xl mx-auto mb-28">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-white/10 pb-6">
                 <div>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-2">Suite de Aplicaciones</h2>
-                    <p class="text-zinc-400 text-sm md:text-base">Herramientas nativas diseñadas con arquitectura limpia, sin consumo superfluo de batería.</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-2">Suite de Proyectos</h2>
+                    <p class="text-zinc-400 text-sm md:text-base">Soluciones de software especializadas, sin librerías innecesarias ni telemetría invasiva.</p>
                 </div>
-                <span class="text-xs font-mono text-zinc-500 mt-3 md:mt-0">4 Proyectos Activos</span>
+                <span class="text-xs font-mono text-zinc-500 mt-3 md:mt-0">4 Proyectos Activos &bull; Google Play Ecosystem</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                 <!-- 1. MOTORPEDIA PRO -->
                 <div class="app-card rounded-3xl p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute -right-16 -top-16 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -right-12 -top-12 w-44 h-44 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
                     <div>
                         <div class="flex justify-between items-start mb-6">
-                            <span class="px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-cyan-500/15 text-cyan-400 border border-cyan-500/20">
-                                Diagnóstico Automotriz OBD2
-                            </span>
-                            <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
-                                Activo
+                            <!-- Icono Motorpedia -->
+                            <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shadow-inner">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full uppercase tracking-wider">
+                                Play Store
                             </span>
                         </div>
+
+                        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 block mb-1">Diagnóstico Automotriz</span>
                         <h3 class="text-3xl font-black text-white mb-3">Motorpedia Pro</h3>
                         <p class="text-zinc-400 text-sm md:text-base leading-relaxed mb-6">
-                            Escáner profesional multimarca vía adaptadores ELM327 Bluetooth. Lectura y borrado de averías DTC en tiempo real, soporte UDS avanzado, curvas de sonda lambda y métricas de sensores sin intermediarios.
+                            Escáner profesional multimarca compatible con adaptadores ELM327 Bluetooth. Lectura y borrado de códigos de avería (DTC), curvas de sensores en tiempo real, soporte de tramas UDS y base de datos técnica local.
                         </p>
+
                         <div class="flex flex-wrap gap-2 mb-8">
                             <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Bluetooth BLE / Clásico</span>
-                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Protocolo UDS / OBD2</span>
-                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Buscador DTC Local</span>
+                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Protocolo UDS</span>
+                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Buscador DTC Offline</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 pt-4 border-t border-white/5">
+
+                    <div class="flex items-center gap-4 pt-5 border-t border-white/5">
                         <a href="motorpedia.html" class="inline-flex items-center gap-2 text-sm font-bold text-white bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-full transition">
-                            Ficha Técnica &amp; DTC &rarr;
+                            Ficha Técnica &rarr;
                         </a>
                         <a href="https://play.google.com/store/apps/details?id=com.artimadev.motorpedia" target="_blank" rel="noopener" class="text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition">
-                            Google Play
+                            Google Play Console
                         </a>
                     </div>
                 </div>
 
                 <!-- 2. CINEMATCH -->
                 <div class="app-card rounded-3xl p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute -right-16 -top-16 w-48 h-48 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -right-12 -top-12 w-44 h-44 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
                     <div>
                         <div class="flex justify-between items-start mb-6">
-                            <span class="px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-red-500/15 text-red-400 border border-red-500/20">
-                                Streaming &amp; Cine
-                            </span>
-                            <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
-                                Activo
+                            <!-- Icono CineMatch -->
+                            <div class="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 shadow-inner">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                                </svg>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full uppercase tracking-wider">
+                                Play Store
                             </span>
                         </div>
+
+                        <span class="text-xs font-bold uppercase tracking-wider text-red-400 block mb-1">Streaming &amp; Entretenimiento</span>
                         <h3 class="text-3xl font-black text-white mb-3">CineMatch</h3>
                         <p class="text-zinc-400 text-sm md:text-base leading-relaxed mb-6">
-                            Filtro inteligente en tiempo real sincronizado con 12 plataformas oficiales. Resuelve la indecisión al elegir qué ver con el modo duelo en pareja en el mismo terminal y candado parental verificado con TMDB.
+                            Recomendador ágil sincronizado con las principales plataformas de streaming. Incluye modo duelo en pareja en el mismo dispositivo para tomar decisiones en segundos y candado parental verificado con la API de TMDB.
                         </p>
+
                         <div class="flex flex-wrap gap-2 mb-8">
                             <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">API TMDB</span>
                             <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">12 Plataformas</span>
-                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Filtro Parental</span>
+                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Modo Duelo 1vs1</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 pt-4 border-t border-white/5">
+
+                    <div class="flex items-center gap-4 pt-5 border-t border-white/5">
                         <a href="cinematch.html" class="inline-flex items-center gap-2 text-sm font-bold text-white bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-full transition">
                             Ficha de Producto &rarr;
                         </a>
                         <a href="https://play.google.com/store/apps/details?id=com.artimadev.cinematch" target="_blank" rel="noopener" class="text-sm font-semibold text-red-400 hover:text-red-300 transition">
-                            Google Play
+                            Google Play Console
                         </a>
                     </div>
                 </div>
 
                 <!-- 3. BATERIX -->
                 <div class="app-card rounded-3xl p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -right-12 -top-12 w-44 h-44 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
                     <div>
                         <div class="flex justify-between items-start mb-6">
-                            <span class="px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">
-                                Rendimiento &amp; Batería
-                            </span>
-                            <span class="text-xs font-semibold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-full">
-                                Beta Privada
+                            <!-- Icono Baterix -->
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-inner">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                </svg>
+                            </div>
+                            <span class="text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full uppercase tracking-wider">
+                                Beta Testers
                             </span>
                         </div>
+
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-1">Hardware &amp; Batería</span>
                         <h3 class="text-3xl font-black text-white mb-3">Baterix</h3>
                         <p class="text-zinc-400 text-sm md:text-base leading-relaxed mb-6">
-                            Monitor especializado para maximizar la vida útil de la batería. Notificaciones inteligentes de umbral de carga (80%), métricas de corriente en mA en tiempo real, registro térmico e histórico de ciclos de recarga.
+                            Monitor de telemetría de energía orientado a la longevidad de celdas. Lecturas de corriente en mA, registro térmico continuo y avisos en el umbral del 80% para minimizar el estrés químico en la carga rápida.
                         </p>
+
                         <div class="flex flex-wrap gap-2 mb-8">
-                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Salud &amp; Ciclos</span>
-                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Alerta Límite 80%</span>
                             <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Cero WakeLocks</span>
+                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Alerta Límite 80%</span>
+                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Salud Térmica</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 pt-4 border-t border-white/5">
+
+                    <div class="flex items-center gap-4 pt-5 border-t border-white/5">
                         <a href="baterix.html" class="inline-flex items-center gap-2 text-sm font-bold text-white bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-full transition">
-                            Ver Detalles &rarr;
+                            Detalles del Monitor &rarr;
                         </a>
                         <a href="mailto:artimadev@gmail.com?subject=Solicitud%20Beta%20Baterix" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition">
-                            Solicitar Acceso Beta
+                            Solicitar Acceso APK
                         </a>
                     </div>
                 </div>
 
                 <!-- 4. QUICKMUTE -->
                 <div class="app-card rounded-3xl p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute -right-16 -top-16 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -right-12 -top-12 w-44 h-44 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
                     <div>
                         <div class="flex justify-between items-start mb-6">
-                            <span class="px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-purple-500/15 text-purple-400 border border-purple-500/20">
-                                Productividad &amp; Audio
-                            </span>
-                            <span class="text-xs font-semibold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-full">
-                                Beta Privada
+                            <!-- Icono QuickMute -->
+                            <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shadow-inner">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                                </svg>
+                            </div>
+                            <span class="text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full uppercase tracking-wider">
+                                Beta Testers
                             </span>
                         </div>
+
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-400 block mb-1">Productividad &amp; Audio</span>
                         <h3 class="text-3xl font-black text-white mb-3">QuickMute</h3>
                         <p class="text-zinc-400 text-sm md:text-base leading-relaxed mb-6">
-                            Control granular e instantáneo del entorno sonoro. Cambios de perfil por gestos, silencio selectivo de canales de audio y temporizador inteligente de "No Molestar" integrado con las APIs modernas de Android.
+                            Gestión rápida y precisa del entorno de audio. Mute instantáneo por gestos, silencio selectivo de canales multimedia preservando alarmas prioritarias y automatización con accesos rápidos Quick Settings.
                         </p>
+
                         <div class="flex flex-wrap gap-2 mb-8">
                             <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Quick Settings Tile</span>
-                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Gestión de Perfiles</span>
-                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Automatización</span>
+                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Canales Aislados</span>
+                            <span class="text-xs font-mono bg-white/5 text-zinc-400 px-3 py-1 rounded-lg">Android Audio API</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 pt-4 border-t border-white/5">
+
+                    <div class="flex items-center gap-4 pt-5 border-t border-white/5">
                         <a href="quickmute.html" class="inline-flex items-center gap-2 text-sm font-bold text-white bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-full transition">
-                            Ver Detalles &rarr;
+                            Detalles de la App &rarr;
                         </a>
                         <a href="mailto:artimadev@gmail.com?subject=Solicitud%20Beta%20QuickMute" class="text-sm font-semibold text-purple-400 hover:text-purple-300 transition">
-                            Solicitar Acceso Beta
+                            Solicitar Acceso APK
                         </a>
                     </div>
                 </div>
@@ -256,45 +292,70 @@
             </div>
         </section>
 
-        <!-- SECCIÓN DE INGENIERÍA Y PILARES TÉCNICOS -->
-        <section id="ingenieria" class="max-w-6xl mx-auto mb-20 bg-card rounded-3xl p-8 md:p-14 border border-white/10">
-            <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-8 text-center md:text-left">
-                Principios de Desarrollo en ArtimaDev
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="space-y-3">
-                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-mono font-bold">01</div>
-                    <h4 class="text-lg font-bold text-white">Android Nativo Puro</h4>
-                    <p class="text-sm text-zinc-400 leading-relaxed">
-                        Construcción en Kotlin y Jetpack Compose. Sin capas híbridas pesadas que degraden el rendimiento o consuman memoria innecesaria.
+        <!-- SECCIÓN DE STACK & PILARES TÉCNICOS -->
+        <section id="stack" class="max-w-6xl mx-auto mb-24 bg-[#0f0f14] rounded-3xl p-8 md:p-12 border border-white/10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-3">Estándares de Ingeniería ArtimaDev</h2>
+                <p class="text-zinc-400 text-sm">Desarrollo enfocado en fiabilidad bajo entornos reales de hardware.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white/[0.02] p-6 rounded-2xl border border-white/5">
+                    <span class="text-blue-400 font-mono text-sm font-semibold">01 &bull; Nativo</span>
+                    <h4 class="text-lg font-bold text-white mt-2 mb-2">Kotlin &amp; Jetpack Compose</h4>
+                    <p class="text-xs md:text-sm text-zinc-400 leading-relaxed">
+                        Arquitectura moderna MVVM / Clean Architecture. Interfaces declarativas fluidas y reactivas sin sobrecarga de capas web empaquetadas.
                     </p>
                 </div>
-                <div class="space-y-3">
-                    <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-mono font-bold">02</div>
-                    <h4 class="text-lg font-bold text-white">Privacidad Local (Offline-first)</h4>
-                    <p class="text-sm text-zinc-400 leading-relaxed">
-                        Los datos de diagnóstico, perfiles de garaje y parámetros del sistema se procesan y almacenan de forma segura en local. Sin telemetría abusiva.
+                <div class="bg-white/[0.02] p-6 rounded-2xl border border-white/5">
+                    <span class="text-cyan-400 font-mono text-sm font-semibold">02 &bull; Privacidad</span>
+                    <h4 class="text-lg font-bold text-white mt-2 mb-2">Almacenamiento Local</h4>
+                    <p class="text-xs md:text-sm text-zinc-400 leading-relaxed">
+                        Tus registros de diagnóstico, datos de vehículos y configuraciones residen en la memoria local de tu dispositivo con Room Database cifrado.
                     </p>
                 </div>
-                <div class="space-y-3">
-                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-mono font-bold">03</div>
-                    <h4 class="text-lg font-bold text-white">Despliegue &amp; Validación</h4>
-                    <p class="text-sm text-zinc-400 leading-relaxed">
-                        Pruebas rigurosas con comunidades de testers y validación de hardware físico bajo estándares estrictos de Google Play Console.
+                <div class="bg-white/[0.02] p-6 rounded-2xl border border-white/5">
+                    <span class="text-emerald-400 font-mono text-sm font-semibold">03 &bull; Validación</span>
+                    <h4 class="text-lg font-bold text-white mt-2 mb-2">Comunidad de Pruebas</h4>
+                    <p class="text-xs md:text-sm text-zinc-400 leading-relaxed">
+                        Ciclos de pruebas cerradas exhaustivas en terminales físicos para garantizar estabilidad antes de cada despliegue en Google Play.
                     </p>
                 </div>
             </div>
+
+            <!-- Tags del Stack -->
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-6 border-t border-white/5">
+                <span class="text-xs font-mono text-zinc-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">Kotlin 2.x</span>
+                <span class="text-xs font-mono text-zinc-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">Jetpack Compose</span>
+                <span class="text-xs font-mono text-zinc-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">Coroutines &amp; Flow</span>
+                <span class="text-xs font-mono text-zinc-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">Bluetooth Low Energy</span>
+                <span class="text-xs font-mono text-zinc-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">ISO 14229 (UDS)</span>
+                <span class="text-xs font-mono text-zinc-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">Room DB</span>
+                <span class="text-xs font-mono text-zinc-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">Cloudflare Pages</span>
+            </div>
+        </section>
+
+        <!-- BANNER DE CONTACTO / TESTERS -->
+        <section class="max-w-4xl mx-auto text-center bg-gradient-to-b from-blue-950/20 to-transparent p-10 md:p-14 rounded-3xl border border-blue-500/20">
+            <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">¿Quieres probar versiones anticipadas?</h3>
+            <p class="text-zinc-400 text-sm md:text-base max-w-xl mx-auto mb-8">
+                Forma parte de nuestro grupo de testers cerrado de Google Play o contáctanos para soporte técnico y sugerencias de nuevas funciones.
+            </p>
+            <a href="mailto:artimadev@gmail.com?subject=Unirse%20a%20Testers%20ArtimaDev" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3.5 rounded-full transition shadow-lg shadow-blue-600/30">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                Escribir a artimadev@gmail.com
+            </a>
         </section>
     </main>
 
-    <!-- PIE DE PÁGINA -->
-    <footer class="border-t border-white/10 py-14 bg-dark">
+    <!-- FOOTER GLOBAL -->
+    <footer class="border-t border-white/10 py-14 bg-[#08080a]">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-sm text-zinc-500">
             <div class="flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-black text-sm">A</div>
                 <div>
                     <p class="font-bold text-white">ArtimaDev Studio</p>
-                    <p class="text-xs text-zinc-400">Horta, Barcelona &bull; Ingeniería de Software Móvil</p>
+                    <p class="text-xs text-zinc-400">Barcelona, España &bull; Desarrollo Android Independiente</p>
                 </div>
             </div>
 
@@ -313,7 +374,7 @@
         </div>
     </footer>
 
-    <!-- SCRIPT MENU MOVIL -->
+    <!-- SCRIPT MENÚ MÓVIL -->
     <script>
         const btn = document.getElementById('menu-btn');
         const menu = document.getElementById('mobile-menu');
