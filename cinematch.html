@@ -1,65 +1,481 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineMatch | ArtimaDev</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <title>CineMatch | El Sommelier de Streaming — ArtimaDev</title>
+    <meta name="description" content="Descubre qué película o serie ver en segundos. Filtrado inteligente en 12 plataformas de streaming, modo duelo en pareja y candado parental certificado por TMDB.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        dark: '#08080a',
+                        card: '#101016',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #09090b; color: #f4f4f5; }
-        .glass-nav { background: rgba(9, 9, 11, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        body {
+            background-color: #08080a;
+            color: #f4f4f5;
+            background-image: radial-gradient(rgba(239, 68, 68, 0.05) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .sub-nav {
+            background: rgba(16, 16, 22, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .bento-card {
+            background: linear-gradient(180deg, rgba(22, 22, 30, 0.7) 0%, rgba(12, 12, 18, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.3s ease;
+        }
+        .bento-card:hover {
+            border-color: rgba(239, 68, 68, 0.35);
+            transform: translateY(-3px);
+        }
+        .tab-btn.active {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+        .phone-mockup {
+            border: 6px solid #27272a;
+            border-radius: 2.2rem;
+            background: #09090b;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+        }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col">
+<body class="antialiased min-h-screen flex flex-col selection:bg-red-500 selection:text-white">
 
+    <!-- NAVEGACIÓN GLOBAL ARTIMADEV -->
     <header class="fixed top-0 w-full z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
-            <a href="index.html" class="text-xl font-black tracking-tight text-white">Artima<span class="text-blue-500">Dev</span></a>
-            <nav class="hidden md:flex gap-8 text-sm font-semibold text-zinc-400">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-rose-400 flex items-center justify-center font-black text-black text-lg">
+                    A
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight text-white block leading-none">Artima<span class="text-red-500">Dev</span></span>
+                    <span class="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">Barcelona &bull; ES</span>
+                </div>
+            </a>
+
+            <!-- Enlaces a las subpáginas -->
+            <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-zinc-400">
                 <a href="index.html" class="hover:text-white transition">Inicio</a>
                 <a href="motorpedia.html" class="hover:text-white transition">Motorpedia Pro</a>
-                <a href="cinematch.html" class="text-white">CineMatch</a>
+                <a href="cinematch.html" class="text-red-400">CineMatch</a>
+                <a href="quickmute.html" class="hover:text-white transition">QuickMute</a>
+                <a href="baterix.html" class="hover:text-white transition">Baterix</a>
                 <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
             </nav>
+
+            <!-- Botón de apoyo Ko-fi -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 transition">
+                    <span>☕</span> Apoyar en Ko-fi
+                </a>
+            </div>
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="flex-grow pt-32 pb-20 px-6">
-        <section class="max-w-5xl mx-auto mb-20 text-center">
-            <h1 class="text-4xl md:text-6xl font-black mb-6">Cine<span class="text-red-500">Match</span></h1>
-            <p class="text-xl text-zinc-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Filtra en tiempo real los catálogos de las 12 plataformas de streaming más importantes. Encuentra qué ver sin perder el tiempo.
+        
+        <!-- CABECERA DEL PRODUCTO -->
+        <section class="max-w-5xl mx-auto text-center mb-12">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-bold uppercase tracking-wider mb-6">
+                Entretenimiento &amp; Recomendador Inteligente
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-5">
+                Cine<span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-400">Match</span>
+            </h1>
+            <p class="text-base md:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-8">
+                El sommelier definitivo de streaming. Deja de perder media hora buscando qué ver: filtra tus plataformas favoritas, activa el candado parental oficial o reta a tu pareja en el modo duelo.
             </p>
-            <a href="https://play.google.com/store/apps/details?id=com.artimadev.cinematch" target="_blank" class="inline-block bg-red-600 hover:bg-red-500 text-white font-bold px-8 py-4 rounded-full transition">
-                Descargar en Google Play
-            </a>
+
+            <!-- Botones principales de acción -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <a href="https://play.google.com/store/apps/details?id=com.artimadev.cinematch" target="_blank" rel="noopener" class="bg-red-600 hover:bg-red-500 text-white font-extrabold px-7 py-3.5 rounded-full shadow-lg shadow-red-600/25 transition flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 20.5v-17c0-.83.67-1.5 1.5-1.5.31 0 .61.1.86.28l14.15 8.5c.71.43.94 1.35.51 2.06-.13.21-.3.38-.51.51l-14.15 8.5c-.71.43-1.63.2-2.06-.51-.18-.25-.28-.55-.28-.86z"/></svg>
+                    Descargar en Google Play
+                </a>
+                <button onclick="switchTab('duelo')" class="bg-card hover:bg-white/10 text-white border border-white/15 font-semibold px-7 py-3.5 rounded-full transition flex items-center gap-2">
+                    ⚔️ Descubre el Modo Duelo
+                </button>
+            </div>
+
+            <!-- SUB-MENÚ INTERNO DE CINEMATCH (PESTAÑAS) -->
+            <div class="sub-nav inline-flex flex-wrap justify-center gap-2 p-2 rounded-2xl max-w-full">
+                <button onclick="switchTab('resumen')" id="tab-resumen" class="tab-btn active px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-300 border border-transparent transition">
+                    📱 Funciones &amp; Capturas
+                </button>
+                <button onclick="switchTab('duelo')" id="tab-duelo" class="tab-btn px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-300 border border-transparent transition">
+                    ⚔️ Modo Duelo en Pareja
+                </button>
+                <button onclick="switchTab('plataformas')" id="tab-plataformas" class="tab-btn px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-300 border border-transparent transition">
+                    🎬 12 Plataformas &amp; Parental
+                </button>
+                <button onclick="switchTab('faq')" id="tab-faq" class="tab-btn px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-300 border border-transparent transition">
+                    ❓ Preguntas Frecuentes (FAQ)
+                </button>
+            </div>
         </section>
 
-        <section class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-zinc-900 p-8 rounded-3xl border border-zinc-800">
-                <h3 class="text-xl font-bold text-white mb-3">Candado Parental</h3>
-                <p class="text-sm text-zinc-400">Filtrado estricto certificado por TMDB para edades de 2-4, 5-8, 9-11 y 12-16 años.</p>
+        <!-- ==========================================
+             APARTADO 1: RESUMEN, FUNCIONES Y CAPTURAS
+             ========================================== -->
+        <div id="section-resumen" class="tab-section max-w-6xl mx-auto space-y-20">
+            
+            <!-- Grid de Funciones -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 text-xl mb-5">
+                        🎯
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Filtrado Cruzado Real</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Selecciona solo las plataformas que tienes contratadas en casa, combina tus géneros favoritos, filtra por nota mínima o década y obtén recomendaciones exactas al instante.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 text-xl mb-5">
+                        ⚔️
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Modo Duelo 1 vs 1</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        ¿No os ponéis de acuerdo en el sofá? Pasad el móvil por turnos descartando o aceptando propuestas hasta que el algoritmo encuentre la coincidencia perfecta para esta noche.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-xl mb-5">
+                        🛡️
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Candado Parental Oficial</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Bloqueo inteligente basado en las certificaciones de edad oficiales de TMDB. Filtra automáticamente contenido adulto para disfrutar de sesiones de cine en familia con total tranquilidad.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-xl mb-5">
+                        🌍
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Soporte en 9 Idiomas</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Interfaz y sinopsis traducidas y adaptadas a 9 idiomas (Español, Inglés, Francés, Alemán, Italiano, Portugués, etc.), mostrando el catálogo disponible según tu país.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xl mb-5">
+                        🍿
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Tráilers, Reparto y Notas</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Consulta fichas completas con puntuaciones de la comunidad, actores principales, duración, temporadas y acceso directo al tráiler antes de decidirte.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl mb-5">
+                        🔖
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Sin Cuentas ni Registros</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Guarda tu lista de pendientes y películas ya vistas directamente en la memoria de tu teléfono. Sin crear cuentas, sin correos spam y respetando tu privacidad.
+                    </p>
+                </div>
             </div>
-            <div class="bg-zinc-900 p-8 rounded-3xl border border-zinc-800">
-                <h3 class="text-xl font-bold text-white mb-3">Modo Pareja</h3>
-                <p class="text-sm text-zinc-400">Repartimos 10 cartas verificadas. Deslizad a izquierda o derecha en el mismo móvil hasta hacer Match.</p>
+
+            <!-- Galería de Capturas de Pantalla (Screenshots) -->
+            <div class="pt-6">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Diseñado para decidir en segundos</h2>
+                    <p class="text-sm text-zinc-400">Estética oscura tipo sala de cine con navegación fluida por tarjetas y gestos.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Captura 1 -->
+                    <div class="phone-mockup p-4 flex flex-col justify-between aspect-[9/18]">
+                        <div class="w-16 h-1.5 bg-zinc-800 rounded-full mx-auto mb-4"></div>
+                        <div class="my-auto text-center px-3">
+                            <span class="text-3xl block mb-3">🎬</span>
+                            <p class="text-xs font-mono uppercase text-red-400 mb-1">Captura 01</p>
+                            <h4 class="font-bold text-white text-base mb-2">Selector de Plataformas</h4>
+                            <p class="text-xs text-zinc-500">Elige tus servicios de streaming activos y géneros favoritos.</p>
+                        </div>
+                        <div class="text-[10px] text-center text-zinc-600 font-mono">com.artimadev.cinematch</div>
+                    </div>
+
+                    <!-- Captura 2 -->
+                    <div class="phone-mockup p-4 flex flex-col justify-between aspect-[9/18]">
+                        <div class="w-16 h-1.5 bg-zinc-800 rounded-full mx-auto mb-4"></div>
+                        <div class="my-auto text-center px-3">
+                            <span class="text-3xl block mb-3">🔥</span>
+                            <p class="text-xs font-mono uppercase text-red-400 mb-1">Captura 02</p>
+                            <h4 class="font-bold text-white text-base mb-2">Tarjetas Interactivas</h4>
+                            <p class="text-xs text-zinc-500">Pósters en alta definición, puntuación TMDB, año y sinopsis rápida.</p>
+                        </div>
+                        <div class="text-[10px] text-center text-zinc-600 font-mono">com.artimadev.cinematch</div>
+                    </div>
+
+                    <!-- Captura 3 -->
+                    <div class="phone-mockup p-4 flex flex-col justify-between aspect-[9/18]">
+                        <div class="w-16 h-1.5 bg-zinc-800 rounded-full mx-auto mb-4"></div>
+                        <div class="my-auto text-center px-3">
+                            <span class="text-3xl block mb-3">⚔️</span>
+                            <p class="text-xs font-mono uppercase text-red-400 mb-1">Captura 03</p>
+                            <h4 class="font-bold text-white text-base mb-2">Modo Duelo en Pareja</h4>
+                            <p class="text-xs text-zinc-500">Votación por turnos hasta encontrar el "Match" ganador.</p>
+                        </div>
+                        <div class="text-[10px] text-center text-zinc-600 font-mono">com.artimadev.cinematch</div>
+                    </div>
+
+                    <!-- Captura 4 -->
+                    <div class="phone-mockup p-4 flex flex-col justify-between aspect-[9/18]">
+                        <div class="w-16 h-1.5 bg-zinc-800 rounded-full mx-auto mb-4"></div>
+                        <div class="my-auto text-center px-3">
+                            <span class="text-3xl block mb-3">🔒</span>
+                            <p class="text-xs font-mono uppercase text-red-400 mb-1">Captura 04</p>
+                            <h4 class="font-bold text-white text-base mb-2">Control Parental &amp; Listas</h4>
+                            <p class="text-xs text-zinc-500">Ajuste de edades certificadas y biblioteca de favoritas.</p>
+                        </div>
+                        <div class="text-[10px] text-center text-zinc-600 font-mono">com.artimadev.cinematch</div>
+                    </div>
+                </div>
             </div>
-            <div class="bg-zinc-900 p-8 rounded-3xl border border-zinc-800">
-                <h3 class="text-xl font-bold text-white mb-3">12 Plataformas</h3>
-                <p class="text-sm text-zinc-400">Netflix, Prime, Max, Disney+, Filmin, Crunchyroll y más, verificadas en tiempo real.</p>
+        </div>
+
+        <!-- ==========================================
+             APARTADO 2: MODO DUELO EN PAREJA
+             ========================================== -->
+        <div id="section-duelo" class="tab-section hidden max-w-5xl mx-auto space-y-10">
+            <div class="text-center max-w-2xl mx-auto">
+                <span class="text-xs font-mono uppercase text-red-400">Adiós a las discusiones en el sofá</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mt-1 mb-3">¿Cómo funciona el Modo Duelo?</h2>
+                <p class="text-sm text-zinc-400">
+                    No hace falta instalar la aplicación en dos móviles ni escanear códigos complicados. Todo ocurre en un único teléfono en menos de 2 minutos.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bento-card p-8 rounded-3xl border border-red-500/20">
+                    <span class="text-xs font-mono font-bold text-red-400 bg-red-500/10 px-3 py-1 rounded-full">Paso 01</span>
+                    <h3 class="text-xl font-bold text-white mt-4 mb-2">Configurad el Terreno</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Elegid si os apetece película o serie, marcad vuestras plataformas de streaming y seleccionad uno o varios géneros que os llamen la atención hoy.
+                    </p>
+                </div>
+
+                <div class="bento-card p-8 rounded-3xl border border-red-500/20">
+                    <span class="text-xs font-mono font-bold text-red-400 bg-red-500/10 px-3 py-1 rounded-full">Paso 02</span>
+                    <h3 class="text-xl font-bold text-white mt-4 mb-2">Turno del Jugador 1 y 2</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        El Jugador 1 vota en secreto un lote rápido de propuestas deslizando a derecha o izquierda, y luego le pasa el móvil al Jugador 2 para que evalúe las opciones.
+                    </p>
+                </div>
+
+                <div class="bento-card p-8 rounded-3xl border border-emerald-500/30">
+                    <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full">Paso 03 &bull; ¡Match!</span>
+                    <h3 class="text-xl font-bold text-white mt-4 mb-2">Coincidencia Instantánea</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        En cuanto ambos coincidís en un título, salta la pantalla de <strong>CineMatch</strong> indicando en qué plataforma podéis darle al Play directamente.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             APARTADO 3: 12 PLATAFORMAS Y PARENTAL
+             ========================================== -->
+        <div id="section-plataformas" class="tab-section hidden max-w-5xl mx-auto space-y-10">
+            <div class="bento-card p-8 md:p-10 rounded-3xl">
+                <h2 class="text-2xl font-extrabold text-white mb-3">Sincronizado con las 12 principales plataformas</h2>
+                <p class="text-sm text-zinc-400 mb-8">
+                    CineMatch comprueba en tiempo real en qué servicio de suscripción está incluido cada título en tu región para que nunca te enamores de una película que no puedes ver.
+                </p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center font-bold text-sm">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Netflix</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Prime Video</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Disney+</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Max (HBO)</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">SkyShowtime</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Apple TV+</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Movistar Plus+</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Filmin</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Crunchyroll</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Rakuten TV</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Atresplayer</div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-3 text-white">Mitele / Pluto TV</div>
+                </div>
+            </div>
+
+            <!-- Bloque Candado Parental -->
+            <div class="bento-card p-8 md:p-10 rounded-3xl border border-amber-500/30">
+                <div class="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+                    <div>
+                        <span class="text-xs font-bold uppercase text-amber-400">Protección Familiar Verificada</span>
+                        <h3 class="text-2xl font-bold text-white mt-1 mb-2">Candado Parental por Edades (TMDB)</h3>
+                        <p class="text-sm text-zinc-400 max-w-2xl leading-relaxed">
+                            A diferencia de otros buscadores que solo ocultan un género, nuestro candado parental consulta la certificación oficial por edades de cada país (Apta para todos los públicos, +7, +12, +16, +18) para garantizar resultados seguros cuando buscas cine con niños.
+                        </p>
+                    </div>
+                    <span class="text-4xl">🛡️</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             APARTADO 4: PREGUNTAS FRECUENTES (FAQ)
+             ========================================== -->
+        <div id="section-faq" class="tab-section hidden max-w-3xl mx-auto space-y-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Preguntas Frecuentes (FAQ)</h2>
+                <p class="text-sm text-zinc-400">Todo lo que necesitas saber sobre el funcionamiento de CineMatch.</p>
+            </div>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center list-none">
+                    <span>¿Se pueden reproducir o ver las películas completas dentro de CineMatch?</span>
+                    <span class="text-red-400 group-open:rotate-45 transition-transform text-xl">+</span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 leading-relaxed">
+                    No. CineMatch es un recomendador y asistente inteligente 100% legal. Te muestra tráilers oficiales, sinopsis, reparto y te indica exactamente en qué plataforma de streaming oficial (Netflix, Prime Video, Disney+, etc.) está disponible la película para que la abras allí.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center list-none">
+                    <span>¿Necesito crear una cuenta o vincular mis contraseñas de Netflix o HBO?</span>
+                    <span class="text-red-400 group-open:rotate-45 transition-transform text-xl">+</span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 leading-relaxed">
+                    Jamás te pediremos tus claves ni tu correo electrónico. Simplemente marcas con un toque los iconos de las plataformas que tienes contratadas y la app guarda tus preferencias en tu propio teléfono.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center list-none">
+                    <span>¿En qué idiomas está disponible la aplicación?</span>
+                    <span class="text-red-400 group-open:rotate-45 transition-transform text-xl">+</span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 leading-relaxed">
+                    CineMatch cuenta con soporte completo para 9 idiomas, adaptando automáticamente los títulos, pósters, sinopsis y disponibilidad regional de los catálogos.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center list-none">
+                    <span>¿De dónde proceden las notas y el catálogo de películas y series?</span>
+                    <span class="text-red-400 group-open:rotate-45 transition-transform text-xl">+</span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 leading-relaxed">
+                    Utilizamos en tiempo real la base de datos de <strong>TMDB (The Movie Database)</strong> y los proveedores de JustWatch, actualizados a diario con todos los estrenos mundiales.
+                </p>
+            </details>
+        </div>
+
+        <!-- ==========================================
+             BLOQUE DE APOYO KO-FI + VENTA CRUZADA
+             ========================================== -->
+        <section class="max-w-6xl mx-auto mt-24 pt-16 border-t border-white/10">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                
+                <!-- Tarjeta Ko-fi -->
+                <div class="bento-card p-8 rounded-3xl border border-amber-500/25 lg:col-span-1">
+                    <span class="text-2xl block mb-3">☕</span>
+                    <h3 class="text-xl font-bold text-white mb-2">Apoya a ArtimaDev en Ko-fi</h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-6">
+                        Desarrollamos aplicaciones limpias y pensadas para el usuario desde Barcelona. Si CineMatch os ha salvado la noche de peli y manta, puedes invitarnos a un café.
+                    </p>
+                    <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs px-5 py-3 rounded-full transition">
+                        Invitar a un café en Ko-fi &rarr;
+                    </a>
+                </div>
+
+                <!-- Descubre las otras apps del estudio (Tráfico Cruzado) -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 class="text-lg font-bold text-white">Descubre otros proyectos de ArtimaDev</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <a href="motorpedia.html" class="bento-card p-5 rounded-2xl block">
+                            <span class="text-[10px] font-bold uppercase text-cyan-400">Diagnóstico OBD2</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1">Motorpedia Pro</h4>
+                            <p class="text-xs text-zinc-400">Lee y borra averías de tu coche con +50.000 códigos DTC.</p>
+                        </a>
+                        <a href="quickmute.html" class="bento-card p-5 rounded-2xl block">
+                            <span class="text-[10px] font-bold uppercase text-purple-400">Utilidad Android</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1">QuickMute</h4>
+                            <p class="text-xs text-zinc-400">Silencia el móvil al instante con widgets y temporizador inteligente.</p>
+                        </a>
+                        <a href="baterix.html" class="bento-card p-5 rounded-2xl block">
+                            <span class="text-[10px] font-bold uppercase text-emerald-400">Salud &amp; Energía</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1">Baterix</h4>
+                            <p class="text-xs text-zinc-400">Cuida la vida útil de tu batería con alertas al 80% y telemetría.</p>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </section>
+
     </main>
 
-    <footer class="border-t border-white/5 py-12 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-500">
-            <p class="font-bold text-white">ArtimaDev Studio</p>
-            <div class="flex gap-6">
-                <a href="mailto:artimadev@gmail.com" class="hover:text-white transition">Contacto</a>
-                <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
+    <!-- FOOTER GLOBAL + ATRIBUCIÓN TMDB -->
+    <footer class="border-t border-white/10 py-12 bg-[#08080a]">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col gap-6 text-xs text-zinc-500">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <p class="font-bold text-white text-sm">ArtimaDev Studio</p>
+                    <p>Barcelona, España &bull; Ingeniería Android</p>
+                </div>
+                <div class="flex flex-wrap gap-6 text-zinc-400">
+                    <a href="index.html" class="hover:text-white transition">Inicio</a>
+                    <a href="motorpedia.html" class="hover:text-white transition">Motorpedia Pro</a>
+                    <a href="quickmute.html" class="hover:text-white transition">QuickMute</a>
+                    <a href="baterix.html" class="hover:text-white transition">Baterix</a>
+                    <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
+                    <a href="mailto:artimadev@gmail.com" class="hover:text-white transition">Soporte</a>
+                </div>
+                <p>&copy; 2026 ArtimaDev. Todos los derechos reservados.</p>
+            </div>
+            <div class="border-t border-white/5 pt-4 text-center md:text-left text-[11px] text-zinc-600">
+                CineMatch utiliza la API de TMDB pero no está avalado ni certificado por TMDB. Todos los logotipos y marcas de plataformas pertenecen a sus respectivos propietarios.
             </div>
         </div>
     </footer>
+
+    <!-- SCRIPT DE PESTAÑAS -->
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-section').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-' + tabName).classList.add('active');
+        }
+    </script>
 </body>
 </html>
