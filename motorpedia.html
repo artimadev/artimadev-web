@@ -3,86 +3,597 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motorpedia Pro | ArtimaDev</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <title>Motorpedia Pro | Diagnóstico OBD2 y Buscador DTC — ArtimaDev</title>
+    <meta name="description" content="Aplicación Android de diagnosis automotriz OBD2, telemetría en tiempo real, guía de adaptadores ELM327 y buscador gratuito de códigos de avería DTC en español.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        dark: '#08080a',
+                        card: '#101016',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #09090b; color: #f4f4f5; }
-        .glass-nav { background: rgba(9, 9, 11, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        body {
+            background-color: #08080a;
+            color: #f4f4f5;
+            background-image: radial-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .sub-nav {
+            background: rgba(16, 16, 22, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .bento-card {
+            background: linear-gradient(180deg, rgba(22, 22, 30, 0.7) 0%, rgba(12, 12, 18, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.3s ease;
+        }
+        .bento-card:hover {
+            border-color: rgba(6, 182, 212, 0.35);
+            transform: translateY(-3px);
+        }
+        .tab-btn.active {
+            background-color: rgba(6, 182, 212, 0.15);
+            color: #22d3ee;
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        .phone-mockup {
+            border: 6px solid #27272a;
+            border-radius: 2.2rem;
+            background: #09090b;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+        }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col">
+<body class="antialiased min-h-screen flex flex-col selection:bg-cyan-500 selection:text-black">
 
+    <!-- NAVEGACIÓN GLOBAL ARTIMADEV -->
     <header class="fixed top-0 w-full z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
-            <a href="index.html" class="text-xl font-black tracking-tight text-white">Artima<span class="text-blue-500">Dev</span></a>
-            <nav class="hidden md:flex gap-8 text-sm font-semibold text-zinc-400">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center font-black text-black text-lg">
+                    A
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight text-white block leading-none">Artima<span class="text-cyan-400">Dev</span></span>
+                    <span class="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">Barcelona &bull; ES</span>
+                </div>
+            </a>
+
+            <!-- Enlaces a todas tus subpáginas -->
+            <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-zinc-400">
                 <a href="index.html" class="hover:text-white transition">Inicio</a>
-                <a href="motorpedia.html" class="text-white">Motorpedia Pro</a>
+                <a href="motorpedia.html" class="text-cyan-400">Motorpedia Pro</a>
                 <a href="cinematch.html" class="hover:text-white transition">CineMatch</a>
+                <a href="quickmute.html" class="hover:text-white transition">QuickMute</a>
+                <a href="baterix.html" class="hover:text-white transition">Baterix</a>
                 <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
             </nav>
+
+            <!-- Botón de apoyo Ko-fi -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 transition">
+                    <span>☕</span> Apoyar en Ko-fi
+                </a>
+            </div>
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="flex-grow pt-32 pb-20 px-6">
-        <section class="max-w-5xl mx-auto mb-20">
-            <h1 class="text-4xl md:text-6xl font-black mb-6">Motorpedia <span class="text-cyan-400">Pro</span></h1>
-            <p class="text-xl text-zinc-400 mb-10 max-w-3xl leading-relaxed">
-                El escáner de diagnóstico automotriz definitivo en tu bolsillo. Conéctate vía Bluetooth ELM327 y accede a la telemetría oculta de tu vehículo.
+        
+        <!-- CABECERA DEL PRODUCTO -->
+        <section class="max-w-5xl mx-auto text-center mb-12">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-6">
+                Diagnóstico Automotriz &amp; Telemetría OBD2
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-5">
+                Motorpedia <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">OBD2 Pro</span>
+            </h1>
+            <p class="text-base md:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-8">
+                Comprende qué le ocurre a tu vehículo sin complicaciones. Lee y borra averías del motor, visualiza relojes en tiempo real y consulta más de 50.000 códigos de fallo en español sin necesidad de internet.
             </p>
-            <a href="https://play.google.com/store/apps/details?id=com.artimadev.motorpedia" target="_blank" class="inline-block bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-4 rounded-full transition">
-                Descargar en Google Play
-            </a>
-        </section>
 
-        <!-- HERRAMIENTA WEB DTC -->
-        <section class="max-w-5xl mx-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-8 md:p-12">
-            <h2 class="text-2xl font-bold mb-2">Buscador Técnico de Averías (DTC)</h2>
-            <p class="text-zinc-400 mb-8 text-sm">Prueba una muestra de nuestra base de datos interna. Busca códigos como P0171, P0420 o P0300.</p>
-            
-            <form onsubmit="buscarAveriaWeb(event)" class="flex flex-col sm:flex-row gap-4 mb-8">
-                <input type="text" id="web-input" required class="flex-1 bg-black border border-zinc-700 rounded-xl px-6 py-4 text-white uppercase font-mono" placeholder="Ej: P0171">
-                <button type="submit" class="bg-blue-600 hover:bg-blue-500 font-bold px-8 py-4 rounded-xl transition">Consultar Código</button>
-            </form>
+            <!-- Botones principales de acción -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <a href="https://play.google.com/store/apps/details?id=com.artimadev.motorpedia" target="_blank" rel="noopener" class="bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold px-7 py-3.5 rounded-full shadow-lg shadow-cyan-500/20 transition flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 20.5v-17c0-.83.67-1.5 1.5-1.5.31 0 .61.1.86.28l14.15 8.5c.71.43.94 1.35.51 2.06-.13.21-.3.38-.51.51l-14.15 8.5c-.71.43-1.63.2-2.06-.51-.18-.25-.28-.55-.28-.86z"/></svg>
+                    Descargar en Google Play
+                </a>
+                <button onclick="switchTab('buscador')" class="bg-card hover:bg-white/10 text-white border border-white/15 font-semibold px-7 py-3.5 rounded-full transition flex items-center gap-2">
+                    🔍 Ir al Buscador de Averías (DTC)
+                </button>
+            </div>
 
-            <div id="web-resultado" class="hidden bg-black rounded-xl p-6 border border-zinc-800">
-                <div class="flex justify-between items-center mb-4">
-                    <span id="web-codigo" class="text-3xl font-black text-cyan-400 font-mono"></span>
-                    <span id="web-gravedad" class="px-3 py-1 rounded text-xs font-bold bg-zinc-800 text-zinc-300"></span>
-                </div>
-                <div id="web-desc" class="text-lg font-bold text-white mb-4"></div>
-                <div id="web-sol" class="text-sm text-zinc-400 font-mono"></div>
+            <!-- SUB-MENÚ INTERNO DE MOTORPEDIA (PESTAÑAS) -->
+            <div class="sub-nav inline-flex flex-wrap justify-center gap-2 p-2 rounded-2xl max-w-full">
+                <button onclick="switchTab('resumen')" id="tab-resumen" class="tab-btn active px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-300 border border-transparent transition">
+                    📱 Funciones &amp; Capturas
+                </button>
+                <button onclick="switchTab('buscador')" id="tab-buscador" class="tab-btn px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-300 border border-transparent transition">
+                    🔍 Buscador DTC (+50.000)
+                </button>
+                <button onclick="switchTab('adaptadores')" id="tab-adaptadores" class="tab-btn px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-300 border border-transparent transition">
+                    🔌 Guía de Adaptadores
+                </button>
+                <button onclick="switchTab('faq')" id="tab-faq" class="tab-btn px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-300 border border-transparent transition">
+                    ❓ Preguntas Frecuentes (FAQ)
+                </button>
             </div>
         </section>
+
+        <!-- ==========================================
+             APARTADO 1: RESUMEN, FUNCIONES Y CAPTURAS
+             ========================================== -->
+        <div id="section-resumen" class="tab-section max-w-6xl mx-auto space-y-20">
+            
+            <!-- Grid de Funciones Explicadas Sencillas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl mb-5">
+                        🛠️
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Diagnóstico y Borrado</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Lee los fallos que encienden el testigo de avería del motor (Check Engine), descubre qué pieza falla en español claro y apaga el testigo tras realizar tu mantenimiento.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xl mb-5">
+                        ⏱️
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Cuadro y Telemetría en Vivo</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Relojes digitales precisos para vigilar temperatura de refrigerante, presión de turbo, revoluciones, carga de batería, sondas y consumo en tiempo real.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl mb-5">
+                        🏁
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Modo Drag &amp; Rendimiento</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Mide tiempos de aceleración (0-100 km/h, cuarto de milla) y comprueba la respuesta real de tu vehículo directamente con los datos de la centralita.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-xl mb-5">
+                        📚
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">+50.000 Códigos Offline</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Diccionario completo integrado en la propia app. Funciona en garajes subterráneos o carreteras sin cobertura móvil, incluyendo códigos genéricos y de fabricante.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-xl mb-5">
+                        🔋
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Test de Batería y Alternador</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Comprueba el voltaje de arranque y verifica si el alternador carga correctamente antes de quedarte tirado por una batería agotada.
+                    </p>
+                </div>
+
+                <div class="bento-card p-7 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 text-xl mb-5">
+                        🔒
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">100% Seguro para tu Coche</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Motorpedia actúa en modo lectura segura y borrado estándar de averías: jamás modifica mapas de motor ni desprograma configuraciones de fábrica.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Galería de Capturas de Pantalla (Screenshots) -->
+            <div class="pt-6">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Interfaz pensada para el conductor</h2>
+                    <p class="text-sm text-zinc-400">Diseño oscuro de alto contraste para una lectura rápida y cómoda en el interior del vehículo.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Captura 1: Sustituir src por tu imagen si la subes a la carpeta img/ -->
+                    <div class="phone-mockup p-4 flex flex-col justify-between aspect-[9/18]">
+                        <div class="w-16 h-1.5 bg-zinc-800 rounded-full mx-auto mb-4"></div>
+                        <div class="my-auto text-center px-3">
+                            <span class="text-3xl block mb-3">🎛️</span>
+                            <p class="text-xs font-mono uppercase text-cyan-400 mb-1">Captura 01</p>
+                            <h4 class="font-bold text-white text-base mb-2">Diales en Tiempo Real</h4>
+                            <p class="text-xs text-zinc-500">RPM, velocidad, presión de admisión y temperaturas en vivo.</p>
+                        </div>
+                        <div class="text-[10px] text-center text-zinc-600 font-mono">com.artimadev.motorpedia</div>
+                    </div>
+
+                    <!-- Captura 2 -->
+                    <div class="phone-mockup p-4 flex flex-col justify-between aspect-[9/18]">
+                        <div class="w-16 h-1.5 bg-zinc-800 rounded-full mx-auto mb-4"></div>
+                        <div class="my-auto text-center px-3">
+                            <span class="text-3xl block mb-3">⚠️</span>
+                            <p class="text-xs font-mono uppercase text-cyan-400 mb-1">Captura 02</p>
+                            <h4 class="font-bold text-white text-base mb-2">Escáner de Averías</h4>
+                            <p class="text-xs text-zinc-500">Detección de fallos confirmados y pendientes con descripción clara.</p>
+                        </div>
+                        <div class="text-[10px] text-center text-zinc-600 font-mono">com.artimadev.motorpedia</div>
+                    </div>
+
+                    <!-- Captura 3 -->
+                    <div class="phone-mockup p-4 flex flex-col justify-between aspect-[9/18]">
+                        <div class="w-16 h-1.5 bg-zinc-800 rounded-full mx-auto mb-4"></div>
+                        <div class="my-auto text-center px-3">
+                            <span class="text-3xl block mb-3">🔎</span>
+                            <p class="text-xs font-mono uppercase text-cyan-400 mb-1">Captura 03</p>
+                            <h4 class="font-bold text-white text-base mb-2">Diccionario Integrado</h4>
+                            <p class="text-xs text-zinc-500">Consulta cualquier código P, B, C o U al instante sin conexión.</p>
+                        </div>
+                        <div class="text-[10px] text-center text-zinc-600 font-mono">com.artimadev.motorpedia</div>
+                    </div>
+
+                    <!-- Captura 4 -->
+                    <div class="phone-mockup p-4 flex flex-col justify-between aspect-[9/18]">
+                        <div class="w-16 h-1.5 bg-zinc-800 rounded-full mx-auto mb-4"></div>
+                        <div class="my-auto text-center px-3">
+                            <span class="text-3xl block mb-3">🚀</span>
+                            <p class="text-xs font-mono uppercase text-cyan-400 mb-1">Captura 04</p>
+                            <h4 class="font-bold text-white text-base mb-2">Telemetría &amp; Drag</h4>
+                            <p class="text-xs text-zinc-500">Cronómetro de aceleración y gráficas de sensores de motor.</p>
+                        </div>
+                        <div class="text-[10px] text-center text-zinc-600 font-mono">com.artimadev.motorpedia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             APARTADO 2: BUSCADOR INTERNO DE DTCs
+             ========================================== -->
+        <div id="section-buscador" class="tab-section hidden max-w-4xl mx-auto">
+            <div class="bento-card p-8 md:p-10 rounded-3xl border border-cyan-500/30">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-cyan-400">Base de Datos Abierta ArtimaDev</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Buscador de Códigos de Avería (DTC)</h2>
+                    </div>
+                    <span id="dtc-counter" class="text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 px-3 py-1.5 rounded-lg self-start">
+                        Diccionario OBD2 Español
+                    </span>
+                </div>
+
+                <p class="text-sm text-zinc-400 mb-6">
+                    Introduce el código que te ha mostrado la aplicación o el cuadro de tu coche (por ejemplo: <strong class="text-white font-mono">P0420</strong>, <strong class="text-white font-mono">P0171</strong>, <strong class="text-white font-mono">P0300</strong>) o escribe una palabra clave como <em class="text-zinc-300">catalizador</em>, <em class="text-zinc-300">egr</em> o <em class="text-zinc-300">inyector</em>.
+                </p>
+
+                <!-- Barra de Búsqueda -->
+                <div class="relative mb-6">
+                    <input 
+                        type="text" 
+                        id="dtc-input" 
+                        placeholder="Escribe un código (ej. P0420) o síntoma..." 
+                        class="w-full bg-[#08080a] border border-white/15 focus:border-cyan-400 rounded-2xl px-5 py-4 text-white font-mono text-base focus:outline-none transition"
+                        oninput="buscarDTC()"
+                    >
+                </div>
+
+                <!-- Botones rápidos de códigos muy buscados -->
+                <div class="flex flex-wrap items-center gap-2 mb-8">
+                    <span class="text-xs text-zinc-500 mr-1">Búsquedas frecuentes:</span>
+                    <button onclick="setSearch('P0420')" class="text-xs font-mono bg-white/5 hover:bg-cyan-500/20 text-zinc-300 hover:text-cyan-300 px-3 py-1 rounded-lg transition">P0420</button>
+                    <button onclick="setSearch('P0171')" class="text-xs font-mono bg-white/5 hover:bg-cyan-500/20 text-zinc-300 hover:text-cyan-300 px-3 py-1 rounded-lg transition">P0171</button>
+                    <button onclick="setSearch('P0300')" class="text-xs font-mono bg-white/5 hover:bg-cyan-500/20 text-zinc-300 hover:text-cyan-300 px-3 py-1 rounded-lg transition">P0300</button>
+                    <button onclick="setSearch('P0401')" class="text-xs font-mono bg-white/5 hover:bg-cyan-500/20 text-zinc-300 hover:text-cyan-300 px-3 py-1 rounded-lg transition">P0401</button>
+                    <button onclick="setSearch('P0299')" class="text-xs font-mono bg-white/5 hover:bg-cyan-500/20 text-zinc-300 hover:text-cyan-300 px-3 py-1 rounded-lg transition">P0299</button>
+                    <button onclick="setSearch('U0100')" class="text-xs font-mono bg-white/5 hover:bg-cyan-500/20 text-zinc-300 hover:text-cyan-300 px-3 py-1 rounded-lg transition">U0100</button>
+                </div>
+
+                <!-- Contenedor de Resultados -->
+                <div id="dtc-results" class="space-y-3"></div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             APARTADO 3: GUÍA SENCILLA DE ADAPTADORES
+             ========================================== -->
+        <div id="section-adaptadores" class="tab-section hidden max-w-5xl mx-auto space-y-10">
+            <div class="text-center max-w-2xl mx-auto">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-3">Guía Fácil de Adaptadores OBD2</h2>
+                <p class="text-sm text-zinc-400">
+                    Para que tu móvil se comunique con el coche necesitas un pequeño conector llamado <strong>adaptador OBD2 ELM327</strong>. No todos son iguales; aquí te explicamos cuál elegir sin gastar de más.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Opción Recomendada -->
+                <div class="bento-card p-7 rounded-3xl border border-emerald-500/30">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-400">✅ Recomendado</span>
+                    <h3 class="text-xl font-bold text-white mt-4 mb-2">Bluetooth 4.0 (BLE) o Clásico de Calidad</h3>
+                    <p class="text-sm text-zinc-400 mb-4 leading-relaxed">
+                        Adaptadores de marcas reconocidas (como Vgate iCar Pro, Viecar, Konnwei o Obdlink). Llevan chips estables, conectan en 2 segundos y leen todos los sensores sin cortes.
+                    </p>
+                    <ul class="text-xs text-zinc-300 space-y-2 font-mono">
+                        <li>• Conexión rápida y automática</li>
+                        <li>• Bajo consumo de batería</li>
+                        <li>• Compatible con coches diésel y gasolina</li>
+                    </ul>
+                </div>
+
+                <!-- Opción Básica -->
+                <div class="bento-card p-7 rounded-3xl border border-amber-500/30">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-400">⚠️ Funcional Básico</span>
+                    <h3 class="text-xl font-bold text-white mt-4 mb-2">ELM327 Azul / Negro Genérico (v1.5)</h3>
+                    <p class="text-sm text-zinc-400 mb-4 leading-relaxed">
+                        Son los más económicos. Si tienes uno versión <strong>v1.5</strong>, te servirá perfectamente para leer fallos de motor y ver relojes básicos en la mayoría de coches.
+                    </p>
+                    <ul class="text-xs text-zinc-300 space-y-2 font-mono">
+                        <li>• Ideal para empezar</li>
+                        <li>• Requiere emparejar por PIN (1234 o 0000)</li>
+                        <li>• Desconéctalo al aparcar porque no se apaga solo</li>
+                    </ul>
+                </div>
+
+                <!-- Qué evitar -->
+                <div class="bento-card p-7 rounded-3xl border border-rose-500/30">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-500/15 text-rose-400">❌ Mejor Evitar</span>
+                    <h3 class="text-xl font-bold text-white mt-4 mb-2">Clones v2.1 ultra baratos o Wi-Fi</h3>
+                    <p class="text-sm text-zinc-400 mb-4 leading-relaxed">
+                        Muchos adaptadores muy baratos etiquetados como "v2.1" recortan comandos internos y fallan al conectar con el coche. Los modelos Wi-Fi además te dejan sin datos móviles en el teléfono mientras los usas.
+                    </p>
+                    <ul class="text-xs text-zinc-300 space-y-2 font-mono">
+                        <li>• Suelen dar error de protocolo</li>
+                        <li>• Elige siempre Bluetooth antes que Wi-Fi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Pasos para conectar -->
+            <div class="bento-card p-8 rounded-3xl">
+                <h3 class="text-lg font-bold text-white mb-6">¿Cómo se conecta por primera vez en 3 pasos?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                    <div>
+                        <span class="text-cyan-400 font-mono font-bold block mb-1">Paso 1 &bull; Enchufar</span>
+                        <p class="text-zinc-400">Conecta el adaptador al puerto OBD2 de tu coche (suele estar debajo del volante, cerca de los pedales o la caja de fusibles) y da el contacto sin necesidad de arrancar.</p>
+                    </div>
+                    <div>
+                        <span class="text-cyan-400 font-mono font-bold block mb-1">Paso 2 &bull; Bluetooth</span>
+                        <p class="text-zinc-400">Si es un adaptador Bluetooth clásico, vincúlalo en los ajustes Bluetooth de tu Android (el código suele ser <code class="text-white">1234</code> o <code class="text-white">0000</code>). Si es Bluetooth 4.0 BLE, entra directo a la app.</p>
+                    </div>
+                    <div>
+                        <span class="text-cyan-400 font-mono font-bold block mb-1">Paso 3 &bull; Abrir Motorpedia</span>
+                        <p class="text-zinc-400">Abre Motorpedia Pro, selecciona tu adaptador en la lista y pulsa Conectar. En segundos verás las revoluciones y el estado del motor.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             APARTADO 4: PREGUNTAS FRECUENTES (FAQ)
+             ========================================== -->
+        <div id="section-faq" class="tab-section hidden max-w-3xl mx-auto space-y-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Preguntas Frecuentes (FAQ)</h2>
+                <p class="text-sm text-zinc-400">Respuestas claras a las dudas más habituales sobre el uso de Motorpedia Pro.</p>
+            </div>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center list-none">
+                    <span>¿Es seguro usar la aplicación? ¿Puedo estropear o desprogramar algo del coche?</span>
+                    <span class="text-cyan-400 group-open:rotate-45 transition-transform text-xl">+</span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 leading-relaxed">
+                    Es totalmente seguro. Motorpedia Pro únicamente solicita datos de lectura a la centralita y utiliza el comando estándar oficial para apagar el testigo de avería cuando tú lo pulsas. No reescribe la centralita ni altera ningún ajuste del fabricante.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center list-none">
+                    <span>Si borro un código de avería y se apaga la luz del cuadro, ¿ya está arreglado el coche?</span>
+                    <span class="text-cyan-400 group-open:rotate-45 transition-transform text-xl">+</span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 leading-relaxed">
+                    Borrar el código apaga el aviso luminoso del salpicadero. Si el fallo fue puntual (por ejemplo, un mal contacto momentáneo o un tapón de combustible mal cerrado), no volverá a encenderse. Pero si hay una pieza físicamente averiada, el coche volverá a detectar el problema tras unos kilómetros y encenderá la luz de nuevo hasta que se repare la pieza.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center list-none">
+                    <span>¿Con qué coches es compatible Motorpedia Pro?</span>
+                    <span class="text-cyan-400 group-open:rotate-45 transition-transform text-xl">+</span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 leading-relaxed">
+                    Es compatible con prácticamente todos los coches de gasolina matriculados desde el año 2001 y diésel desde el año 2004 en adelante que dispongan del conector estándar OBD2 de 16 pines.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center list-none">
+                    <span>¿Por qué el adaptador enciende sus luces pero no conecta con la aplicación?</span>
+                    <span class="text-cyan-400 group-open:rotate-45 transition-transform text-xl">+</span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 leading-relaxed">
+                    Verifica tres puntos sencillos: 1) Asegúrate de que la llave del coche está en posición de contacto (cuadro encendido). 2) Cierra cualquier otra aplicación OBD que tengas abierta en segundo plano en el móvil, ya que el adaptador solo acepta una app a la vez. 3) Acepta los permisos de Bluetooth y ubicación cercana cuando Android te lo pregunte.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center list-none">
+                    <span>¿Necesito conexión a internet mientras uso la aplicación en el coche?</span>
+                    <span class="text-cyan-400 group-open:rotate-45 transition-transform text-xl">+</span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 leading-relaxed">
+                    No. Toda la base de datos de códigos de avería y el motor de diagnóstico están guardados dentro de la propia aplicación para que puedas usarla en garajes subterráneos o zonas sin cobertura.
+                </p>
+            </details>
+        </div>
+
+        <!-- ==========================================
+             BLOQUE DE APOYO KO-FI + VENTA CRUZADA
+             ========================================== -->
+        <section class="max-w-6xl mx-auto mt-24 pt-16 border-t border-white/10">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                
+                <!-- Tarjeta Ko-fi -->
+                <div class="bento-card p-8 rounded-3xl border border-amber-500/25 lg:col-span-1">
+                    <span class="text-2xl block mb-3">☕</span>
+                    <h3 class="text-xl font-bold text-white mb-2">Apoya el desarrollo independiente</h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-6">
+                        ArtimaDev es un estudio independiente en Barcelona. Si Motorpedia te ha ayudado a diagnosticar tu coche o ahorrar una visita al taller, puedes invitarnos a un café en Ko-fi.
+                    </p>
+                    <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs px-5 py-3 rounded-full transition">
+                        Apoyar en Ko-fi &rarr;
+                    </a>
+                </div>
+
+                <!-- Descubre las otras apps del estudio (Tráfico Cruzado) -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 class="text-lg font-bold text-white">Descubre otros proyectos de ArtimaDev</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <a href="cinematch.html" class="bento-card p-5 rounded-2xl block">
+                            <span class="text-[10px] font-bold uppercase text-red-400">Streaming &amp; Cine</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1">CineMatch</h4>
+                            <p class="text-xs text-zinc-400">Elige película en pareja y filtra en 12 plataformas al instante.</p>
+                        </a>
+                        <a href="quickmute.html" class="bento-card p-5 rounded-2xl block">
+                            <span class="text-[10px] font-bold uppercase text-purple-400">Utilidad Android</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1">QuickMute</h4>
+                            <p class="text-xs text-zinc-400">Silencia el móvil al instante con widgets y temporizador inteligente.</p>
+                        </a>
+                        <a href="baterix.html" class="bento-card p-5 rounded-2xl block">
+                            <span class="text-[10px] font-bold uppercase text-emerald-400">Salud &amp; Energía</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1">Baterix</h4>
+                            <p class="text-xs text-zinc-400">Cuida la vida útil de tu batería con alertas al 80% y telemetría.</p>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
     </main>
 
-    <footer class="border-t border-white/5 py-12 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-500">
-            <p class="font-bold text-white">ArtimaDev Studio</p>
-            <div class="flex gap-6">
-                <a href="mailto:artimadev@gmail.com" class="hover:text-white transition">Contacto</a>
-                <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
+    <!-- FOOTER GLOBAL -->
+    <footer class="border-t border-white/10 py-12 bg-[#08080a]">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500">
+            <div>
+                <p class="font-bold text-white text-sm">ArtimaDev Studio</p>
+                <p>Barcelona, España &bull; Ingeniería Android</p>
             </div>
+            <div class="flex flex-wrap gap-6 text-zinc-400">
+                <a href="index.html" class="hover:text-white transition">Inicio</a>
+                <a href="cinematch.html" class="hover:text-white transition">CineMatch</a>
+                <a href="quickmute.html" class="hover:text-white transition">QuickMute</a>
+                <a href="baterix.html" class="hover:text-white transition">Baterix</a>
+                <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
+                <a href="mailto:artimadev@gmail.com" class="hover:text-white transition">Soporte</a>
+            </div>
+            <p>&copy; 2026 ArtimaDev. Todos los derechos reservados.</p>
         </div>
     </footer>
 
+    <!-- LÓGICA DE PESTAÑAS Y BUSCADOR DTC -->
     <script>
-        const baseDatosWeb = {
-            "P0171": { desc: "Sistema demasiado pobre en Banco 1", grav: "GRAVEDAD MEDIA", sol: "Posible fuga de vacío o fallo en MAF. Revisar correctores LTFT." },
-            "P0420": { desc: "Eficiencia del sistema catalítico por debajo del umbral", grav: "RECHAZO ITV", sol: "Verificar curva de Sonda Lambda 2 y estado del monolito." },
-            "P0300": { desc: "Fallo de encendido aleatorio", grav: "GRAVEDAD ALTA", sol: "Comprobar bobinas de encendido, bujías y compresión." }
-        };
-        function buscarAveriaWeb(e) {
-            e.preventDefault();
-            const input = document.getElementById("web-input").value.toUpperCase().trim();
-            const datos = baseDatosWeb[input] || { desc: "Anomalía técnica registrada en ECU", grav: "REVISIÓN TALLER", sol: "Conecta Motorpedia Pro al vehículo para leer el código hexadecimal exacto y acceder al protocolo UDS." };
-            document.getElementById("web-codigo").innerText = input;
-            document.getElementById("web-gravedad").innerText = datos.grav;
-            document.getElementById("web-desc").innerText = datos.desc;
-            document.getElementById("web-sol").innerText = datos.sol;
-            document.getElementById("web-resultado").classList.remove("hidden");
+        // Cambio de sub-pestañas sin recargar la página
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-section').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-' + tabName).classList.add('active');
         }
+
+        // Base de datos inicial integrada + soporte para cargar tu JSON completo de +35.000/50.000 códigos
+        let dtcDatabase = [
+            { code: "P0420", system: "Motor / Emisiones", desc: "Eficiencia del sistema catalizador por debajo del umbral (Bloque 1)", hint: "Revisa el estado del catalizador, posibles fugas en el escape o la sonda lambda trasera." },
+            { code: "P0171", system: "Combustible y Aire", desc: "Sistema demasiado pobre (Bloque 1)", hint: "Posible toma de aire no medida en admisión, sensor MAF sucio o baja presión de combustible." },
+            { code: "P0300", system: "Encendido", desc: "Detectado fallo de encendido aleatorio o en múltiples cilindros", hint: "Comprueba bujías, bobinas de encendido, inyectores o compresión." },
+            { code: "P0401", system: "Control de Emisiones", desc: "Flujo insuficiente detectado en la recirculación de gases de escape (EGR)", hint: "Conductos o válvula EGR obstruidos por carbonilla." },
+            { code: "P0299", system: "Admisión / Turbo", desc: "Presión de sobrealimentación del turbocompresor baja (Subalimentación)", hint: "Revisa manguitos del intercooler rajados, geometría del turbo o electroválvula N75." },
+            { code: "P0101", system: "Combustible y Aire", desc: "Rango o rendimiento del circuito del sensor de flujo de masa de aire (MAF)", hint: "Sensor caudalímetro sucio o conector con mal contacto." },
+            { code: "P0113", system: "Sensores", desc: "Señal de entrada alta en el circuito del sensor de temperatura del aire de admisión (IAT)", hint: "Sensor desconectado o cableado abierto." },
+            { code: "P0500", system: "Velocidad del Vehículo", desc: "Mal funcionamiento en el sensor de velocidad del vehículo (VSS)", hint: "Revisa captadores del ABS o sensor de velocidad en la caja de cambios." },
+            { code: "U0100", system: "Red CAN / Comunicación", desc: "Pérdida de comunicación con el módulo de control del motor (ECM/PCM)", hint: "Comprueba alimentación, relé principal, masas o líneas del bus CAN." },
+            { code: "B1000", system: "Carrocería", desc: "Fallo interno o de tensión en la unidad de control de carrocería (BCM)", hint: "Verifica el estado de la batería y bornes." },
+            { code: "C0035", system: "Chasis / ABS", desc: "Circuito del sensor de velocidad de la rueda delantera izquierda", hint: "Corona magnética sucia o cable del sensor ABS dañado." }
+        ];
+
+        // Intenta cargar automáticamente un archivo 'dtc_database.json' si lo subes a tu GitHub con los 50.000 códigos
+        fetch('dtc_database.json')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data && Array.isArray(data)) {
+                    dtcDatabase = data;
+                    document.getElementById('dtc-counter').textContent = data.length.toLocaleString('es-ES') + ' códigos cargados';
+                    buscarDTC();
+                }
+            })
+            .catch(() => {});
+
+        function setSearch(val) {
+            document.getElementById('dtc-input').value = val;
+            buscarDTC();
+        }
+
+        function buscarDTC() {
+            const query = document.getElementById('dtc-input').value.trim().toUpperCase();
+            const container = document.getElementById('dtc-results');
+            
+            const filtered = query === '' 
+                ? dtcDatabase.slice(0, 6) 
+                : dtcDatabase.filter(item => 
+                    item.code.toUpperCase().includes(query) || 
+                    item.desc.toUpperCase().includes(query)
+                ).slice(0, 25);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 text-center">
+                        <p class="text-sm text-zinc-300 font-semibold mb-1">No hemos encontrado coincidencias para "${query}" en la vista previa web.</p>
+                        <p class="text-xs text-zinc-400">Descarga <strong>Motorpedia Pro</strong> en tu Android para consultar los más de 50.000 códigos completos de fabricante sin conexión.</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="p-5 rounded-2xl bg-[#08080a] border border-white/10 hover:border-cyan-500/40 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-3 mb-1">
+                            <span class="font-mono font-extrabold text-lg text-cyan-400">${item.code}</span>
+                            <span class="text-[11px] font-mono bg-white/5 text-zinc-400 px-2.5 py-0.5 rounded-md">${item.system || 'Diagnóstico OBD2'}</span>
+                        </div>
+                        <p class="text-sm font-semibold text-white">${item.desc}</p>
+                        ${item.hint ? `<p class="text-xs text-zinc-400 mt-1">💡 ${item.hint}</p>` : ''}
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.artimadev.motorpedia" target="_blank" rel="noopener" class="text-xs font-bold text-cyan-400 hover:text-cyan-300 whitespace-nowrap self-start sm:self-center">
+                        Diagnosticar en la App &rarr;
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        // Inicializar resultados por defecto
+        buscarDTC();
     </script>
 </body>
 </html>
