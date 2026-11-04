@@ -1,0 +1,1044 @@
+﻿<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motorpedia OBD2 Pro | Diagnóstico Automotriz y Buscador DTC — ArtimaDev Studio</title>
+    <meta name="description" content="Aplicación Android nativa para diagnóstico automotriz OBD2/UDS con adaptadores ELM327. Telemetría en vivo, borrado de Check Engine, modo Drag y buscador offline de +50.000 códigos DTC.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        dark: '#08080a',
+                        surface: '#0d0d12',
+                        card: '#101016',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #08080a;
+            color: #f4f4f5;
+            background-image: radial-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .bento-card {
+            background: linear-gradient(180deg, rgba(20, 20, 28, 0.75) 0%, rgba(11, 11, 15, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bento-card:hover {
+            border-color: rgba(6, 182, 212, 0.30);
+        }
+        .tab-btn {
+            transition: all 0.2s ease;
+        }
+        .tab-btn.active {
+            background-color: rgba(6, 182, 212, 0.15);
+            color: #22d3ee;
+            border-color: rgba(6, 182, 212, 0.40);
+            box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.2);
+        }
+        .phone-mockup {
+            border: 8px solid #1f2029;
+            border-radius: 2.5rem;
+            background: #09090d;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 14px;
+            background: #1f2029;
+            border-radius: 10px;
+            z-index: 20;
+        }
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-cyan-500 selection:text-black">
+
+    <!-- HEADER / BARRA DE NAVEGACIÓN GLOBAL UNIFICADA -->
+    <header class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <!-- Logo ArtimaDev -->
+            <a href="index.html" class="flex items-center gap-3 group shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 22 12 17 22 22 12 2"></polygon>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-extrabold tracking-tight text-white leading-none">Artima<span class="text-cyan-400">Dev</span></span>
+                        <span class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-zinc-400">Barcelona &bull; ES</span>
+                    </div>
+                    <span class="text-[11px] text-zinc-500 font-mono block mt-0.5">Android Engineering Studio</span>
+                </div>
+            </a>
+
+            <!-- Navegación Escritorio -->
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-zinc-400">
+                <a href="index.html" class="hover:text-white transition">Inicio</a>
+                <a href="motorpedia.html" class="text-cyan-400 font-semibold transition flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                    Motorpedia Pro
+                </a>
+                <a href="cinematch.html" class="hover:text-red-400 transition flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                    CineMatch
+                </a>
+
+                <!-- Desplegable Utilidades -->
+                <div class="relative group">
+                    <button class="hover:text-white transition flex items-center gap-1 py-2 focus:outline-none">
+                        <span>Utilidades</span>
+                        <svg class="w-4 h-4 text-zinc-500 group-hover:text-white group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 top-full pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="bg-[#0d0d12] border border-white/10 rounded-2xl p-2 shadow-2xl backdrop-blur-xl space-y-1">
+                            <a href="quickmute.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-white group-hover/item:text-purple-400 transition block">QuickMute</span>
+                                    <span class="text-[11px] text-zinc-500">Control instantáneo de audio</span>
+                                </div>
+                            </a>
+                            <a href="baterix.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-white group-hover/item:text-emerald-400 transition block">Batterix</span>
+                                    <span class="text-[11px] text-zinc-500">Telemetría y salud de batería</span>
+                                </div>
+                            </a>
+                            <a href="pluvio.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                <div class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-white group-hover/item:text-sky-400 transition block">Pluvio</span>
+                                    <span class="text-[11px] text-zinc-500">Radar de lluvia hiperlocal 60m</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="soporte.html" class="hover:text-white transition">Soporte &amp; Testers</a>
+                <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
+            </nav>
+
+            <!-- Botones de Acción Derecha -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 transition shadow-sm shadow-amber-500/10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                    </svg>
+                    <span>Apoyar en Ko-fi</span>
+                </a>
+                <a href="mailto:artimadev@gmail.com" class="bg-white/5 hover:bg-white/10 text-zinc-200 px-4 py-2 rounded-full border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition">
+                    <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span>Contacto</span>
+                </a>
+            </div>
+
+            <!-- Botón Menú Móvil -->
+            <button id="menu-btn" aria-label="Abrir Menú de Navegación" class="lg:hidden text-zinc-300 hover:text-white p-2 rounded-lg border border-white/10 bg-white/5">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden lg:hidden border-b border-white/10 bg-[#08080a]/95 backdrop-blur-xl px-6 py-6 space-y-4 text-sm">
+            <div class="space-y-2">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Navegación Principal</span>
+                <a href="index.html" class="block text-zinc-300 hover:text-white font-medium py-1.5">Inicio</a>
+                <a href="motorpedia.html" class="block text-cyan-400 font-bold py-1.5">Motorpedia Pro &mdash; Automoción OBD2</a>
+                <a href="cinematch.html" class="block text-red-400 font-semibold py-1.5">CineMatch &mdash; Streaming</a>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Suite de Utilidades</span>
+                <a href="quickmute.html" class="block text-purple-400 font-semibold py-1">QuickMute &mdash; Control de Audio</a>
+                <a href="baterix.html" class="block text-emerald-400 font-semibold py-1">Batterix &mdash; Telemetría de Batería</a>
+                <a href="pluvio.html" class="block text-sky-400 font-semibold py-1">Pluvio &mdash; Radar de Lluvia 60m</a>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <a href="soporte.html" class="block text-zinc-300 hover:text-white font-medium py-1">Soporte &amp; Programa Beta Testers</a>
+                <a href="privacidad.html" class="block text-zinc-300 hover:text-white font-medium py-1">Centro de Privacidad Legal</a>
+            </div>
+            <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/15 border border-amber-500/30 text-amber-400 px-4 py-2 rounded-full text-xs font-bold">
+                    Apoyar en Ko-fi
+                </a>
+                <a href="mailto:artimadev@gmail.com" class="bg-white/5 border border-white/10 text-zinc-300 px-4 py-2 rounded-full text-xs font-mono">
+                    artimadev@gmail.com
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow pt-32 pb-24 px-6">
+
+        <!-- HERO / CABECERA DEL PRODUCTO -->
+        <section class="max-w-5xl mx-auto text-center pt-4 mb-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-mono uppercase mb-6">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span>DIAGNÓSTICO AUTOMOTRIZ &bull; ELM327 &bull; TELEMETRÍA NATIVA</span>
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6">
+                Motorpedia <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">OBD2 Pro</span>
+            </h1>
+            <p class="text-base sm:text-lg text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-8">
+                Diagnostica tu vehículo con precisión profesional. Lee y borra códigos de fallo (Check Engine), visualiza telemetría de sensores en vivo, mide aceleración en <strong class="text-zinc-200">Modo Drag</strong> y consulta más de <strong class="text-cyan-400">50.000 códigos DTC</strong> offline en español.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
+                <a href="https://play.google.com/store/apps/details?id=com.artimadev.motorpedia" target="_blank" rel="noopener" class="bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold px-8 py-3.5 rounded-full text-sm transition flex items-center gap-2 shadow-xl shadow-cyan-500/20">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 20.5v-17c0-.83.67-1.5 1.5-1.5.31 0 .61.1.86.28l14.15 8.5c.71.43.94 1.35.51 2.06-.13.21-.3.38-.51.51l-14.15 8.5c-.71.43-1.63.2-2.06-.51-.18-.25-.28-.55-.28-.86z"/></svg>
+                    <span>Descargar en Google Play</span>
+                </a>
+                <button type="button" onclick="switchTab('buscador')" class="bg-white/5 hover:bg-white/10 text-white border border-white/15 font-semibold px-7 py-3.5 rounded-full text-sm transition flex items-center gap-2">
+                    <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <span>Buscador Web DTC (+50.000)</span>
+                </button>
+            </div>
+
+            <!-- SUB-MENÚ DE PESTAÑAS INTERNAS -->
+            <div class="bg-[#0e0e14] border border-white/10 rounded-2xl p-2 inline-flex flex-wrap justify-center gap-2 max-w-full" role="tablist">
+                <button type="button" onclick="switchTab('resumen')" id="tab-btn-resumen" class="tab-btn active px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-300 border border-transparent">
+                    📱 Visión General &amp; Capturas
+                </button>
+                <button type="button" onclick="switchTab('transparencia')" id="tab-btn-transparencia" class="tab-btn px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-400 hover:text-white border border-transparent">
+                    ⚖️ Qué hace / Qué NO hace
+                </button>
+                <button type="button" onclick="switchTab('buscador')" id="tab-btn-buscador" class="tab-btn px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-400 hover:text-white border border-transparent">
+                    🔍 Buscador DTC Interactivo
+                </button>
+                <button type="button" onclick="switchTab('adaptadores')" id="tab-btn-adaptadores" class="tab-btn px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-400 hover:text-white border border-transparent">
+                    🔌 Guía Adaptadores OBD2
+                </button>
+                <button type="button" onclick="switchTab('faq')" id="tab-btn-faq" class="tab-btn px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-400 hover:text-white border border-transparent">
+                    ❓ Preguntas Frecuentes
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SUB-PESTAÑA 1: VISIÓN GENERAL & CAPTURAS
+             ========================================== -->
+        <section id="panel-resumen" class="tab-panel max-w-6xl mx-auto space-y-16">
+            
+            <!-- Grid de Funciones Principales -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bento-card p-8 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center text-cyan-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Lectura &amp; Borrado de Averías</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+                        Lee averías de motor y transmisión estándar SAE J1979 / ISO 15765-4 CAN. Explica el significado técnico en español y apaga la luz de <strong class="text-zinc-200">Check Engine (MIL)</strong> tras la reparación.
+                    </p>
+                    <span class="text-xs font-mono text-cyan-400">Códigos Activos &bull; Pendientes &bull; Freeze Frame</span>
+                </div>
+
+                <div class="bento-card p-8 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Telemetría en Vivo &amp; Relojes</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+                        Monitorea parámetros de la ECU en tiempo real: temperatura exacta de refrigerante, presión del turbo (Boost/MAP), caudalímetro (MAF), sondas lambda O2 y carga del motor con refresco a alta frecuencia.
+                    </p>
+                    <span class="text-xs font-mono text-blue-400">Cuadro Personalizable &bull; Logging CSV</span>
+                </div>
+
+                <div class="bento-card p-8 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Modo Drag &amp; Test de Batería</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+                        Cronometra aceleraciones reales de 0 a 100 km/h y cuarto de milla sincronizado con los PIDs de velocidad de la centralita, y ejecuta pruebas de tensión del alternador para evaluar la batería.
+                    </p>
+                    <span class="text-xs font-mono text-emerald-400">0-100 km/h &bull; Test 12V / 14.4V Alternador</span>
+                </div>
+            </div>
+
+            <!-- GALERÍA DE 4 MARCOS MÓVILES (MOCKUPS ELEGANTES) -->
+            <div>
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="text-xs font-mono uppercase text-cyan-400 tracking-wider block mb-2">Interfaz de Usuario Nativa</span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white">Diseño Optimizado para Conducción y Taller</h2>
+                    <p class="text-zinc-400 text-sm mt-2">Construida con Jetpack Compose para garantizar alto contraste diurno y legibilidad a bordo.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Mockup 1: Dashboard de Relojes -->
+                    <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
+                        <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
+                            <span class="text-cyan-400 font-bold">TELEMETRÍA ECU</span>
+                            <span class="text-emerald-400">CONECTADO</span>
+                        </div>
+                        <div class="space-y-3 my-auto">
+                            <!-- Gauge 1 -->
+                            <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-3 text-center">
+                                <span class="text-[10px] font-mono text-zinc-400 uppercase block">Régimen Motor</span>
+                                <span class="text-3xl font-extrabold text-white font-mono block">2.450 <span class="text-xs font-normal text-zinc-500">RPM</span></span>
+                                <div class="w-full bg-zinc-800 h-1.5 rounded-full mt-2 overflow-hidden">
+                                    <div class="bg-cyan-400 h-full w-[40%] rounded-full"></div>
+                                </div>
+                            </div>
+                            <!-- Gauge 2 & 3 -->
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="bg-white/[0.03] border border-white/10 rounded-xl p-2.5 text-center">
+                                    <span class="text-[9px] font-mono text-zinc-500 block">REFRIGERANTE</span>
+                                    <span class="text-lg font-bold text-emerald-400 font-mono">89°C</span>
+                                </div>
+                                <div class="bg-white/[0.03] border border-white/10 rounded-xl p-2.5 text-center">
+                                    <span class="text-[9px] font-mono text-zinc-500 block">TURBO BOOST</span>
+                                    <span class="text-lg font-bold text-cyan-400 font-mono">1.25 bar</span>
+                                </div>
+                            </div>
+                            <!-- Gauge 4 -->
+                            <div class="bg-white/[0.03] border border-white/10 rounded-xl p-2.5 flex justify-between items-center text-xs font-mono">
+                                <span class="text-zinc-400">Sonda Lambda λ:</span>
+                                <span class="text-white font-bold">0.99 (Estequiométrica)</span>
+                            </div>
+                        </div>
+                        <div class="text-center pt-2 border-t border-white/10">
+                            <span class="text-[11px] font-mono text-zinc-400">Cuadro en Tiempo Real</span>
+                        </div>
+                    </div>
+
+                    <!-- Mockup 2: Diagnóstico DTC -->
+                    <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
+                        <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
+                            <span class="text-red-400 font-bold">CHECK ENGINE</span>
+                            <span class="text-zinc-400">1 FALLO</span>
+                        </div>
+                        <div class="space-y-3 my-auto">
+                            <div class="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/25">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm font-black font-mono text-red-400">P0420</span>
+                                    <span class="text-[9px] font-mono bg-red-500/20 text-red-300 px-2 py-0.5 rounded">CONFIRMADO</span>
+                                </div>
+                                <p class="text-xs font-semibold text-white leading-tight">Catalizador: Eficiencia por debajo del umbral (Bloque 1)</p>
+                                <p class="text-[10px] text-zinc-400 mt-2">Posible causa: Sonda lambda defectuosa o fuga en escape.</p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-white/[0.02] border border-white/10">
+                                <span class="text-[10px] font-mono text-zinc-500 block">ESTADO FREEZE FRAME</span>
+                                <span class="text-xs text-zinc-300 font-mono">Velocidad: 78 km/h &bull; Carga: 42%</span>
+                            </div>
+                            <button class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition">
+                                Borrar Códigos (MIL Off)
+                            </button>
+                        </div>
+                        <div class="text-center pt-2 border-t border-white/10">
+                            <span class="text-[11px] font-mono text-zinc-400">Escáner de Averías OBD2</span>
+                        </div>
+                    </div>
+
+                    <!-- Mockup 3: Modo Drag -->
+                    <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
+                        <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
+                            <span class="text-amber-400 font-bold">MODO DRAG</span>
+                            <span class="text-zinc-400">GPS + ECU</span>
+                        </div>
+                        <div class="space-y-3 my-auto text-center">
+                            <span class="text-[10px] font-mono uppercase text-zinc-400 tracking-wider">0 a 100 km/h</span>
+                            <div class="text-4xl font-black font-mono text-white tracking-tight">
+                                6.82 <span class="text-sm font-normal text-amber-400">seg</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-left pt-2">
+                                <div class="bg-white/[0.03] border border-white/10 rounded-xl p-2.5">
+                                    <span class="text-[9px] font-mono text-zinc-500 block">0-60 KM/H</span>
+                                    <span class="text-xs font-bold text-white font-mono">3.10 s</span>
+                                </div>
+                                <div class="bg-white/[0.03] border border-white/10 rounded-xl p-2.5">
+                                    <span class="text-[9px] font-mono text-zinc-500 block">400 METROS</span>
+                                    <span class="text-xs font-bold text-white font-mono">14.90 s</span>
+                                </div>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/5 rounded-xl p-2 text-xs font-mono text-emerald-400">
+                                Salida detectada automáticamente
+                            </div>
+                        </div>
+                        <div class="text-center pt-2 border-t border-white/10">
+                            <span class="text-[11px] font-mono text-zinc-400">Test de Aceleración y G-Force</span>
+                        </div>
+                    </div>
+
+                    <!-- Mockup 4: Test de Batería & Alternador -->
+                    <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
+                        <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
+                            <span class="text-emerald-400 font-bold">TEST DE CARGA</span>
+                            <span class="text-zinc-400">PIN 16</span>
+                        </div>
+                        <div class="space-y-3 my-auto">
+                            <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-3 text-center">
+                                <span class="text-[10px] font-mono text-zinc-400 uppercase block">Tensión Actual</span>
+                                <span class="text-3xl font-extrabold text-emerald-400 font-mono block">14.3 <span class="text-xs font-normal text-zinc-400">V</span></span>
+                                <span class="text-[10px] text-emerald-400 font-mono mt-1 inline-block">Alternador cargando OK</span>
+                            </div>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between p-2 rounded-lg bg-white/[0.02] border border-white/5 font-mono">
+                                    <span class="text-zinc-400">Motor parado:</span>
+                                    <span class="text-white font-bold">12.6 V (100%)</span>
+                                </div>
+                                <div class="flex justify-between p-2 rounded-lg bg-white/[0.02] border border-white/5 font-mono">
+                                    <span class="text-zinc-400">Caída arranque:</span>
+                                    <span class="text-white font-bold">10.4 V (Saludable)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center pt-2 border-t border-white/10">
+                            <span class="text-[11px] font-mono text-zinc-400">Diagnóstico del Sistema Eléctrico</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             SUB-PESTAÑA 2: QUÉ HACE Y QUÉ NO HACE
+             ========================================== -->
+        <section id="panel-transparencia" class="tab-panel hidden max-w-6xl mx-auto space-y-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="text-xs font-mono uppercase text-cyan-400 tracking-wider block mb-2">Transparencia Técnica Total</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white">¿Qué hace y qué NO hace Motorpedia Pro?</h2>
+                <p class="text-zinc-400 text-sm mt-2">
+                    En ArtimaDev creemos en el software honesto. Queremos que sepas con exactitud las capacidades reales del protocolo OBD2 y evitar falsas promesas comerciales.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Columna: Qué SÍ hace -->
+                <div class="bento-card rounded-3xl p-8 border-emerald-500/30">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Qué SÍ hace Motorpedia Pro</h3>
+                    </div>
+
+                    <ul class="space-y-4 text-sm text-zinc-300">
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
+                            <span><strong>Lectura de averías de motor y transmisión:</strong> Lee códigos genéricos (P0xxx) y específicos de fabricante (P1xxx, P2xxx, P3xxx) bajo el protocolo oficial SAE J1979 / ISO 15765-4.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
+                            <span><strong>Apaga el testigo Check Engine (MIL):</strong> Envía el comando estandarizado Mode 04 para limpiar la memoria de fallos de la ECU tras realizar la reparación.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
+                            <span><strong>Telemetría de sensores en vivo:</strong> Lee valores de temperatura, revoluciones, presión absoluta del colector (MAP), caudal de aire (MAF) y posición de mariposa a alta tasa de refresco.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
+                            <span><strong>Modo Drag de aceleración:</strong> Mide tiempos de 0 a 100 km/h y 400 metros cruzando lecturas de velocidad reales de la centralita con el sensor inercial del teléfono.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
+                            <span><strong>Enciclopedia offline de +50.000 DTCs:</strong> Base de datos local integrada con explicaciones detalladas y síntomas habituales sin requerir conexión a internet.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Columna: Qué NO hace -->
+                <div class="bento-card rounded-3xl p-8 border-red-500/30">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Qué NO hace (Importante)</h3>
+                    </div>
+
+                    <ul class="space-y-4 text-sm text-zinc-300">
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
+                            <span><strong>NO reprograma centralitas (NO es Stage 1 / Chiptuning):</strong> No altera mapas de inyección, no aumenta caballos ni flashea memorias EEPROM. El protocolo ELM327 estándar es de diagnosis, no de reprogramación.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
+                            <span><strong>NO modifica el cuentakilómetros:</strong> No altera el odómetro legal del vehículo. Es ilegal y técnicamente imposible mediante comandos de lectura estándar OBD2.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
+                            <span><strong>NO anula sistemas anticontaminación:</strong> No desactiva filtros de partículas (DPF/FAP), válvulas EGR ni inyección de AdBlue (SCR). Cumplimos estrictamente la normativa de emisiones.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
+                            <span><strong>NO repara averías mecánicas por sí sola:</strong> Si borras un código con un sensor físicamente roto o un manguito rajado, la centralita volverá a encender la luz de Check Engine tras unos kilómetros de circulación.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SUB-PESTAÑA 3: BUSCADOR WEB INTERACTIVO DTC
+             ========================================== -->
+        <section id="panel-buscador" class="tab-panel hidden max-w-5xl mx-auto space-y-8">
+            <div class="text-center max-w-2xl mx-auto">
+                <span class="text-xs font-mono uppercase text-cyan-400 tracking-wider block mb-2">Base de Datos de Diagnóstico</span>
+                <h2 class="text-3xl font-extrabold text-white">Buscador Web de Códigos DTC (+50.000)</h2>
+                <p class="text-zinc-400 text-sm mt-2">
+                    Introduce cualquier código OBD2 estándar (P, B, C, U) o palabra clave para consultar su significado y posibles causas en español.
+                </p>
+            </div>
+
+            <!-- Caja de búsqueda interactiva -->
+            <div class="bento-card rounded-3xl p-6 md:p-8">
+                <div class="relative mb-6">
+                    <input type="text" id="dtc-input" oninput="buscarDTC()" placeholder="Escribe un código (ej. P0420, P0171, U0100) o término (catalizador, turbo)..." class="w-full bg-[#08080a] border border-white/15 focus:border-cyan-400 focus:outline-none rounded-2xl px-5 py-4 text-white text-base font-mono placeholder:text-zinc-500 pl-12 transition">
+                    <svg class="w-5 h-5 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </div>
+
+                <!-- Botones de códigos frecuentes -->
+                <div class="flex flex-wrap items-center gap-2 mb-6">
+                    <span class="text-xs font-mono text-zinc-500 uppercase">Códigos más buscados:</span>
+                    <button type="button" onclick="setSearch('P0420')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-cyan-500/20 text-cyan-300 border border-white/10 text-xs font-mono transition">P0420</button>
+                    <button type="button" onclick="setSearch('P0171')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-cyan-500/20 text-cyan-300 border border-white/10 text-xs font-mono transition">P0171</button>
+                    <button type="button" onclick="setSearch('P0300')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-cyan-500/20 text-cyan-300 border border-white/10 text-xs font-mono transition">P0300</button>
+                    <button type="button" onclick="setSearch('P0401')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-cyan-500/20 text-cyan-300 border border-white/10 text-xs font-mono transition">P0401</button>
+                    <button type="button" onclick="setSearch('P0299')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-cyan-500/20 text-cyan-300 border border-white/10 text-xs font-mono transition">P0299</button>
+                    <button type="button" onclick="setSearch('P0101')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-cyan-500/20 text-cyan-300 border border-white/10 text-xs font-mono transition">P0101</button>
+                    <button type="button" onclick="setSearch('U0100')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-cyan-500/20 text-cyan-300 border border-white/10 text-xs font-mono transition">U0100</button>
+                    <button type="button" onclick="setSearch('P0500')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-cyan-500/20 text-cyan-300 border border-white/10 text-xs font-mono transition">P0500</button>
+                </div>
+
+                <div class="flex items-center justify-between text-xs font-mono text-zinc-500 border-b border-white/10 pb-3 mb-4">
+                    <span id="dtc-counter">20 códigos en base local</span>
+                    <span>Resultados interactivos</span>
+                </div>
+
+                <!-- Contenedor de Resultados -->
+                <div id="dtc-results" class="space-y-3">
+                    <!-- Rellenado dinámicamente con JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SUB-PESTAÑA 4: GUÍA DE ADAPTADORES OBD2
+             ========================================== -->
+        <section id="panel-adaptadores" class="tab-panel hidden max-w-6xl mx-auto space-y-12">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="text-xs font-mono uppercase text-cyan-400 tracking-wider block mb-2">Hardware Recomendado</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white">Guía de Adaptadores OBD2 (ELM327)</h2>
+                <p class="text-zinc-400 text-sm mt-2">
+                    No todos los adaptadores son iguales. Aprende a elegir el modelo adecuado con nuestra clasificación de semáforo para no malgastar tu dinero ni tener problemas de conexión.
+                </p>
+            </div>
+
+            <!-- Semáforo de Adaptadores -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- 🟢 Recomendados -->
+                <div class="bento-card rounded-3xl p-7 border-emerald-500/30">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-mono uppercase mb-4">
+                        <span>🟢 Recomendados (Estables)</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Bluetooth 4.0/5.0 BLE &amp; PIC18F25K80</h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+                        Adaptadores con procesadores ARM o chips genuinos Microchip que no pierden paquetes en el bus CAN y cuentan con modo de reposo automático para no descargar la batería de tu coche.
+                    </p>
+                    <ul class="text-xs text-zinc-300 space-y-2 mb-4 font-mono">
+                        <li>&bull; Vgate iCar Pro (BLE 4.0 / BT 3.0)</li>
+                        <li>&bull; OBDLink LX / MX+ Bluetooth</li>
+                        <li>&bull; Viecar Bluetooth 4.0 Dual-Mode</li>
+                        <li>&bull; Konnwei KW902 auténtico</li>
+                    </ul>
+                    <span class="text-[11px] text-emerald-400 font-semibold block">Recomendados para uso frecuente y modo relojes.</span>
+                </div>
+
+                <!-- 🟡 Básicos Funcionales -->
+                <div class="bento-card rounded-3xl p-7 border-amber-500/30">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-mono uppercase mb-4">
+                        <span>🟡 Básicos (Económicos)</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">ELM327 v1.5 Genéricos</h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+                        Los clásicos adaptadores de carcasa azul translúcida o negra con firmware v1.5. Son muy baratos (5-10 €) y suficientes para leer y borrar averías de motor de forma puntual.
+                    </p>
+                    <div class="p-3 bg-amber-500/5 border border-amber-500/20 rounded-xl mb-4">
+                        <span class="text-[11px] text-amber-300 block"><strong>Aviso:</strong> No tienen modo de suspensión automática. Es aconsejable desenchufarlos tras terminar la diagnosis.</span>
+                    </div>
+                    <span class="text-[11px] text-zinc-400 block font-mono">Válidos para salir del paso en casa.</span>
+                </div>
+
+                <!-- 🔴 A Evitar -->
+                <div class="bento-card rounded-3xl p-7 border-red-500/30">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/25 text-red-400 text-xs font-mono uppercase mb-4">
+                        <span>🔴 A Evitar Absolutamente</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Clones v2.1 Recortados &amp; Wi-Fi</h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+                        Adaptadores ultrabaratos falsamente etiquetados como "v2.1" con microcontroladores recortados que no soportan los comandos AT estándar del bus CAN ni el protocolo ISO 14229.
+                    </p>
+                    <ul class="text-xs text-zinc-400 space-y-2 mb-4">
+                        <li>&bull; Fallan continuamente al conectar con la ECU.</li>
+                        <li>&bull; Adaptadores Wi-Fi: bloquean la conexión a internet móvil de tu teléfono mientras los usas.</li>
+                    </ul>
+                    <span class="text-[11px] text-red-400 font-semibold block">Generan frustración y errores de timeout.</span>
+                </div>
+
+            </div>
+
+            <!-- Guía Rápida en 3 Pasos de Conexión -->
+            <div class="bento-card rounded-3xl p-8">
+                <h3 class="text-xl font-bold text-white mb-6">Guía rápida de conexión en 3 pasos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-[#09090e] border border-white/10 rounded-2xl p-5">
+                        <span class="text-xs font-mono text-cyan-400 font-bold block mb-2">PASO 01 &bull; PUERTO OBD2</span>
+                        <p class="text-xs text-zinc-300 leading-relaxed">
+                            Localiza el conector hembra de 16 pines en tu vehículo (suele estar debajo del volante, en la caja de fusibles lateral o bajo el cenicero). Enchufa el adaptador firmemente.
+                        </p>
+                    </div>
+                    <div class="bg-[#09090e] border border-white/10 rounded-2xl p-5">
+                        <span class="text-xs font-mono text-cyan-400 font-bold block mb-2">PASO 02 &bull; CONTACTO PUESTO</span>
+                        <p class="text-xs text-zinc-300 leading-relaxed">
+                            Gira la llave a posición de contacto (cuadro encendido) o arranca el motor si vas a monitorear relojes. En Android, empareja el dispositivo Bluetooth (PIN típico: <code class="text-white">1234</code> o <code class="text-white">0000</code>).
+                        </p>
+                    </div>
+                    <div class="bg-[#09090e] border border-white/10 rounded-2xl p-5">
+                        <span class="text-xs font-mono text-cyan-400 font-bold block mb-2">PASO 03 &bull; ABRIR MOTORPEDIA</span>
+                        <p class="text-xs text-zinc-300 leading-relaxed">
+                            Abre Motorpedia OBD2 Pro, pulsa en Conectar y selecciona tu adaptador. En cuestión de 3 segundos se negociará el protocolo y verás tus revoluciones en vivo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SUB-PESTAÑA 5: PREGUNTAS FRECUENTES (FAQ)
+             ========================================== -->
+        <section id="panel-faq" class="tab-panel hidden max-w-4xl mx-auto space-y-4">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="text-xs font-mono uppercase text-cyan-400 tracking-wider block mb-2">Centro de Respuestas</span>
+                <h2 class="text-3xl font-extrabold text-white">Preguntas Frecuentes sobre Motorpedia Pro</h2>
+                <p class="text-zinc-400 text-sm mt-2">Dudas reales resueltas por nuestro equipo de ingeniería.</p>
+            </div>
+
+            <!-- FAQ 1 -->
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer" open>
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Es seguro usar la app? ¿Puedo desprogramar o romper la centralita del coche?</span>
+                    <span class="text-cyan-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Es 100% seguro. Motorpedia Pro opera estrictamente bajo los servicios de solo lectura estandarizados por la normativa internacional (SAE J1979 / ISO 15765-4). Únicamente solicita lecturas de sensores y envía la orden estandarizada de borrado de códigos (Mode 04) cuando tú pulsas el botón. Es imposible desprogramar mapas, inmovilizadores o alterar la electrónica del vehículo.
+                </p>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Con qué marcas y años de coche es compatible Motorpedia Pro?</span>
+                    <span class="text-cyan-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Es compatible con cualquier vehículo que cumpla con la normativa OBD2/EOBD de 16 pines:
+                    <br>&bull; <strong>Gasolina:</strong> Matriculados en Europa desde el año 2001 en adelante.
+                    <br>&bull; <strong>Diésel:</strong> Matriculados en Europa desde el año 2004 en adelante.
+                    <br>&bull; <strong>Mercado Americano (US OBD2):</strong> Prácticamente todos los modelos desde 1996.
+                </p>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>Si borro el código de avería y se apaga el Check Engine, ¿ya está arreglado el coche?</span>
+                    <span class="text-cyan-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Borrar el código limpia la memoria de la centralita y apaga el testigo en el cuadro. Si el fallo fue esporádico (por ejemplo, una bajada de tensión puntual de la batería o un tapón de gasolina mal cerrado), no volverá a aparecer. Sin embargo, si existe una avería mecánica o eléctrica real (una bobina comunicada, una sonda lambda quemada, etc.), la ECU detectará la anomalía tras unos kilómetros y volverá a encender el testigo hasta reparar la pieza.
+                </p>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Por qué mi adaptador enciende sus luces pero la app dice que no conecta a la ECU?</span>
+                    <span class="text-cyan-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Las luces LED del adaptador solo indican que recibe 12V del pin 16 del coche. Para conectar con la centralita necesitas: 1) Poner el contacto del coche (llave en posición II con el cuadro encendido). 2) Cerrar otras aplicaciones OBD2 en segundo plano (el adaptador solo soporta un cliente Bluetooth simultáneo). 3) Comprobar que tu adaptador no es un clon chino defectuoso v2.1.
+                </p>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Puedo dejar el adaptador OBD2 conectado permanentemente en el coche?</span>
+                    <span class="text-cyan-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Si utilizas un adaptador con función de ahorro de energía (Auto-Sleep) como el <strong>Vgate iCar Pro</strong> o <strong>OBDLink</strong>, sí puedes dejarlo conectado, ya que entran en suspensión (<3 mA) al detectar que el motor se apaga. Si tienes un ELM327 genérico barato, te recomendamos desenchufarlo si vas a dejar el coche parado varios días para evitar agotar la batería de 12V.
+                </p>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Necesito internet o cobertura móvil para usar Motorpedia Pro en un garaje?</span>
+                    <span class="text-cyan-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    <strong>No.</strong> Toda la base de datos de más de 50.000 códigos DTC y la lógica de comunicación con la ECU están almacenadas localmente dentro de la aplicación. Puedes realizar diagnósticos completos en garajes subterráneos o en mitad de la montaña sin cobertura.
+                </p>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Puede apagar la luz de Airbag, ABS o el testigo de cambio de aceite?</span>
+                    <span class="text-cyan-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Motorpedia Pro está especializada en diagnosis de <strong>Motor, Transmisión y Emisiones (Powertrain / Códigos P)</strong> bajo el estándar internacional OBD2/EOBD. Los módulos de Airbag (SRS), ABS/ESP o el reseteo de intervalos de aceite suelen utilizar protocolos propietarios específicos de cada fabricante que requieren máquinas dedicadas.
+                </p>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Qué diferencia hay entre Motorpedia Pro y una máquina de taller de 2.000 €?</span>
+                    <span class="text-cyan-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Las máquinas de taller profesionales (tipo Bosch KTS o Autel MaxiSys) incluyen funciones de codificación de inyectores, regeneración forzada de DPF y diagnosis de carrocería multimarca. Motorpedia Pro te ofrece el 90% de lo que un conductor, aficionado o mecánico particular necesita a diario (saber por qué se enciende el Check Engine, leer datos en vivo, medir prestaciones y borrar fallos de motor) por una fracción mínima del coste y sin cuotas de suscripción.
+                </p>
+            </details>
+
+        </section>
+
+        <!-- ==========================================
+             BLOQUE FINAL: APOYO EN KO-FI & VENTA CRUZADA
+             ========================================== -->
+        <section class="max-w-6xl mx-auto mt-24 pt-16 border-t border-white/10">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                
+                <!-- Tarjeta Ko-fi -->
+                <div class="bento-card p-8 rounded-3xl border border-amber-500/25 flex flex-col justify-between">
+                    <div>
+                        <span class="inline-flex items-center gap-2 text-xs font-mono uppercase text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full mb-4">
+                            ☕ Desarrollo Independiente
+                        </span>
+                        <h3 class="text-xl font-bold text-white mb-2">¿Te ha ayudado Motorpedia?</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed mb-6">
+                            Si nuestra herramienta te ha ahorrado una factura innecesaria de taller o te ha servido para diagnosticar tu coche en un momento crítico, puedes invitarnos a un café en Ko-fi para seguir mejorándola.
+                        </p>
+                    </div>
+                    <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs px-6 py-3.5 rounded-full transition shadow-lg shadow-amber-500/20">
+                        <span>Invítanos a un café en Ko-fi</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Tarjetas de Venta Cruzada (Otras Apps de ArtimaDev) -->
+                <div class="lg:col-span-2 space-y-4">
+                    <span class="text-xs font-mono uppercase text-zinc-400 font-bold tracking-wider block">Descubre otras aplicaciones del estudio</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <a href="cinematch.html" class="bento-card p-5 rounded-2xl block group hover:border-red-500/30 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-red-400">Streaming &bull; Cine</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-red-400 transition">CineMatch</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Filtra en 12 plataformas, candado parental y modo duelo en pareja.</p>
+                        </a>
+                        <a href="quickmute.html" class="bento-card p-5 rounded-2xl block group hover:border-purple-500/30 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-purple-400">Audio &bull; Productividad</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-purple-400 transition">QuickMute</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Control táctil de sonido, Quick Settings Tile y temporizador inteligente.</p>
+                        </a>
+                        <a href="baterix.html" class="bento-card p-5 rounded-2xl block group hover:border-emerald-500/30 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-emerald-400">Energía &bull; Batería</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-emerald-400 transition">Batterix</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Alerta de carga al 80%, lectura real de mA y widgets Jetpack Glance.</p>
+                        </a>
+                        <a href="pluvio.html" class="bento-card p-5 rounded-2xl block group hover:border-sky-500/30 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-sky-400">Clima &bull; Nowcasting</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-sky-400 transition">Pluvio</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Radar de lluvia hiperlocal a 60 minutos con alertas inteligentes.</p>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER GLOBAL UNIFICADO -->
+    <footer class="border-t border-white/10 bg-[#060608] pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+                <!-- Columna 1: Marca -->
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center font-black text-white text-sm">
+                            A
+                        </div>
+                        <span class="text-lg font-extrabold text-white">Artima<span class="text-cyan-400">Dev</span> Studio</span>
+                    </a>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+                        Estudio de Ingeniería Android independiente especializado en aplicaciones nativas en Kotlin, diagnóstico automotriz OBD2 y utilidades de sistema.
+                    </p>
+                    <p class="text-xs font-mono text-zinc-500">Barcelona, España &bull; EU</p>
+                </div>
+
+                <!-- Columna 2: Catálogo de Apps -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Aplicaciones</h4>
+                    <ul class="space-y-2.5 text-xs text-zinc-400">
+                        <li><a href="motorpedia.html" class="text-cyan-400 font-semibold">Motorpedia OBD2 Pro</a></li>
+                        <li><a href="cinematch.html" class="hover:text-red-400 transition">CineMatch Streaming</a></li>
+                        <li><a href="quickmute.html" class="hover:text-purple-400 transition">QuickMute Audio Control</a></li>
+                        <li><a href="baterix.html" class="hover:text-emerald-400 transition">Batterix Battery Health</a></li>
+                        <li><a href="pluvio.html" class="hover:text-sky-400 transition">Pluvio Rain Radar</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Recursos y Soporte -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Comunidad &amp; Legal</h4>
+                    <ul class="space-y-2.5 text-xs text-zinc-400">
+                        <li><a href="soporte.html" class="hover:text-white transition">Centro de Soporte Técnico</a></li>
+                        <li><a href="soporte.html#testers" class="hover:text-blue-400 transition">Programa Oficial Beta Testers</a></li>
+                        <li><a href="privacidad.html" class="hover:text-white transition">Política de Privacidad Multi-App</a></li>
+                        <li><a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="hover:text-amber-400 transition">Apoyar Estudio en Ko-fi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Contacto Directo -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Contacto Directo</h4>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-3">
+                        Atención técnica directa por parte del equipo de desarrollo sin bots ni intermediarios.
+                    </p>
+                    <a href="mailto:artimadev@gmail.com" class="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 hover:text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 px-3.5 py-2 rounded-lg transition mb-3">
+                        <span>artimadev@gmail.com</span>
+                    </a>
+                    <div class="block">
+                        <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 transition">
+                            <span>☕ ko-fi.com/artimadev</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+                <p>&copy; 2026 ArtimaDev Studio (Barcelona, España). Todos los derechos reservados.</p>
+                <p class="font-mono text-[11px]">OBD-II y ELM327 son especificaciones y marcas de sus respectivos propietarios.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT DE PESTAÑAS Y BUSCADOR DTC -->
+    <script>
+        // Control de Menú Móvil
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Cambio de sub-pestañas internas sin recargar la página
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            const targetPanel = document.getElementById('panel-' + tabId);
+            const targetBtn = document.getElementById('tab-btn-' + tabId);
+
+            if (targetPanel && targetBtn) {
+                targetPanel.classList.remove('hidden');
+                targetBtn.classList.add('active');
+            }
+        }
+
+        // Base de datos inicial integrada de 20 códigos comunes en español
+        let dtcDatabase = [
+            { code: "P0420", system: "Emisiones / Catalizador", desc: "Eficiencia del sistema catalizador por debajo del umbral (Bloque 1)", hint: "Revisa la sonda lambda trasera (sensor 2), posibles fugas en el tramo de escape o degradación del monolito cerámico del catalizador." },
+            { code: "P0171", system: "Combustible y Aire", desc: "Mezcla de combustible demasiado pobre (Bloque 1)", hint: "Posible entrada de aire no medida (fuga de vacío en admisión), caudalímetro (MAF) sucio o baja presión de la bomba de combustible." },
+            { code: "P0300", system: "Sistema de Encendido", desc: "Detectado fallo de encendido aleatorio o en múltiples cilindros", hint: "Inspecciona el estado de las bujías, bobinas de encendido, inyectores atascados o pérdida de compresión en cilindros." },
+            { code: "P0401", system: "Control de Emisiones EGR", desc: "Flujo insuficiente detectado en el sistema de recirculación de gases de escape (EGR)", hint: "Válvula EGR agarrotada o conductos del colector obstruidos por acumulación severa de carbonilla." },
+            { code: "P0299", system: "Sobrealimentación / Turbo", desc: "Presión de sobrealimentación del turbocompresor baja (Subalimentación)", hint: "Comprueba manguitos del intercooler rajados, válvula de descarga (wastegate/diverter) o la electroválvula de control N75." },
+            { code: "P0101", system: "Admisión / Sensores", desc: "Rango / rendimiento del circuito del sensor de flujo de masa de aire (MAF)", hint: "Caudalímetro contaminado por aceite o polvo; limpia el filamento sensor con spray limpiacontactos específico sin residuo." },
+            { code: "P0113", system: "Sensores de Aire", desc: "Señal de entrada alta en el circuito del sensor de temperatura del aire de admisión (IAT)", hint: "Conector del sensor IAT suelto, cableado cortado o sensor con resistencia abierta." },
+            { code: "P0500", system: "Velocidad del Vehículo", desc: "Mal funcionamiento en el sensor de velocidad del vehículo (VSS)", hint: "Fallo en el captador de velocidad de la caja de cambios o señal del módulo de control de frenos ABS interrumpida." },
+            { code: "U0100", system: "Red de Comunicación CAN", desc: "Pérdida de comunicación con el módulo de control del motor (ECM/PCM)", hint: "Comprueba las líneas de bus CAN-High y CAN-Low, el relé principal de la ECU y la masa del chasis." },
+            { code: "P0130", system: "Sondas de Oxígeno", desc: "Mal funcionamiento en el circuito de la sonda lambda (Sensor 1, Bloque 1)", hint: "Sonda previa al catalizador desgastada o cableado térmico de precalentamiento interrumpido." },
+            { code: "P0340", system: "Distribución / Fase", desc: "Fallo de circuito en el sensor de posición del árbol de levas (CMP)", hint: "Sensor de árbol de levas defectuoso, desfase en la correa/cadena de distribución o conector flojo." },
+            { code: "P0335", system: "Cigüeñal / Encendido", desc: "Fallo en el circuito del sensor de posición del cigüeñal (CKP)", hint: "Impide el arranque del motor; revisa el sensor inductivo o de efecto Hall en el volante motor." },
+            { code: "P0115", system: "Refrigeración Motor", desc: "Mal funcionamiento en el circuito del sensor de temperatura del refrigerante (ECT)", hint: "Sensor ECT fuera de escala o termostato atascado en posición abierta." },
+            { code: "P0234", system: "Sobrealimentación / Turbo", desc: "Condición de sobrepresión del turbocompresor (Sobreboost)", hint: "Geometría variable del turbo atascada por carbonilla o válvula de control de vacío defectuosa." },
+            { code: "P0442", system: "Sistema EVAP", desc: "Fuga pequeña detectada en el sistema de control de emisiones por evaporación", hint: "Tapón de llenado de combustible flojo o junta de goma agrietada; cánister de carbón activo con fuga." },
+            { code: "P0505", system: "Control de Ralentí", desc: "Mal funcionamiento en el sistema de control de aire de ralentí (IAC)", hint: "Cuerpo de mariposa sucio o válvula de ralentí agarrotada por residuos aceitosos." },
+            { code: "P0700", system: "Transmisión Automática", desc: "Solicitud de encendido de MIL por el sistema de control de la transmisión (TCM)", hint: "La caja de cambios automática tiene un código de avería registrado; lee el módulo TCM." },
+            { code: "B1000", system: "Módulo de Carrocería BCM", desc: "Fallo interno o de tensión en la unidad de control de carrocería", hint: "Revisa el estado de carga y bornes de la batería principal de 12V." },
+            { code: "C0035", system: "Sistema de Frenos ABS", desc: "Fallo en el circuito del sensor de velocidad de la rueda delantera izquierda", hint: "Cable del captador ABS seccionado o anillo magnético del rodamiento sucio." },
+            { code: "P2002", system: "Filtro Partículas DPF", desc: "Eficiencia del filtro de partículas diésel por debajo del umbral (Bloque 1)", hint: "Filtro DPF saturado de hollín o fallo en las tomas del sensor de presión diferencial." }
+        ];
+
+        // Intenta cargar automáticamente 'dtc_database.json' completo si existe en el servidor
+        fetch('dtc_database.json')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data && Array.isArray(data)) {
+                    dtcDatabase = data;
+                    const counter = document.getElementById('dtc-counter');
+                    if (counter) {
+                        counter.textContent = data.length.toLocaleString('es-ES') + ' códigos cargados en base de datos';
+                    }
+                    buscarDTC();
+                }
+            })
+            .catch(() => {});
+
+        function setSearch(val) {
+            const input = document.getElementById('dtc-input');
+            if (input) {
+                input.value = val;
+                buscarDTC();
+            }
+        }
+
+        function buscarDTC() {
+            const input = document.getElementById('dtc-input');
+            const container = document.getElementById('dtc-results');
+            if (!input || !container) return;
+
+            const query = input.value.trim().toUpperCase();
+
+            const filtered = query === ''
+                ? dtcDatabase.slice(0, 8)
+                : dtcDatabase.filter(item => 
+                    item.code.toUpperCase().includes(query) || 
+                    (item.desc && item.desc.toUpperCase().includes(query)) ||
+                    (item.system && item.system.toUpperCase().includes(query))
+                ).slice(0, 25);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="p-8 rounded-2xl bg-[#0a0a0f] border border-white/10 text-center">
+                        <p class="text-sm text-zinc-300 font-semibold mb-1">No se han encontrado coincidencias para "${query}" en el visor web.</p>
+                        <p class="text-xs text-zinc-400">Descarga la app <strong>Motorpedia OBD2 Pro</strong> en tu móvil para acceder al diccionario completo de más de 50.000 códigos sin conexión.</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="p-5 rounded-2xl bg-[#09090e] border border-white/10 hover:border-cyan-500/40 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-3">
+                            <span class="font-mono font-black text-lg text-cyan-400">${item.code}</span>
+                            <span class="text-[11px] font-mono bg-white/5 border border-white/10 text-zinc-400 px-2.5 py-0.5 rounded-md">${item.system || 'Diagnóstico OBD2'}</span>
+                        </div>
+                        <p class="text-sm font-semibold text-white">${item.desc}</p>
+                        ${item.hint ? `<p class="text-xs text-zinc-400 mt-1">💡 <strong class="text-zinc-300">Causa probable:</strong> ${item.hint}</p>` : ''}
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.artimadev.motorpedia" target="_blank" rel="noopener" class="text-xs font-bold font-mono text-cyan-400 hover:text-cyan-300 whitespace-nowrap self-start sm:self-center bg-cyan-500/10 border border-cyan-500/20 px-3.5 py-2 rounded-xl transition">
+                        Diagnosticar en App &rarr;
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        // Inicialización al cargar la página
+        buscarDTC();
+
+        // Soporte de navegación por hash (#buscador, #adaptadores, #faq, #transparencia)
+        const initialHash = window.location.hash.replace('#', '').toLowerCase();
+        if (['resumen', 'transparencia', 'buscador', 'adaptadores', 'faq'].includes(initialHash)) {
+            switchTab(initialHash);
+        }
+    </script>
+</body>
+</html>

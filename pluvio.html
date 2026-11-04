@@ -1,0 +1,677 @@
+﻿<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pluvio | Radar de Lluvia Hiperlocal a 60 Minutos y Widget Glance — ArtimaDev Studio</title>
+    <meta name="description" content="Nowcasting meteorológico a 60 minutos vista en Android. Alertas preventivas inteligentes con WorkManager y widget Jetpack Glance sin mapas pesados ni publicidad.">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        dark: '#08080a',
+                        surface: '#0d0d12',
+                        card: '#111118',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #08080a;
+            color: #f4f4f5;
+            background-image: radial-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .bento-card {
+            background: linear-gradient(180deg, rgba(20, 20, 28, 0.75) 0%, rgba(11, 11, 15, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bento-card:hover {
+            border-color: rgba(56, 189, 248, 0.30);
+        }
+        .phone-mockup {
+            border: 8px solid #1f2029;
+            border-radius: 2.5rem;
+            background: #09090d;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 14px;
+            background: #1f2029;
+            border-radius: 10px;
+            z-index: 20;
+        }
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-sky-500 selection:text-black">
+
+    <!-- HEADER / BARRA DE NAVEGACIÓN GLOBAL UNIFICADA -->
+    <header class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <!-- Logo ArtimaDev -->
+            <a href="index.html" class="flex items-center gap-3 group shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 22 12 17 22 22 12 2"></polygon>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-extrabold tracking-tight text-white leading-none">Artima<span class="text-blue-400">Dev</span></span>
+                        <span class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-zinc-400">Barcelona &bull; ES</span>
+                    </div>
+                    <span class="text-[11px] text-zinc-500 font-mono block mt-0.5">Android Engineering Studio</span>
+                </div>
+            </a>
+
+            <!-- Navegación Escritorio -->
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-zinc-400">
+                <a href="index.html" class="hover:text-white transition">Inicio</a>
+                <a href="motorpedia.html" class="hover:text-cyan-400 transition flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                    Motorpedia Pro
+                </a>
+                <a href="cinematch.html" class="hover:text-red-400 transition flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                    CineMatch
+                </a>
+
+                <!-- Desplegable Utilidades -->
+                <div class="relative group">
+                    <button class="text-sky-400 font-semibold transition flex items-center gap-1 py-2 focus:outline-none">
+                        <span>Utilidades</span>
+                        <svg class="w-4 h-4 text-sky-400 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 top-full pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="bg-[#0d0d12] border border-white/10 rounded-2xl p-2 shadow-2xl backdrop-blur-xl space-y-1">
+                            <a href="quickmute.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-white group-hover/item:text-purple-400 transition block">QuickMute</span>
+                                    <span class="text-[11px] text-zinc-500">Control instantáneo de audio</span>
+                                </div>
+                            </a>
+                            <a href="baterix.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-white group-hover/item:text-emerald-400 transition block">Batterix</span>
+                                    <span class="text-[11px] text-zinc-500">Telemetría y salud de batería</span>
+                                </div>
+                            </a>
+                            <a href="pluvio.html" class="flex items-center gap-3 p-2.5 rounded-xl bg-sky-500/10 text-sky-300 transition group/item">
+                                <div class="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-white group-hover/item:text-sky-400 transition block">Pluvio</span>
+                                    <span class="text-[11px] text-zinc-500">Radar de lluvia hiperlocal 60m</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="soporte.html" class="hover:text-white transition">Soporte &amp; Testers</a>
+                <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
+            </nav>
+
+            <!-- Botones de Acción Derecha -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 transition shadow-sm shadow-amber-500/10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                    </svg>
+                    <span>Apoyar en Ko-fi</span>
+                </a>
+                <a href="mailto:artimadev@gmail.com" class="bg-white/5 hover:bg-white/10 text-zinc-200 px-4 py-2 rounded-full border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition">
+                    <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span>Contacto</span>
+                </a>
+            </div>
+
+            <!-- Botón Menú Móvil -->
+            <button id="menu-btn" aria-label="Abrir Menú de Navegación" class="lg:hidden text-zinc-300 hover:text-white p-2 rounded-lg border border-white/10 bg-white/5">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden lg:hidden border-b border-white/10 bg-[#08080a]/95 backdrop-blur-xl px-6 py-6 space-y-4 text-sm">
+            <div class="space-y-2">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Navegación Principal</span>
+                <a href="index.html" class="block text-zinc-300 hover:text-white font-medium py-1.5">Inicio</a>
+                <a href="motorpedia.html" class="block text-cyan-400 font-semibold py-1.5">Motorpedia Pro &mdash; Automoción OBD2</a>
+                <a href="cinematch.html" class="block text-red-400 font-semibold py-1.5">CineMatch &mdash; Streaming</a>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Suite de Utilidades</span>
+                <a href="quickmute.html" class="block text-purple-400 font-semibold py-1">QuickMute &mdash; Control de Audio</a>
+                <a href="baterix.html" class="block text-emerald-400 font-semibold py-1">Batterix &mdash; Telemetría de Batería</a>
+                <a href="pluvio.html" class="block text-sky-400 font-bold py-1">Pluvio &mdash; Radar de Lluvia 60m</a>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <a href="soporte.html" class="block text-zinc-300 hover:text-white font-medium py-1">Soporte &amp; Programa Beta Testers</a>
+                <a href="privacidad.html" class="block text-zinc-300 hover:text-white font-medium py-1">Centro de Privacidad Legal</a>
+            </div>
+            <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/15 border border-amber-500/30 text-amber-400 px-4 py-2 rounded-full text-xs font-bold">
+                    Apoyar en Ko-fi
+                </a>
+                <a href="mailto:artimadev@gmail.com" class="bg-white/5 border border-white/10 text-zinc-300 px-4 py-2 rounded-full text-xs font-mono">
+                    artimadev@gmail.com
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow pt-32 pb-24 px-6">
+
+        <!-- CABECERA DEL PRODUCTO -->
+        <section class="max-w-5xl mx-auto text-center pt-4 mb-14">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-400 text-xs font-mono uppercase mb-6">
+                <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                <span>NOWCASTING 60 MINUTOS &bull; OPEN-METEO API &bull; JETPACK GLANCE</span>
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6">
+                Plu<span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-blue-500">vio</span>
+            </h1>
+            <p class="text-base sm:text-lg text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-8">
+                Radar de precipitación hiperlocal a corto plazo (<code class="text-sky-400 font-mono">com.artimadev.pluvio</code>). Diseñado para responder a una sola pregunta con precisión quirúrgica: <strong class="text-white">¿Va a llover en los próximos 60 minutos antes de salir en moto, bici o a correr?</strong> Previsión minuto a minuto, alertas con <strong class="text-sky-300">WorkManager</strong> y widget minimalista Glance.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="soporte.html#testers" class="bg-sky-400 hover:bg-sky-300 text-black font-extrabold px-8 py-3.5 rounded-full text-sm transition flex items-center gap-2 shadow-xl shadow-sky-500/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                    </svg>
+                    <span>Apuntarse a la Lista de Espera (Beta)</span>
+                </a>
+                <a href="#mockups" class="bg-white/5 hover:bg-white/10 text-white border border-white/15 font-semibold px-7 py-3.5 rounded-full text-sm transition">
+                    Ver Previsión y Widgets
+                </a>
+            </div>
+        </section>
+
+        <!-- GRID DE CARACTERÍSTICAS TÉCNICAS -->
+        <section class="max-w-6xl mx-auto mb-20">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="bento-card p-8 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/25 flex items-center justify-center text-sky-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Nowcasting a 60 Minutos</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+                        Gráfica detallada con resolución minuto a minuto. Conoce la hora exacta en la que comenzarán a caer las primeras gotas y la intensidad prevista en milímetros por hora (mm/h).
+                    </p>
+                    <span class="text-xs font-mono text-sky-400">Resolución Minuto a Minuto &bull; Nowcast</span>
+                </div>
+
+                <div class="bento-card p-8 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Alertas con WorkManager</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+                        Verificaciones periódicas ultraligeras en segundo plano gestionadas por <code class="font-mono text-sky-300">WorkManager</code>. Si se aproxima lluvia inminente, Pluvio te envía una notificación preventiva para recoger la ropa o coger el paraguas.
+                    </p>
+                    <span class="text-xs font-mono text-blue-400">Android WorkManager &bull; Zero WakeLock</span>
+                </div>
+
+                <div class="bento-card p-8 rounded-3xl">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center text-cyan-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Widget Jetpack Glance</h3>
+                    <p class="text-sm text-zinc-400 leading-relaxed mb-4">
+                        Toda la información condensada en un widget limpio para tu pantalla de inicio. Olvídate de abrir aplicaciones pesadas de 100 megas cargadas de banners y noticias irrelevantes.
+                    </p>
+                    <span class="text-xs font-mono text-cyan-400">Glance AppWidget &bull; Sin Publicidad</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE TRANSPARENCIA: QUÉ HACE Y QUÉ NO HACE -->
+        <section class="max-w-6xl mx-auto mb-24">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-xs font-mono uppercase text-sky-400 tracking-wider block mb-2">Propósito Claro</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white">¿Qué hace y qué NO hace Pluvio?</h2>
+                <p class="text-zinc-400 text-sm mt-2">Diferenciamos la información crítica inmediata de las apps meteorológicas tradicionales saturadas.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Qué SÍ hace -->
+                <div class="bento-card rounded-3xl p-8 border-emerald-500/30">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 font-black">
+                            &check;
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Qué SÍ hace Pluvio</h3>
+                    </div>
+                    <ul class="space-y-4 text-sm text-zinc-300">
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
+                            <span><strong>Previsión hiperlocal a 60 minutos (Nowcasting):</strong> Analiza la reflectividad de radar Doppler e interpolación de Open-Meteo para anticipar chubascos repentinos.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
+                            <span><strong>Avisos preventivos al instante:</strong> Recibe una notificación silenciosa o sonora antes de que empiece a llover sobre tus coordenadas exactas.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
+                            <span><strong>Widget Glance de consumo residual:</strong> Consulta la previsión con solo encender la pantalla del móvil sin abrir ninguna app.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
+                            <span><strong>Arranque en frío en menos de 200 milisegundos:</strong> Construida en Kotlin nativo para responder con velocidad instantánea.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Qué NO hace -->
+                <div class="bento-card rounded-3xl p-8 border-red-500/30">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-400 font-black">
+                            &times;
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Qué NO hace Pluvio</h3>
+                    </div>
+                    <ul class="space-y-4 text-sm text-zinc-300">
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
+                            <span><strong>NO te satura con mapas de radar interactivos lentos:</strong> Los mapas satelitales tardan en cargar en conexiones 3G/4G y gastan tu tarifa de datos. Pluvio te da el dato exacto en un gráfico limpio.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
+                            <span><strong>NO guarda tu historial de ubicaciones:</strong> Tus coordenadas se envían de forma anónima a la API meteorológica sin ID publicitario y se desechan de inmediato.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
+                            <span><strong>NO te bombardea con anuncios intersticiales ni noticias:</strong> Sin vídeos publicitarios a pantalla completa ni artículos de relleno sensacionalistas.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
+                            <span><strong>NO agota tu batería con GPS continuo:</strong> No rastrea tus pasos; actualiza la previsión solo cuando el sistema operativo programa las tareas con WorkManager.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALERÍA DE MOCKUPS -->
+        <section id="mockups" class="max-w-6xl mx-auto mb-24">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-xs font-mono uppercase text-sky-400 tracking-wider block mb-2">Simplicidad Visual</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white">Información Crítica de Precipitación al Vuelo</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Mockup 1: Nowcasting Minuto a Minuto -->
+                <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
+                    <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
+                        <span class="text-sky-400 font-bold">NOWCASTING 60M</span>
+                        <span class="text-zinc-400">BARCELONA</span>
+                    </div>
+                    <div class="space-y-3 my-auto">
+                        <div class="text-center">
+                            <span class="text-2xl font-black text-white block">Lluvia en 18 min</span>
+                            <span class="text-[10px] text-sky-300 font-mono">Chubasco moderado previsto</span>
+                        </div>
+                        <div class="h-28 bg-white/[0.03] border border-white/10 rounded-2xl p-3 flex flex-col justify-between">
+                            <div class="flex justify-between text-[9px] font-mono text-zinc-500">
+                                <span>Ahora (0m)</span>
+                                <span>30m</span>
+                                <span>60m</span>
+                            </div>
+                            <div class="h-16 flex items-end gap-1 pt-2">
+                                <div class="bg-zinc-800 h-[10%] w-full rounded-t"></div>
+                                <div class="bg-zinc-800 h-[10%] w-full rounded-t"></div>
+                                <div class="bg-sky-500/40 h-[35%] w-full rounded-t"></div>
+                                <div class="bg-sky-400 h-[80%] w-full rounded-t"></div>
+                                <div class="bg-sky-400 h-[95%] w-full rounded-t"></div>
+                                <div class="bg-sky-500/60 h-[50%] w-full rounded-t"></div>
+                                <div class="bg-sky-500/30 h-[25%] w-full rounded-t"></div>
+                                <div class="bg-zinc-800 h-[10%] w-full rounded-t"></div>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-zinc-400 text-center font-mono">Intensidad máxima: 2.8 mm/h a las +26m</p>
+                    </div>
+                    <div class="text-center pt-2 border-t border-white/10 text-[11px] font-mono text-zinc-400">
+                        Curva Minuto a Minuto
+                    </div>
+                </div>
+
+                <!-- Mockup 2: Alerta Preventiva -->
+                <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
+                    <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
+                        <span class="text-sky-400 font-bold">AVISO PREVENTIVO</span>
+                        <span class="text-white">NOTIFICACIÓN</span>
+                    </div>
+                    <div class="space-y-3 my-auto">
+                        <div class="p-3.5 rounded-2xl bg-sky-500/15 border border-sky-500/30 text-left">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                                <span class="text-xs font-bold text-white">Pluvio &bull; Aviso de Lluvia</span>
+                            </div>
+                            <p class="text-xs text-sky-200 leading-snug">Se prevé lluvia moderada en tu zona en los próximos 15 minutos.</p>
+                            <span class="text-[9px] font-mono text-zinc-400 mt-2 block">Coge el paraguas si vas a salir</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-white/[0.02] border border-white/10 text-xs text-zinc-400">
+                            Disparado localmente por WorkManager sin conexión permanente.
+                        </div>
+                    </div>
+                    <div class="text-center pt-2 border-t border-white/10 text-[11px] font-mono text-zinc-400">
+                        Notificación Inteligente
+                    </div>
+                </div>
+
+                <!-- Mockup 3: Glance Widget -->
+                <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
+                    <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
+                        <span class="text-sky-400 font-bold">GLANCE WIDGET</span>
+                        <span class="text-zinc-400">2x2</span>
+                    </div>
+                    <div class="space-y-3 my-auto">
+                        <div class="p-4 rounded-2xl bg-[#111116] border border-sky-500/30 text-left">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-sky-400 font-bold">Pluvio 60m</span>
+                                <span class="text-xs font-mono text-white">18°C</span>
+                            </div>
+                            <span class="text-xl font-black text-white block mb-1">🌧️ Lluvia en 20m</span>
+                            <span class="text-[10px] text-zinc-400 font-mono">Sin lluvia ahora &bull; 85% prob.</span>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 text-center">Widget en la pantalla principal de Android sin abrir la app.</p>
+                    </div>
+                    <div class="text-center pt-2 border-t border-white/10 text-[11px] font-mono text-zinc-400">
+                        Pantalla de Inicio
+                    </div>
+                </div>
+
+                <!-- Mockup 4: Ajustes de Sensibilidad -->
+                <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
+                    <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
+                        <span class="text-white font-bold">CONFIGURACIÓN</span>
+                        <span class="text-emerald-400">PERSONALIZADO</span>
+                    </div>
+                    <div class="space-y-2.5 my-auto text-xs">
+                        <div class="bg-white/[0.03] p-2.5 rounded-xl border border-white/10 flex justify-between items-center">
+                            <span class="text-zinc-300">Avisar si llovizna débil:</span>
+                            <span class="text-sky-400 font-mono font-bold">SÍ</span>
+                        </div>
+                        <div class="bg-white/[0.03] p-2.5 rounded-xl border border-white/10 flex justify-between items-center">
+                            <span class="text-zinc-300">Anticipación mínima:</span>
+                            <span class="text-white font-mono font-bold">15 min</span>
+                        </div>
+                        <div class="bg-white/[0.03] p-2.5 rounded-xl border border-white/10 flex justify-between items-center">
+                            <span class="text-zinc-300">Modo No Molestar nocturno:</span>
+                            <span class="text-emerald-400 font-mono font-bold">Activado</span>
+                        </div>
+                    </div>
+                    <div class="text-center pt-2 border-t border-white/10 text-[11px] font-mono text-zinc-400">
+                        Sensibilidad de Avisos
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ DESPLEGABLE DE 6 PREGUNTAS -->
+        <section class="max-w-4xl mx-auto mb-20 space-y-4">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="text-xs font-mono uppercase text-sky-400 tracking-wider block mb-2">Preguntas Frecuentes</span>
+                <h2 class="text-3xl font-extrabold text-white">Dudas Comunes sobre Pluvio</h2>
+            </div>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer" open>
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Qué es el Nowcasting a 60 minutos y por qué es más fiable que el pronóstico habitual?</span>
+                    <span class="text-sky-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Las predicciones habituales a 24 o 48 horas calculan probabilidades teóricas sobre áreas de varios kilómetros. El <em>Nowcasting</em> (predicción inmediata a muy corto plazo) proyecta el desplazamiento físico real de las nubes y ecos de radar en los próximos 60 minutos sobre tu punto geográfico exacto, lo que permite saber con minutos de margen cuándo empezará a llover.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Qué proveedores de datos meteorológicos utiliza Pluvio?</span>
+                    <span class="text-sky-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Pluvio se conecta a la infraestructura meteorológica de <strong>Open-Meteo</strong>, que combina modelos meteorológicos numéricos abiertos de agencias nacionales e internacionales (DWD alemán, ECMWF europeo, NOAA y AEMET) con datos de reflectividad de radar Doppler actualizados cada pocos minutos.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Cómo gestiona Pluvio los permisos de ubicación?</span>
+                    <span class="text-sky-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Con estricta transparencia. El permiso de localización se utiliza <strong>única y exclusivamente para solicitar a la API meteorológica la previsión de los próximos 60 minutos en tus coordenadas</strong>. ArtimaDev no guarda ningún registro histórico de las ciudades o lugares que visitas ni comparte tu posición con anunciantes.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Tener el widget en la pantalla de inicio consume mucha batería o datos móviles?</span>
+                    <span class="text-sky-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    No. El widget utiliza <strong>Jetpack Glance</strong> y descarga únicamente una respuesta JSON comprimida de pocos kilobytes con los 60 valores numéricos de la hora siguiente. Las actualizaciones periódicas se realizan respetando los ciclos de reposo de Android, consumiendo menos del 0.2% de batería diaria.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿En qué países y ciudades está disponible la previsión de Pluvio?</span>
+                    <span class="text-sky-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    La cobertura de <em>Nowcasting</em> a 60 minutos está activa en toda España, Europa, Norteamérica y principales regiones del mundo cubiertas por redes de radares meteorológicos oficiales integradas en Open-Meteo.
+                </p>
+            </details>
+
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>¿Cuándo se lanza la versión final y cómo puedo acceder a la beta?</span>
+                    <span class="text-sky-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Actualmente Pluvio se encuentra en fase activa de desarrollo y pruebas internas de campo en Barcelona. Puedes solicitar unirte a la lista de espera de Beta Testers escribiéndonos desde nuestro <a href="soporte.html#testers" class="text-sky-400 underline">Centro de Testers</a> para recibir la compilación antes del lanzamiento público en Google Play.
+                </p>
+            </details>
+        </section>
+
+        <!-- BLOQUE FINAL: KO-FI Y VENTA CRUZADA -->
+        <section class="max-w-6xl mx-auto pt-16 border-t border-white/10">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                <div class="bento-card p-8 rounded-3xl border border-amber-500/25 flex flex-col justify-between">
+                    <div>
+                        <span class="inline-flex items-center gap-2 text-xs font-mono uppercase text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full mb-4">
+                            ☕ Software Independiente
+                        </span>
+                        <h3 class="text-xl font-bold text-white mb-2">Apoya el software útil y sin ruido</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed mb-6">
+                            Pluvio nace como respuesta al hartazgo de aplicaciones del tiempo saturadas de anuncios intrusivos y rastreo publicitario. Puedes apoyar nuestro desarrollo en Ko-fi.
+                        </p>
+                    </div>
+                    <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs px-6 py-3.5 rounded-full transition shadow-lg shadow-amber-500/20">
+                        <span>Invítanos a un café en Ko-fi</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="lg:col-span-2 space-y-4">
+                    <span class="text-xs font-mono uppercase text-zinc-400 font-bold tracking-wider block">Otras aplicaciones del catálogo</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <a href="motorpedia.html" class="bento-card p-5 rounded-2xl block group hover:border-cyan-500/30 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-cyan-400">Automoción &bull; OBD2</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-cyan-400 transition">Motorpedia Pro</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Diagnóstico multimarca ELM327 y buscador de +50.000 DTCs.</p>
+                        </a>
+                        <a href="cinematch.html" class="bento-card p-5 rounded-2xl block group hover:border-red-500/30 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-red-400">Streaming &bull; Cine</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-red-400 transition">CineMatch</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Filtra en 12 plataformas, candado parental y modo duelo en pareja.</p>
+                        </a>
+                        <a href="quickmute.html" class="bento-card p-5 rounded-2xl block group hover:border-purple-500/30 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-purple-400">Audio &bull; Productividad</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-purple-400 transition">QuickMute</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Control táctil de volumen, Quick Settings Tile y silencio inteligente.</p>
+                        </a>
+                        <a href="baterix.html" class="bento-card p-5 rounded-2xl block group hover:border-emerald-500/30 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-emerald-400">Energía &bull; Batería</span>
+                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-emerald-400 transition">Batterix</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Alerta de carga al 80%, lectura real de mA y widgets Jetpack Glance.</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER GLOBAL UNIFICADO -->
+    <footer class="border-t border-white/10 bg-[#060608] pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center font-black text-white text-sm">
+                            A
+                        </div>
+                        <span class="text-lg font-extrabold text-white">Artima<span class="text-blue-400">Dev</span> Studio</span>
+                    </a>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+                        Estudio de Ingeniería Android independiente especializado en aplicaciones nativas en Kotlin, diagnóstico automotriz OBD2 y utilidades de sistema.
+                    </p>
+                    <p class="text-xs font-mono text-zinc-500">Barcelona, España &bull; EU</p>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Aplicaciones</h4>
+                    <ul class="space-y-2.5 text-xs text-zinc-400">
+                        <li><a href="motorpedia.html" class="hover:text-cyan-400 transition">Motorpedia OBD2 Pro</a></li>
+                        <li><a href="cinematch.html" class="hover:text-red-400 transition">CineMatch Streaming</a></li>
+                        <li><a href="quickmute.html" class="hover:text-purple-400 transition">QuickMute Audio Control</a></li>
+                        <li><a href="baterix.html" class="hover:text-emerald-400 transition">Batterix Battery Health</a></li>
+                        <li><a href="pluvio.html" class="text-sky-400 font-semibold">Pluvio Rain Radar</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Comunidad &amp; Legal</h4>
+                    <ul class="space-y-2.5 text-xs text-zinc-400">
+                        <li><a href="soporte.html" class="hover:text-white transition">Centro de Soporte Técnico</a></li>
+                        <li><a href="soporte.html#testers" class="hover:text-blue-400 transition">Programa Oficial Beta Testers</a></li>
+                        <li><a href="privacidad.html" class="hover:text-white transition">Política de Privacidad Multi-App</a></li>
+                        <li><a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="hover:text-amber-400 transition">Apoyar Estudio en Ko-fi</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Contacto Directo</h4>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-3">
+                        Atención técnica directa por parte del equipo de desarrollo sin bots ni intermediarios.
+                    </p>
+                    <a href="mailto:artimadev@gmail.com" class="inline-flex items-center gap-2 text-xs font-mono text-sky-400 hover:text-sky-300 bg-sky-500/10 border border-sky-500/20 px-3.5 py-2 rounded-lg transition mb-3">
+                        <span>artimadev@gmail.com</span>
+                    </a>
+                    <div class="block">
+                        <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 transition">
+                            <span>☕ ko-fi.com/artimadev</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+                <p>&copy; 2026 ArtimaDev Studio (Barcelona, España). Todos los derechos reservados.</p>
+                <p class="font-mono text-[11px]">Los datos meteorológicos son provistos por Open-Meteo bajo licencia Attribution 4.0 International.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT MENÚ MÓVIL -->
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+</body>
+</html>

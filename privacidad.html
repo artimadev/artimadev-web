@@ -1,0 +1,622 @@
+﻿<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad y Centro Legal Multi-App | ArtimaDev Studio</title>
+    <meta name="description" content="Centro legal y Política de Privacidad oficial para Google Play Console de ArtimaDev Studio (Barcelona, España): Motorpedia OBD2 Pro, CineMatch, QuickMute, Batterix y Pluvio.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        dark: '#08080a',
+                        surface: '#0d0d12',
+                        card: '#111118',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #08080a;
+            color: #f4f4f5;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .bento-card {
+            background: linear-gradient(180deg, rgba(20, 20, 28, 0.78) 0%, rgba(11, 11, 15, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        .tab-btn {
+            transition: all 0.2s ease;
+        }
+        .tab-btn.active {
+            background-color: rgba(255, 255, 255, 0.10);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.30);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-blue-500 selection:text-white">
+
+    <!-- HEADER / BARRA DE NAVEGACIÓN GLOBAL UNIFICADA -->
+    <header class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <!-- Logo ArtimaDev -->
+            <a href="index.html" class="flex items-center gap-3 group shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 22 12 17 22 22 12 2"></polygon>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-extrabold tracking-tight text-white leading-none">Artima<span class="text-blue-400">Dev</span></span>
+                        <span class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-zinc-400">Barcelona &bull; ES</span>
+                    </div>
+                    <span class="text-[11px] text-zinc-500 font-mono block mt-0.5">Android Engineering Studio</span>
+                </div>
+            </a>
+
+            <!-- Navegación Escritorio -->
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-zinc-400">
+                <a href="index.html" class="hover:text-white transition">Inicio</a>
+                <a href="motorpedia.html" class="hover:text-cyan-400 transition flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                    Motorpedia Pro
+                </a>
+                <a href="cinematch.html" class="hover:text-red-400 transition flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                    CineMatch
+                </a>
+
+                <!-- Desplegable Utilidades -->
+                <div class="relative group">
+                    <button class="hover:text-white transition flex items-center gap-1 py-2 focus:outline-none">
+                        <span>Utilidades</span>
+                        <svg class="w-4 h-4 text-zinc-500 group-hover:text-white group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 top-full pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="bg-[#0d0d12] border border-white/10 rounded-2xl p-2 shadow-2xl backdrop-blur-xl space-y-1">
+                            <a href="quickmute.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-white group-hover/item:text-purple-400 transition block">QuickMute</span>
+                                    <span class="text-[11px] text-zinc-500">Control instantáneo de audio</span>
+                                </div>
+                            </a>
+                            <a href="baterix.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-white group-hover/item:text-emerald-400 transition block">Batterix</span>
+                                    <span class="text-[11px] text-zinc-500">Telemetría y salud de batería</span>
+                                </div>
+                            </a>
+                            <a href="pluvio.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                <div class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-white group-hover/item:text-sky-400 transition block">Pluvio</span>
+                                    <span class="text-[11px] text-zinc-500">Radar de lluvia hiperlocal 60m</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="soporte.html" class="hover:text-white transition">Soporte &amp; Testers</a>
+                <a href="privacidad.html" class="text-white font-semibold transition">Privacidad</a>
+            </nav>
+
+            <!-- Botones de Acción Derecha -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 transition shadow-sm shadow-amber-500/10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                    </svg>
+                    <span>Apoyar en Ko-fi</span>
+                </a>
+                <a href="mailto:artimadev@gmail.com" class="bg-white/5 hover:bg-white/10 text-zinc-200 px-4 py-2 rounded-full border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition">
+                    <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span>Contacto</span>
+                </a>
+            </div>
+
+            <!-- Botón Menú Móvil -->
+            <button id="menu-btn" aria-label="Abrir Menú de Navegación" class="lg:hidden text-zinc-300 hover:text-white p-2 rounded-lg border border-white/10 bg-white/5">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden lg:hidden border-b border-white/10 bg-[#08080a]/95 backdrop-blur-xl px-6 py-6 space-y-4 text-sm">
+            <div class="space-y-2">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Navegación Principal</span>
+                <a href="index.html" class="block text-zinc-300 hover:text-white font-medium py-1.5">Inicio</a>
+                <a href="motorpedia.html" class="block text-cyan-400 font-semibold py-1.5">Motorpedia Pro &mdash; Automoción OBD2</a>
+                <a href="cinematch.html" class="block text-red-400 font-semibold py-1.5">CineMatch &mdash; Streaming</a>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Suite de Utilidades</span>
+                <a href="quickmute.html" class="block text-purple-400 font-semibold py-1">QuickMute &mdash; Control de Audio</a>
+                <a href="baterix.html" class="block text-emerald-400 font-semibold py-1">Batterix &mdash; Telemetría de Batería</a>
+                <a href="pluvio.html" class="block text-sky-400 font-semibold py-1">Pluvio &mdash; Radar de Lluvia 60m</a>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <a href="soporte.html" class="block text-zinc-300 hover:text-white font-medium py-1">Soporte &amp; Programa Beta Testers</a>
+                <a href="privacidad.html" class="block text-white font-bold py-1">Centro de Privacidad Legal</a>
+            </div>
+            <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/15 border border-amber-500/30 text-amber-400 px-4 py-2 rounded-full text-xs font-bold">
+                    Apoyar en Ko-fi
+                </a>
+                <a href="mailto:artimadev@gmail.com" class="bg-white/5 border border-white/10 text-zinc-300 px-4 py-2 rounded-full text-xs font-mono">
+                    artimadev@gmail.com
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow pt-32 pb-24 px-6">
+
+        <!-- CABECERA DEL CENTRO LEGAL -->
+        <section class="max-w-5xl mx-auto text-center pt-4 pb-12">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 text-emerald-400 text-xs font-mono uppercase mb-6">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <span>Google Play Console Compliance &bull; RGPD / GDPR</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
+                Centro Legal y Política de Privacidad
+            </h1>
+            <p class="text-zinc-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+                Documentación oficial de transparencia, tratamiento de datos y declaración técnica de permisos del sistema Android para todas las aplicaciones publicadas por <strong class="text-white">ArtimaDev Studio (Barcelona, España)</strong>.
+            </p>
+        </section>
+
+        <!-- SELECTOR DE PESTAÑAS INTERACTIVAS MULTI-APP -->
+        <section class="max-w-5xl mx-auto mb-10">
+            <div class="bg-[#0d0d12] border border-white/10 rounded-2xl p-2 flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Selector de Política de Privacidad por Aplicación">
+                <button type="button" data-tab="general" class="tab-btn active px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-300 border border-transparent flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                    <span>Vista General</span>
+                </button>
+                <button type="button" data-tab="motorpedia" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white border border-transparent flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                    <span>Motorpedia Pro</span>
+                </button>
+                <button type="button" data-tab="cinematch" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white border border-transparent flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span>CineMatch</span>
+                </button>
+                <button type="button" data-tab="quickmute" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white border border-transparent flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                    <span>QuickMute</span>
+                </button>
+                <button type="button" data-tab="baterix" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white border border-transparent flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>Batterix</span>
+                </button>
+                <button type="button" data-tab="pluvio" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white border border-transparent flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                    <span>Pluvio</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- CONTENEDOR DE PANELES LEGALES -->
+        <section class="max-w-5xl mx-auto">
+
+            <!-- 0. PESTAÑA: VISTA GENERAL -->
+            <div id="panel-general" class="tab-panel bento-card rounded-3xl p-8 md:p-12 space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-blue-400 block mb-1">Marco Normativo Global</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Política General de Privacidad de ArtimaDev Studio</h2>
+                    </div>
+                    <span class="text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg shrink-0">
+                        Vigente: Noviembre 2026
+                    </span>
+                </div>
+
+                <!-- Datos del Responsable -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white/[0.02] border border-white/10 rounded-2xl p-6">
+                    <div>
+                        <span class="text-[11px] font-mono uppercase text-zinc-500 block mb-1">Responsable del Tratamiento</span>
+                        <span class="text-sm font-bold text-white">ArtimaDev Studio</span>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-mono uppercase text-zinc-500 block mb-1">Sede y Jurisdicción</span>
+                        <span class="text-sm font-bold text-white">Barcelona, España (UE)</span>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-mono uppercase text-zinc-500 block mb-1">Contacto DPO / Soporte Legal</span>
+                        <a href="mailto:artimadev@gmail.com" class="text-sm font-mono font-bold text-blue-400 hover:underline">artimadev@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="space-y-6 text-sm text-zinc-300 leading-relaxed">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">1. Principio de Privacidad por Diseño (Offline-First)</h3>
+                        <p>
+                            En <strong>ArtimaDev Studio</strong> desarrollamos aplicaciones Android bajo el principio de minimización de datos del Reglamento General de Protección de Datos (RGPD / GDPR). Nuestras aplicaciones funcionan de manera local en tu dispositivo y <strong>no requieren registro de cuentas de usuario, no recopilan nombres, correos electrónicos ni números de teléfono, y no venden ni comparten información con brókers de datos</strong>.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">2. Resumen Rápido de Permisos por Aplicación</h3>
+                        <p class="mb-4 text-zinc-400">Haz clic en las pestañas superiores o revisa la tabla inferior para inspeccionar el uso estricto de permisos en cada aplicación de nuestro catálogo:</p>
+                        <div class="overflow-x-auto border border-white/10 rounded-2xl">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-white/5 text-zinc-300 font-mono uppercase border-b border-white/10">
+                                    <tr>
+                                        <th class="py-3.5 px-4">Aplicación</th>
+                                        <th class="py-3.5 px-4">Package Name</th>
+                                        <th class="py-3.5 px-4">Permisos Principales</th>
+                                        <th class="py-3.5 px-4">Finalidad Exclusiva</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/10 text-zinc-300">
+                                    <tr>
+                                        <td class="py-3.5 px-4 font-bold text-cyan-400">Motorpedia Pro</td>
+                                        <td class="py-3.5 px-4 font-mono text-zinc-400">com.artimadev.motorpedia</td>
+                                        <td class="py-3.5 px-4 font-mono">BLUETOOTH_SCAN, BLUETOOTH_CONNECT, ACCESS_FINE_LOCATION</td>
+                                        <td class="py-3.5 px-4">Detectar y enlazar adaptadores OBD2 ELM327 cercanos (sin rastreo GPS).</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3.5 px-4 font-bold text-red-400">CineMatch</td>
+                                        <td class="py-3.5 px-4 font-mono text-zinc-400">com.artimadev.cinematch</td>
+                                        <td class="py-3.5 px-4 font-mono">INTERNET</td>
+                                        <td class="py-3.5 px-4">Consultar catálogo y certificaciones en la API de TMDB. Listas 100% locales.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3.5 px-4 font-bold text-purple-400">QuickMute</td>
+                                        <td class="py-3.5 px-4 font-mono text-zinc-400">com.artimadev.quickmute</td>
+                                        <td class="py-3.5 px-4 font-mono">ACCESS_NOTIFICATION_POLICY, MODIFY_AUDIO_SETTINGS</td>
+                                        <td class="py-3.5 px-4">Silenciar canales multimedia y gestionar modo No Molestar con temporizador.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3.5 px-4 font-bold text-emerald-400">Batterix</td>
+                                        <td class="py-3.5 px-4 font-mono text-zinc-400">com.artimadev.baterix</td>
+                                        <td class="py-3.5 px-4 font-mono">BATTERY_STATS (BatteryManager API), POST_NOTIFICATIONS</td>
+                                        <td class="py-3.5 px-4">Lectura local de amperaje (mA), voltaje y alerta al 80% de carga sin servidores.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3.5 px-4 font-bold text-sky-400">Pluvio</td>
+                                        <td class="py-3.5 px-4 font-mono text-zinc-400">com.artimadev.pluvio</td>
+                                        <td class="py-3.5 px-4 font-mono">ACCESS_COARSE_LOCATION / ACCESS_FINE_LOCATION, INTERNET</td>
+                                        <td class="py-3.5 px-4">Consultar previsión de lluvia a 60 minutos en API Open-Meteo sin guardar historial.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">3. Retención, Eliminación de Datos y Derechos ARCO</h3>
+                        <p>
+                            Dado que todas las preferencias, listas de seguimiento, perfiles de vehículos o configuraciones se almacenan exclusivamente en el almacenamiento interno aislado (<em>sandboxed storage</em>) de tu teléfono Android, <strong>puedes borrar el 100% de tus datos en cualquier momento borrando el almacenamiento de la aplicación desde los Ajustes de Android o desinstalándola</strong>. Para cualquier consulta legal, puedes escribirnos a <a href="mailto:artimadev@gmail.com" class="text-blue-400 underline">artimadev@gmail.com</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1. PESTAÑA: MOTORPEDIA PRO -->
+            <div id="panel-motorpedia" class="tab-panel hidden bento-card rounded-3xl p-8 md:p-12 space-y-6 border-cyan-500/30">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-cyan-400 block mb-1">com.artimadev.motorpedia</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Política de Privacidad &mdash; Motorpedia OBD2 Pro</h2>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">Diagnóstico Automotriz</span>
+                </div>
+
+                <div class="space-y-6 text-sm text-zinc-300 leading-relaxed">
+                    <div class="bg-cyan-500/5 border border-cyan-500/20 rounded-2xl p-6">
+                        <h3 class="text-base font-bold text-cyan-400 mb-2">Declaración Explícita de Permisos Bluetooth y Ubicación Cercana</h3>
+                        <p class="text-zinc-300">
+                            <strong>Motorpedia OBD2 Pro</strong> requiere conectarse físicamente por radiofrecuencia a adaptadores de diagnóstico automotriz estándar <strong>ELM327 (Bluetooth Clásico 2.0/3.0 y Bluetooth Low Energy BLE 4.0/5.0)</strong> conectados al puerto OBD2 del vehículo.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-white mb-2">¿Por qué solicita permisos de Bluetooth y Ubicación?</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-zinc-300">
+                            <li><code class="text-cyan-400 font-mono">BLUETOOTH_SCAN</code> y <code class="text-cyan-400 font-mono">BLUETOOTH_CONNECT</code> (Android 12+): Se utilizan exclusivamente para descubrir adaptadores ELM327 cercanos y abrir el socket serie RFCOMM/GATT con la centralita (ECU) del coche. Declarados con el atributo <code class="font-mono text-zinc-200">neverForLocation</code> cuando el nivel de API lo permite.</li>
+                            <li><code class="text-cyan-400 font-mono">ACCESS_FINE_LOCATION</code> / <code class="text-cyan-400 font-mono">ACCESS_COARSE_LOCATION</code>: En versiones anteriores de Android y para el descubrimiento de ciertos módulos Bluetooth/BLE, el sistema operativo Android exige por diseño este permiso de sistema para permitir el escaneo de hardware cercano.</li>
+                            <li><strong>Cero Rastreo GPS:</strong> Motorpedia OBD2 Pro <strong>NO rastrea tu posición geográfica, NO registra rutas de conducción y NO envía coordenadas GPS a ningún servidor externo</strong>.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-white mb-2">Privacidad de la Telemetría del Vehículo (ECU / DTC / VIN)</h4>
+                        <p>
+                            Los códigos de avería (DTC), lecturas de sensores PIDs en vivo y el diccionario de +50.000 códigos funcionan de forma <strong>100% local en tu teléfono</strong>. ArtimaDev no recopila ni transmite información mecánica ni el número de bastidor (VIN) de tu vehículo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. PESTAÑA: CINEMATCH -->
+            <div id="panel-cinematch" class="tab-panel hidden bento-card rounded-3xl p-8 md:p-12 space-y-6 border-red-500/30">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-red-400 block mb-1">com.artimadev.cinematch</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Política de Privacidad &mdash; CineMatch</h2>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-mono">Streaming &amp; Recomendación</span>
+                </div>
+
+                <div class="space-y-6 text-sm text-zinc-300 leading-relaxed">
+                    <div class="bg-red-500/5 border border-red-500/20 rounded-2xl p-6">
+                        <h3 class="text-base font-bold text-red-400 mb-2">Declaración de Permisos y Uso de la API de TMDB</h3>
+                        <p class="text-zinc-300">
+                            <strong>CineMatch</strong> solicita únicamente el permiso básico de acceso a red (<code class="text-red-300 font-mono">android.permission.INTERNET</code>) para consultar en tiempo real el catálogo público de películas, series, plataformas de streaming disponibles y certificaciones de edad.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-white mb-2">1. Almacenamiento 100% Local de Listas y Preferencias</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-zinc-300">
+                            <li>Tus plataformas de streaming seleccionadas, películas favoritas, historial de descartes y resultados del <strong>Modo Duelo 1vs1</strong> se guardan exclusivamente en la base de datos interna de tu dispositivo Android.</li>
+                            <li>El código PIN del <strong>Candado Parental</strong> se almacena localmente de forma protegida en el dispositivo y jamás se transmite por internet.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-white mb-2">2. Atribución y Servicios de Terceros (The Movie Database - TMDB)</h4>
+                        <p>
+                            CineMatch utiliza la API de <strong>TMDB</strong> para mostrar carátulas, sinopsis y calificaciones por edades oficiales, pero no está avalada ni certificada por TMDB. Las consultas a la API contienen únicamente los parámetros técnicos del filtro (género, idioma, región y proveedor de streaming), sin ningún identificador personal del usuario.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. PESTAÑA: QUICKMUTE -->
+            <div id="panel-quickmute" class="tab-panel hidden bento-card rounded-3xl p-8 md:p-12 space-y-6 border-purple-500/30">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-purple-400 block mb-1">com.artimadev.quickmute</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Política de Privacidad &mdash; QuickMute</h2>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-mono">Control de Audio &amp; Sistema</span>
+                </div>
+
+                <div class="space-y-6 text-sm text-zinc-300 leading-relaxed">
+                    <div class="bg-purple-500/5 border border-purple-500/20 rounded-2xl p-6">
+                        <h3 class="text-base font-bold text-purple-400 mb-2">Declaración de Permisos de Audio y Política de No Molestar</h3>
+                        <p class="text-zinc-300">
+                            <strong>QuickMute</strong> es una utilidad de sistema completamente offline diseñada para silenciar y restaurar canales de sonido de forma rápida mediante Quick Settings Tiles, widgets y temporizadores inteligentes.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-white mb-2">Permisos del Sistema Utilizados</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-zinc-300">
+                            <li><code class="text-purple-300 font-mono">ACCESS_NOTIFICATION_POLICY</code> (Acceso a "No Molestar"): Requerido por el sistema operativo Android para permitir que la aplicación cambie el estado del modo silencio / vibración cuando el usuario pulsa el botón o el Tile de QuickMute. <strong>QuickMute NO lee el contenido de tus notificaciones ni accede a tus mensajes</strong>.</li>
+                            <li><code class="text-purple-300 font-mono">MODIFY_AUDIO_SETTINGS</code>: Utilizado exclusivamente a través de <code class="font-mono">AudioManager</code> para ajustar el volumen del canal multimedia (<code class="font-mono">STREAM_MUSIC</code>) y timbre sin afectar el canal de alarmas (<code class="font-mono">STREAM_ALARM</code>).</li>
+                            <li><code class="text-purple-300 font-mono">FOREGROUND_SERVICE</code> / <code class="text-purple-300 font-mono">SCHEDULE_EXACT_ALARM</code>: Utilizado únicamente cuando el usuario activa un temporizador programado para restaurar automáticamente el sonido a la hora exacta indicada.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. PESTAÑA: BATTERIX -->
+            <div id="panel-baterix" class="tab-panel hidden bento-card rounded-3xl p-8 md:p-12 space-y-6 border-emerald-500/30">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-emerald-400 block mb-1">com.artimadev.baterix</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Política de Privacidad &mdash; Batterix</h2>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono">Telemetría de Batería</span>
+                </div>
+
+                <div class="space-y-6 text-sm text-zinc-300 leading-relaxed">
+                    <div class="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-6">
+                        <h3 class="text-base font-bold text-emerald-400 mb-2">Procesamiento 100% Local de Telemetría Eléctrica</h3>
+                        <p class="text-zinc-300">
+                            <strong>Batterix</strong> monitoriza los parámetros físicos de la batería de tu dispositivo mediante las APIs oficiales del sistema Android (<code class="text-emerald-300 font-mono">BatteryManager</code>) sin transmitir ningún dato a servidores externos.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-white mb-2">Permisos y Sensores Consultados</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-zinc-300">
+                            <li><strong>Lectura de <code class="text-emerald-300 font-mono">BatteryManager</code>:</strong> Lectura en tiempo real de corriente eléctrica (<code class="font-mono">BATTERY_PROPERTY_CURRENT_NOW</code> en mA), voltaje (mV), temperatura térmica (°C) y porcentaje de carga para mostrarlos en la interfaz y en los widgets <strong>Jetpack Glance</strong>.</li>
+                            <li><code class="text-emerald-300 font-mono">POST_NOTIFICATIONS</code>: Utilizado exclusivamente para emitir la alerta local preventiva cuando la batería alcanza el umbral de protección del 80% configurado por el usuario.</li>
+                            <li><strong>Sin conexión a servidores:</strong> Todas las gráficas y métricas de salud de batería permanecen exclusivamente en la memoria interna del dispositivo.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. PESTAÑA: PLUVIO -->
+            <div id="panel-pluvio" class="tab-panel hidden bento-card rounded-3xl p-8 md:p-12 space-y-6 border-sky-500/30">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-sky-400 block mb-1">com.artimadev.pluvio</span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Política de Privacidad &mdash; Pluvio</h2>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-xs font-mono">Radar Meteorológico 60m</span>
+                </div>
+
+                <div class="space-y-6 text-sm text-zinc-300 leading-relaxed">
+                    <div class="bg-sky-500/5 border border-sky-500/20 rounded-2xl p-6">
+                        <h3 class="text-base font-bold text-sky-400 mb-2">Uso Estricto de Ubicación para Previsión de Lluvia a 60 Minutos</h3>
+                        <p class="text-zinc-300">
+                            <strong>Pluvio</strong> ofrece alertas hiperlocales de precipitación (<em>nowcasting</em>) a 60 minutos vista. Para conocer la previsión meteorológica exacta sobre tu posición actual, la aplicación solicita permiso de ubicación.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-white mb-2">Transparencia en el Tratamiento de Coordenadas</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-zinc-300">
+                            <li><code class="text-sky-300 font-mono">ACCESS_COARSE_LOCATION</code> / <code class="text-sky-300 font-mono">ACCESS_FINE_LOCATION</code>: Las coordenadas de latitud y longitud se utilizan <strong>única y exclusivamente para consultar en la API meteorológica Open-Meteo</strong> la intensidad de lluvia prevista para los próximos 60 minutos en esa celda geográfica.</li>
+                            <li><strong>Consultas Anónimas:</strong> La petición HTTPS a Open-Meteo incluye únicamente la latitud y longitud meteorológica sin ningún identificador de usuario, cuenta de Google ni ID publicitario.</li>
+                            <li><strong>Sin Historial de Ubicaciones:</strong> ArtimaDev Studio no posee servidores que almacenen dónde has estado ni realiza seguimiento comercial de tus desplazamientos. Las comprobaciones periódicas con <code class="font-mono">WorkManager</code> se ejecutan localmente en tu dispositivo para avisarte si va a llover y actualizar el widget Jetpack Glance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- BLOQUE PERMANENTE DE CONTACTO DEL RESPONSABLE -->
+        <section class="max-w-5xl mx-auto mt-10">
+            <div class="bento-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-xs text-zinc-400">
+                    <strong class="text-white">Responsable Legal:</strong> ArtimaDev Studio (Barcelona, España) &bull; Contacto directo para usuarios y revisiones de Google Play Console:
+                </div>
+                <a href="mailto:artimadev@gmail.com" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-blue-400 bg-blue-500/10 border border-blue-500/25 px-4 py-2.5 rounded-xl hover:bg-blue-500/20 transition shrink-0">
+                    <span>artimadev@gmail.com</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER GLOBAL UNIFICADO -->
+    <footer class="border-t border-white/10 bg-[#060608] pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+                <!-- Columna 1: Marca -->
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center font-black text-white text-sm">
+                            A
+                        </div>
+                        <span class="text-lg font-extrabold text-white">Artima<span class="text-blue-400">Dev</span> Studio</span>
+                    </a>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+                        Estudio de Ingeniería Android independiente especializado en aplicaciones nativas en Kotlin, diagnóstico automotriz OBD2 y utilidades de sistema.
+                    </p>
+                    <p class="text-xs font-mono text-zinc-500">Barcelona, España &bull; EU</p>
+                </div>
+
+                <!-- Columna 2: Catálogo de Apps -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Aplicaciones</h4>
+                    <ul class="space-y-2.5 text-xs text-zinc-400">
+                        <li><a href="motorpedia.html" class="hover:text-cyan-400 transition">Motorpedia OBD2 Pro</a></li>
+                        <li><a href="cinematch.html" class="hover:text-red-400 transition">CineMatch Streaming</a></li>
+                        <li><a href="quickmute.html" class="hover:text-purple-400 transition">QuickMute Audio Control</a></li>
+                        <li><a href="baterix.html" class="hover:text-emerald-400 transition">Batterix Battery Health</a></li>
+                        <li><a href="pluvio.html" class="hover:text-sky-400 transition">Pluvio Rain Radar</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Recursos y Soporte -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Comunidad &amp; Legal</h4>
+                    <ul class="space-y-2.5 text-xs text-zinc-400">
+                        <li><a href="soporte.html" class="hover:text-white transition">Centro de Soporte Técnico</a></li>
+                        <li><a href="soporte.html#testers" class="hover:text-blue-400 transition">Programa Oficial Beta Testers</a></li>
+                        <li><a href="privacidad.html" class="hover:text-white transition">Política de Privacidad Multi-App</a></li>
+                        <li><a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="hover:text-amber-400 transition">Apoyar Estudio en Ko-fi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Contacto Directo -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Contacto Directo</h4>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-3">
+                        Atención técnica directa por parte del equipo de desarrollo sin bots ni intermediarios.
+                    </p>
+                    <a href="mailto:artimadev@gmail.com" class="inline-flex items-center gap-2 text-xs font-mono text-blue-400 hover:text-blue-300 bg-blue-500/10 border border-blue-500/20 px-3.5 py-2 rounded-lg transition mb-3">
+                        <span>artimadev@gmail.com</span>
+                    </a>
+                    <div class="block">
+                        <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 transition">
+                            <span>☕ ko-fi.com/artimadev</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+                <p>&copy; 2026 ArtimaDev Studio (Barcelona, España). Todos los derechos reservados.</p>
+                <p class="font-mono text-[11px]">Google Play y el logotipo de Google Play son marcas comerciales de Google LLC.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS DE NAVEGACIÓN MÓVIL Y PESTAÑAS INTERACTIVAS -->
+    <script>
+        // Menú móvil
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Sistema de Pestañas Legales con soporte de URL Hash (#motorpedia, #cinematch, etc.)
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        function activateTab(tabId) {
+            tabButtons.forEach(btn => {
+                const isMatch = btn.getAttribute('data-tab') === tabId;
+                btn.classList.toggle('active', isMatch);
+            });
+            tabPanels.forEach(panel => {
+                const isMatch = panel.id === `panel-${tabId}`;
+                panel.classList.toggle('hidden', !isMatch);
+            });
+        }
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTab = btn.getAttribute('data-tab');
+                activateTab(targetTab);
+                history.replaceState(null, null, `#${targetTab}`);
+            });
+        });
+
+        // Activar pestaña desde hash si existe en la URL
+        const initialHash = window.location.hash.replace('#', '').toLowerCase();
+        const validTabs = ['general', 'motorpedia', 'cinematch', 'quickmute', 'baterix', 'pluvio'];
+        if (validTabs.includes(initialHash)) {
+            activateTab(initialHash);
+        }
+    </script>
+</body>
+</html>
