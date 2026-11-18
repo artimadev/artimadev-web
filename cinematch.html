@@ -30,22 +30,26 @@
         body {
             background-color: #08080a;
             color: #f4f4f5;
-            background-image: radial-gradient(rgba(239, 68, 68, 0.05) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(239, 68, 68, 0.055) 1px, transparent 1px);
             background-size: 24px 24px;
         }
         .glass-nav {
-            background: rgba(8, 8, 10, 0.82);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(8, 8, 10, 0.84);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .bento-card {
-            background: linear-gradient(180deg, rgba(20, 20, 28, 0.75) 0%, rgba(11, 11, 15, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(22, 22, 30, 0.78) 0%, rgba(11, 11, 16, 0.96) 100%);
             border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .bento-card:hover {
-            border-color: rgba(239, 68, 68, 0.30);
+            border-color: rgba(239, 68, 68, 0.32);
+        }
+        .hero-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(239, 68, 68, 0.14) 0%, rgba(244, 63, 94, 0.06) 40%, transparent 70%);
         }
         .tab-btn {
             transition: all 0.2s ease;
@@ -92,7 +96,7 @@
             <!-- Logo ArtimaDev -->
             <a href="index.html" class="flex items-center gap-3 group shrink-0">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
-                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="12 2 2 22 12 17 22 22 12 2"></polygon>
                     </svg>
                 </div>
@@ -108,65 +112,88 @@
             <!-- Navegación Escritorio -->
             <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-zinc-400">
                 <a href="index.html" class="hover:text-white transition">Inicio</a>
-                <a href="motorpedia.html" class="hover:text-cyan-400 transition flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-                    Motorpedia Pro
-                </a>
-                <a href="cinematch.html" class="text-red-400 font-semibold transition flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                    CineMatch
-                </a>
 
-                <!-- Desplegable Utilidades -->
+                <!-- Menú Desplegable de las 6 Aplicaciones -->
                 <div class="relative group">
-                    <button class="hover:text-white transition flex items-center gap-1 py-2 focus:outline-none">
-                        <span>Utilidades</span>
-                        <svg class="w-4 h-4 text-zinc-500 group-hover:text-white group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button type="button" class="text-red-400 font-semibold transition flex items-center gap-1.5 py-2 focus:outline-none">
+                        <span>Aplicaciones</span>
+                        <span class="text-[10px] font-mono bg-red-500/15 text-red-400 border border-red-500/30 px-1.5 py-0.2 rounded-full">6</span>
+                        <svg class="w-4 h-4 text-red-400 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
-                    <div class="absolute left-0 top-full pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                        <div class="bg-[#0d0d12] border border-white/10 rounded-2xl p-2 shadow-2xl backdrop-blur-xl space-y-1">
-                            <a href="quickmute.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
-                                <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <span class="text-xs font-bold text-white group-hover/item:text-purple-400 transition block">QuickMute</span>
-                                    <span class="text-[11px] text-zinc-500">Control instantáneo de audio</span>
-                                </div>
-                            </a>
-                            <a href="baterix.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
-                                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <span class="text-xs font-bold text-white group-hover/item:text-emerald-400 transition block">Batterix</span>
-                                    <span class="text-[11px] text-zinc-500">Telemetría y salud de batería</span>
-                                </div>
-                            </a>
-                            <a href="pluvio.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
-                                <div class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <span class="text-xs font-bold text-white group-hover/item:text-sky-400 transition block">Pluvio</span>
-                                    <span class="text-[11px] text-zinc-500">Radar de lluvia hiperlocal 60m</span>
-                                </div>
-                            </a>
+                    <div class="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[540px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="bg-[#0d0d12]/95 border border-white/10 rounded-2xl p-3 shadow-2xl backdrop-blur-2xl">
+                            <div class="flex items-center justify-between px-2 pb-2 mb-2 border-b border-white/10">
+                                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Catálogo Oficial Android (6 Apps)</span>
+                                <a href="index.html#catalogo" class="text-[11px] font-mono text-red-400 hover:underline">Ver todas &rarr;</a>
+                            </div>
+                            <div class="grid grid-cols-2 gap-1.5">
+                                <a href="motorpedia.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center text-cyan-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-cyan-400 transition block">Motorpedia OBD2 Pro</span>
+                                        <span class="text-[11px] text-zinc-500">Diagnóstico ECU &amp; +50k DTCs</span>
+                                    </div>
+                                </a>
+                                <a href="cinematch.html" class="flex items-center gap-3 p-2.5 rounded-xl bg-red-500/10 text-red-300 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-red-500/20 border border-red-500/35 flex items-center justify-center text-red-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-red-400 transition block">CineMatch</span>
+                                        <span class="text-[11px] text-zinc-400">Streaming, Duelo 1vs1 &amp; PIN</span>
+                                    </div>
+                                </a>
+                                <a href="baterix.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-emerald-400 transition block">Baterix</span>
+                                        <span class="text-[11px] text-zinc-500">Telemetría mA/°C &amp; Alerta 80%</span>
+                                    </div>
+                                </a>
+                                <a href="pluvio.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-sky-500/10 border border-sky-500/25 flex items-center justify-center text-sky-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-sky-400 transition block">Pluvio</span>
+                                        <span class="text-[11px] text-zinc-500">Radar de lluvia a 60 minutos</span>
+                                    </div>
+                                </a>
+                                <a href="quickmute.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-purple-400 transition block">QuickMute</span>
+                                        <span class="text-[11px] text-zinc-500">Control instantáneo de audio</span>
+                                    </div>
+                                </a>
+                                <a href="kippo.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-amber-400 transition block">Kippo</span>
+                                        <span class="text-[11px] text-zinc-500">Tickets, garantías y vencimientos</span>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <a href="motorpedia.html#buscador" class="hover:text-cyan-400 transition flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                    <span>Buscador DTC</span>
+                </a>
                 <a href="soporte.html" class="hover:text-white transition">Soporte &amp; Testers</a>
-                <a href="privacidad.html" class="hover:text-white transition">Privacidad</a>
+                <a href="privacidad.html#cinematch" class="hover:text-white transition">Privacidad</a>
             </nav>
 
             <!-- Botones de Acción Derecha -->
@@ -198,22 +225,23 @@
             <div class="space-y-2">
                 <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Navegación Principal</span>
                 <a href="index.html" class="block text-zinc-300 hover:text-white font-medium py-1.5">Inicio</a>
-                <a href="motorpedia.html" class="block text-cyan-400 font-semibold py-1.5">Motorpedia Pro &mdash; Automoción OBD2</a>
-                <a href="cinematch.html" class="block text-red-400 font-bold py-1.5">CineMatch &mdash; Streaming</a>
             </div>
             <div class="space-y-2 pt-2 border-t border-white/10">
-                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Suite de Utilidades</span>
-                <a href="quickmute.html" class="block text-purple-400 font-semibold py-1">QuickMute &mdash; Control de Audio</a>
-                <a href="baterix.html" class="block text-emerald-400 font-semibold py-1">Batterix &mdash; Telemetría de Batería</a>
-                <a href="pluvio.html" class="block text-sky-400 font-semibold py-1">Pluvio &mdash; Radar de Lluvia 60m</a>
+                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Catálogo de 6 Aplicaciones</span>
+                <a href="motorpedia.html" class="block text-cyan-400 font-semibold py-1">1. Motorpedia OBD2 Pro &mdash; Diagnóstico ECU</a>
+                <a href="cinematch.html" class="block text-red-400 font-bold py-1">2. CineMatch &mdash; Recomendador Streaming</a>
+                <a href="baterix.html" class="block text-emerald-400 font-semibold py-1">3. Baterix &mdash; Telemetría y Salud de Batería</a>
+                <a href="pluvio.html" class="block text-sky-400 font-semibold py-1">4. Pluvio &mdash; Radar de Lluvia a 60 Minutos</a>
+                <a href="quickmute.html" class="block text-purple-400 font-semibold py-1">5. QuickMute &mdash; Control Instantáneo de Audio</a>
+                <a href="kippo.html" class="block text-amber-400 font-semibold py-1">6. Kippo &mdash; Gestor de Tickets y Garantías</a>
             </div>
             <div class="space-y-2 pt-2 border-t border-white/10">
                 <a href="soporte.html" class="block text-zinc-300 hover:text-white font-medium py-1">Soporte &amp; Programa Beta Testers</a>
-                <a href="privacidad.html" class="block text-zinc-300 hover:text-white font-medium py-1">Centro de Privacidad Legal</a>
+                <a href="privacidad.html#cinematch" class="block text-zinc-300 hover:text-white font-medium py-1">Centro de Privacidad Legal</a>
             </div>
             <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-3">
                 <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/15 border border-amber-500/30 text-amber-400 px-4 py-2 rounded-full text-xs font-bold">
-                    Apoyar en Ko-fi
+                    ☕ Apoyar en Ko-fi
                 </a>
                 <a href="mailto:artimadev@gmail.com" class="bg-white/5 border border-white/10 text-zinc-300 px-4 py-2 rounded-full text-xs font-mono">
                     artimadev@gmail.com
@@ -223,19 +251,24 @@
     </header>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="flex-grow pt-32 pb-24 px-6">
+    <main class="flex-grow pt-32 pb-24 px-6 hero-glow">
 
-        <!-- CABECERA DEL PRODUCTO -->
+        <!-- HERO DEL PRODUCTO -->
         <section class="max-w-5xl mx-auto text-center pt-4 mb-10">
+            <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 shadow-xl shadow-red-500/15">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
+                </svg>
+            </div>
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-mono uppercase mb-6">
                 <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                <span>STREAMING &bull; DECISIÓN EN PAREJA &bull; TMDB VERIFIED</span>
+                <span>STREAMING &bull; DUELO 1 VS 1 EN PAREJA &bull; CANDADO PARENTAL TMDB</span>
             </div>
             <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6">
                 Cine<span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-400 to-amber-400">Match</span>
             </h1>
             <p class="text-base sm:text-lg text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-8">
-                El sommelier definitivo de cine y series. Deja de perder media hora navegando sin rumbo: filtra simultáneamente entre tus <strong class="text-white">12 plataformas contratadas</strong>, reta a tu pareja en el <strong class="text-red-400">Modo Duelo 1vs1</strong> en un solo móvil o protege a tus hijos con el <strong class="text-zinc-200">Candado Parental oficial de TMDB</strong>.
+                El recomendador inteligente y legal de cine y series (<code class="text-red-400 font-mono">com.artimadev.cinematch</code>). Filtra simultáneamente entre tus <strong class="text-white">12 plataformas de streaming</strong>, reta a tu pareja en el <strong class="text-red-400">Modo Duelo 1vs1</strong> pasando un solo móvil en el sofá y protege a tus hijos con el <strong class="text-zinc-200">Candado Parental certificado por TMDB</strong>.
             </p>
 
             <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
@@ -243,12 +276,8 @@
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 20.5v-17c0-.83.67-1.5 1.5-1.5.31 0 .61.1.86.28l14.15 8.5c.71.43.94 1.35.51 2.06-.13.21-.3.38-.51.51l-14.15 8.5c-.71.43-1.63.2-2.06-.51-.18-.25-.28-.55-.28-.86z"/></svg>
                     <span>Descargar en Google Play</span>
                 </a>
-                <button type="button" onclick="switchTab('duelo')" class="bg-white/5 hover:bg-white/10 text-white border border-white/15 font-semibold px-7 py-3.5 rounded-full text-sm transition flex items-center gap-2">
-                    <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <span>Descubrir Modo Duelo 1vs1</span>
+                <button type="button" onclick="switchTab('duelo')" class="bg-white/5 hover:bg-white/10 text-white border border-red-500/30 font-semibold px-7 py-3.5 rounded-full text-sm transition flex items-center gap-2">
+                    <span>⚔️ Cómo funciona el Duelo 1vs1</span>
                 </button>
             </div>
 
@@ -258,19 +287,19 @@
                     🎬 Funciones &amp; Capturas
                 </button>
                 <button type="button" onclick="switchTab('duelo')" id="tab-btn-duelo" class="tab-btn px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-400 hover:text-white border border-transparent">
-                    ⚔️ Modo Duelo 1vs1
+                    ⚔️ Modo Duelo 1 vs 1 en Pareja
                 </button>
                 <button type="button" onclick="switchTab('plataformas')" id="tab-btn-plataformas" class="tab-btn px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-400 hover:text-white border border-transparent">
-                    📺 12 Plataformas &amp; Candado PIN
+                    📺 12 Plataformas &amp; Candado Parental
                 </button>
                 <button type="button" onclick="switchTab('faq')" id="tab-btn-faq" class="tab-btn px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-zinc-400 hover:text-white border border-transparent">
-                    ❓ Preguntas Frecuentes
+                    ❓ FAQ (7)
                 </button>
             </div>
         </section>
 
         <!-- ==========================================
-             SUB-PESTAÑA 1: FUNCIONES, QUÉ ES / QUÉ NO ES & CAPTURAS
+             SUB-PESTAÑA 1: FUNCIONES, QUÉ HACE / QUÉ NO HACE & CAPTURAS
              ========================================== -->
         <section id="panel-resumen" class="tab-panel max-w-6xl mx-auto space-y-16">
             
@@ -284,9 +313,9 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2">Filtro Cruzado en 12 Servicios</h3>
                     <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-                        Selecciona únicamente las plataformas que pagas (Netflix, Prime Video, Disney+, Max, etc.) y filtra por género, año, puntuación y duración máxima sin salirte de tus catálogos reales.
+                        Marca únicamente las plataformas que tienes contratadas (Netflix, Prime Video, Disney+, Max, Filmin, Movistar+, etc.) y filtra por género, año, nota y duración máxima.
                     </p>
-                    <span class="text-xs font-mono text-red-400">12 Plataformas &bull; Sin Catálogos Fantasma</span>
+                    <span class="text-xs font-mono text-red-400">12 Plataformas &bull; 9 Idiomas</span>
                 </div>
 
                 <div class="bento-card p-8 rounded-3xl">
@@ -297,9 +326,9 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2">Modo Duelo 1 vs 1 en Pareja</h3>
                     <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-                        Pasad el móvil de mano en mano en el sofá: cada uno aprueba o descarta títulos de forma secreta. La app celebra con confeti únicamente los títulos donde los dos habéis coincidido.
+                        Pasad un único teléfono por turnos en el sofá: cada persona vota en secreto y CineMatch revela al instante los títulos donde habéis coincidido al 100%.
                     </p>
-                    <span class="text-xs font-mono text-rose-400">En un Único Teléfono &bull; Cero Discusiones</span>
+                    <span class="text-xs font-mono text-rose-400">Un Solo Móvil &bull; Cero Discusiones</span>
                 </div>
 
                 <div class="bento-card p-8 rounded-3xl">
@@ -308,43 +337,41 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Candado Parental Certificado</h3>
+                    <h3 class="text-xl font-bold text-white mb-2">Candado Parental TMDB</h3>
                     <p class="text-sm text-zinc-400 leading-relaxed mb-4">
-                        Establece un código PIN de 4 dígitos y bloquea contenidos para mayores de +12, +16 o +18 según las certificaciones oficiales de TMDB para que tus hijos exploren cine seguro.
+                        Configura un PIN local de 4 dígitos y bloquea recomendaciones para mayores de +7, +12, +16 o +18 según las calificaciones oficiales por edad de TMDB.
                     </p>
-                    <span class="text-xs font-mono text-amber-400">PIN Local Seguro &bull; Certificaciones TMDB</span>
+                    <span class="text-xs font-mono text-amber-400">PIN Local &bull; Certificaciones Oficiales</span>
                 </div>
             </div>
 
-            <!-- CUADRO COMPARATIVO: QUÉ SÍ ES / QUÉ NO ES -->
+            <!-- TABLA COMPARATIVA: QUÉ HACE / QUÉ NO HACE -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Columna SÍ -->
                 <div class="bento-card rounded-3xl p-8 border-emerald-500/30">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                            </svg>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 font-black">
+                            &check;
                         </div>
-                        <h3 class="text-xl font-bold text-white">Qué SÍ hace CineMatch</h3>
+                        <h3 class="text-xl font-bold text-white">✅ Qué SÍ hace CineMatch</h3>
                     </div>
 
                     <ul class="space-y-4 text-sm text-zinc-300">
                         <li class="flex items-start gap-3">
                             <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
-                            <span><strong>Recomendador inteligente y legal:</strong> Consulta la API de TMDB en tiempo real para brindarte sinopsis oficiales, puntuaciones, tráilers de YouTube y qué plataforma tiene los derechos en tu país.</span>
+                            <span><strong>Recomendador inteligente y 100% legal:</strong> Consulta la API oficial de TMDB para mostrar carátulas, sinopsis, reparto, tráilers y en qué plataforma legal ver cada título.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
-                            <span><strong>Filtros combinados de alta precisión:</strong> Combina plataformas, géneros (ej. Thriller psicológico + Ciencia Ficción), año de estreno y duración para dar con la película perfecta en segundos.</span>
+                            <span><strong>Filtrado cruzado en 12 plataformas:</strong> Evita recomendaciones frustrantes de servicios que no tienes contratados en casa.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
-                            <span><strong>Modo Duelo 1 vs 1 local:</strong> Resuelve el eterno "¿qué vemos hoy?" pasando el móvil entre dos personas sin necesidad de que la otra persona instale nada.</span>
+                            <span><strong>Modo Duelo 1 vs 1 en un solo móvil:</strong> Permite que dos personas elijan película por turnos sin que la otra persona tenga que instalar nada.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="text-emerald-400 font-bold shrink-0 mt-0.5">&check;</span>
-                            <span><strong>Listas 100% privadas:</strong> Tus favoritos, listas de "Pendientes de ver" y descartes se guardan en la memoria local de tu Android sin rastreadores publicitarios.</span>
+                            <span><strong>Listas y PIN Parental 100% locales:</strong> Tus favoritos, descartes y código PIN se guardan en privado en tu teléfono Android.</span>
                         </li>
                     </ul>
                 </div>
@@ -352,41 +379,39 @@
                 <!-- Columna NO -->
                 <div class="bento-card rounded-3xl p-8 border-red-500/30">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-400">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
+                        <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-400 font-black">
+                            &times;
                         </div>
-                        <h3 class="text-xl font-bold text-white">Qué NO hace (Importante)</h3>
+                        <h3 class="text-xl font-bold text-white">❌ Qué NO hace (Importante)</h3>
                     </div>
 
                     <ul class="space-y-4 text-sm text-zinc-300">
                         <li class="flex items-start gap-3">
                             <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
-                            <span><strong>NO es una aplicación pirata de streaming:</strong> CineMatch no reproduce películas gratis ni aloja archivos de vídeo pirateados. Te enlaza de forma oficial a la app de streaming correspondiente que tengas instalada.</span>
+                            <span><strong>NO es una app de streaming pirata:</strong> CineMatch no aloja ni reproduce películas pirateadas. Te dirige a las apps oficiales de tus plataformas legítimas.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
-                            <span><strong>NO pide contraseñas de tus cuentas:</strong> Jamás te pediremos tus credenciales de Netflix, HBO Max, Disney+ ni de ningún servicio. Solo marcas con un clic las plataformas que tienes contratadas.</span>
+                            <span><strong>NO pide contraseñas de tus suscripciones:</strong> Nunca te pediremos tu usuario o clave de Netflix, Disney+ ni Prime Video.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
-                            <span><strong>NO exige crear cuentas de usuario:</strong> Abres la aplicación y funciona de inmediato sin correos, inicios de sesión con Facebook ni perfiles en servidores en la nube.</span>
+                            <span><strong>NO obliga a crear cuentas ni iniciar sesión:</strong> Abres la app y funciona al instante en cualquiera de sus 9 idiomas soportados.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
-                            <span><strong>NO vende tus gustos cinematográficos:</strong> No perfilamos tus hábitos de consumo para venderlos a redes de publicidad programática.</span>
+                            <span><strong>NO rastrea ni vende tus gustos:</strong> Tus preferencias cinematográficas nunca se venden a terceros ni redes publicitarias.</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <!-- GALERÍA DE 4 MARCOS MÓVILES (MOCKUPS ELEGANTES) -->
+            <!-- GALERÍA DE 4 MOCKUPS MÓVILES -->
             <div>
                 <div class="text-center max-w-2xl mx-auto mb-10">
-                    <span class="text-xs font-mono uppercase text-red-400 tracking-wider block mb-2">Capturas de Pantalla Reales</span>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-white">Interfaz Diseñada para Encontrar y Disfrutar</h2>
-                    <p class="text-zinc-400 text-sm mt-2">Navegación gestual nativa con Jetpack Compose y compatibilidad con 9 idiomas.</p>
+                    <span class="text-xs font-mono uppercase text-red-400 tracking-wider block mb-2">Experiencia Visual Nativa</span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white">4 Vistas de CineMatch en Android</h2>
+                    <p class="text-zinc-400 text-sm mt-2">Interfaz fluida con Jetpack Compose y soporte multilingüe en 9 idiomas.</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -398,7 +423,7 @@
                             <span class="text-zinc-400">ESPAÑA</span>
                         </div>
                         <div class="space-y-3 my-auto">
-                            <span class="text-[11px] font-mono uppercase text-zinc-400 block">Mis Servicios (4)</span>
+                            <span class="text-[11px] font-mono uppercase text-zinc-400 block">Mis Plataformas (4)</span>
                             <div class="flex flex-wrap gap-1.5">
                                 <span class="px-2.5 py-1 rounded-lg bg-red-600 text-white text-[11px] font-bold">Netflix</span>
                                 <span class="px-2.5 py-1 rounded-lg bg-blue-600 text-white text-[11px] font-bold">Prime</span>
@@ -411,7 +436,7 @@
                                     <span class="text-white font-bold">Ciencia Ficción</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-zinc-400">Nota mínima:</span>
+                                    <span class="text-zinc-400">Nota TMDB:</span>
                                     <span class="text-amber-400 font-bold">★ 7.5+</span>
                                 </div>
                                 <div class="flex justify-between">
@@ -420,63 +445,63 @@
                                 </div>
                             </div>
                             <button class="w-full py-2.5 rounded-xl bg-red-600 text-white font-bold text-xs">
-                                Ver 42 Resultados
+                                Explorar 42 Títulos
                             </button>
                         </div>
                         <div class="text-center pt-2 border-t border-white/10">
-                            <span class="text-[11px] font-mono text-zinc-400">Filtro Cruzado de Streaming</span>
+                            <span class="text-[11px] font-mono text-zinc-400">1. Filtro Multi-Plataforma</span>
                         </div>
                     </div>
 
                     <!-- Mockup 2: Ficha de Película -->
                     <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
                         <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
-                            <span class="text-zinc-300 font-bold">FICHA TMDB</span>
+                            <span class="text-zinc-300 font-bold">FICHA OFICIAL</span>
                             <span class="text-amber-400">★ 8.4</span>
                         </div>
                         <div class="space-y-2.5 my-auto">
                             <div class="h-28 rounded-xl bg-gradient-to-t from-black via-zinc-800 to-zinc-700 flex items-center justify-center relative overflow-hidden">
-                                <span class="text-xs font-bold text-zinc-300">INTERSTELLAR (2014)</span>
+                                <span class="text-xs font-bold text-zinc-200">INTERSTELLAR (2014)</span>
                                 <span class="absolute bottom-2 right-2 text-[10px] bg-red-600 text-white font-mono px-2 py-0.5 rounded">En Max y Prime</span>
                             </div>
-                            <p class="text-[11px] text-zinc-300 line-clamp-3 leading-relaxed">
-                                Un grupo de exploradores emprende la misión más importante de la historia humana: viajar más allá de nuestra galaxia para descubrir un nuevo hogar.
+                            <p class="text-[11px] text-zinc-300 leading-relaxed">
+                                Un equipo de exploradores viaja a través de un agujero de gusano en el espacio en un intento de asegurar la supervivencia de la humanidad.
                             </p>
                             <div class="flex gap-2">
                                 <span class="text-[10px] font-mono bg-white/5 border border-white/10 px-2 py-0.5 rounded text-zinc-400">+12 Años</span>
                                 <span class="text-[10px] font-mono bg-white/5 border border-white/10 px-2 py-0.5 rounded text-zinc-400">169 min</span>
                             </div>
-                            <button class="w-full py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs flex items-center justify-center gap-1.5">
-                                <span>▶ Ver Tráiler Oficial</span>
+                            <button class="w-full py-2 rounded-xl bg-white/10 text-white font-bold text-xs">
+                                ▶ Ver Tráiler HD
                             </button>
                         </div>
                         <div class="text-center pt-2 border-t border-white/10">
-                            <span class="text-[11px] font-mono text-zinc-400">Sinopsis y Reparto Verificado</span>
+                            <span class="text-[11px] font-mono text-zinc-400">2. Detalles y Tráiler</span>
                         </div>
                     </div>
 
                     <!-- Mockup 3: Modo Duelo 1vs1 -->
                     <div class="phone-mockup p-5 flex flex-col justify-between h-[480px]">
                         <div class="pt-4 pb-2 border-b border-white/10 flex justify-between items-center text-[10px] font-mono text-zinc-500">
-                            <span class="text-rose-400 font-bold">¡MATCH DETECTADO!</span>
+                            <span class="text-rose-400 font-bold">¡MATCH EN PAREJA!</span>
                             <span class="text-emerald-400">100%</span>
                         </div>
                         <div class="space-y-3 my-auto text-center">
                             <div class="w-14 h-14 mx-auto rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 text-2xl">
                                 ⚔️
                             </div>
-                            <h4 class="text-base font-extrabold text-white">¡Tenéis película para hoy!</h4>
+                            <h4 class="text-base font-extrabold text-white">¡Habéis coincidido!</h4>
                             <div class="p-3 rounded-2xl bg-white/[0.03] border border-white/10 text-center">
                                 <span class="text-xs font-bold text-white block">Blade Runner 2049</span>
-                                <span class="text-[10px] text-zinc-400 font-mono">Ambos habéis dicho SÍ</span>
+                                <span class="text-[10px] text-zinc-400 font-mono">Ambos habéis votado SÍ</span>
                             </div>
-                            <p class="text-[10px] text-zinc-400">Disponible ahora en Netflix España</p>
+                            <p class="text-[10px] text-zinc-400">Incluida en vuestra suscripción de Netflix</p>
                             <button class="w-full py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-500 text-white font-bold text-xs">
-                                Abrir en Netflix &rarr;
+                                Abrir en Plataforma &rarr;
                             </button>
                         </div>
                         <div class="text-center pt-2 border-t border-white/10">
-                            <span class="text-[11px] font-mono text-zinc-400">Votación en Pareja 1vs1</span>
+                            <span class="text-[11px] font-mono text-zinc-400">3. Modo Duelo 1 vs 1</span>
                         </div>
                     </div>
 
@@ -488,8 +513,8 @@
                         </div>
                         <div class="space-y-3 my-auto">
                             <div class="text-center mb-2">
-                                <span class="text-xs font-bold text-white block">Filtro Familiar Activado</span>
-                                <span class="text-[10px] text-zinc-400">Límite configurado: Máximo +12</span>
+                                <span class="text-xs font-bold text-white block">Filtro Familiar TMDB</span>
+                                <span class="text-[10px] text-zinc-400">Edad máxima permitida: +12</span>
                             </div>
                             <div class="grid grid-cols-2 gap-2 text-center text-xs font-mono">
                                 <div class="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400">
@@ -506,11 +531,11 @@
                                 </div>
                             </div>
                             <div class="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 text-[10px] text-zinc-400 text-center font-mono">
-                                Solicita PIN de 4 dígitos para desbloquear
+                                Protegido con PIN local de 4 dígitos
                             </div>
                         </div>
                         <div class="text-center pt-2 border-t border-white/10">
-                            <span class="text-[11px] font-mono text-zinc-400">Control Parental por Edades</span>
+                            <span class="text-[11px] font-mono text-zinc-400">4. Control Parental Oficial</span>
                         </div>
                     </div>
 
@@ -520,28 +545,26 @@
         </section>
 
         <!-- ==========================================
-             SUB-PESTAÑA 2: MODO DUELO 1 VS 1 (PASO A PASO)
+             SUB-PESTAÑA 2: MODO DUELO 1 VS 1 EN PAREJA
              ========================================== -->
         <section id="panel-duelo" class="tab-panel hidden max-w-5xl mx-auto space-y-12">
             <div class="text-center max-w-3xl mx-auto">
                 <span class="text-xs font-mono uppercase text-red-400 tracking-wider block mb-2">Sin Discusiones en el Sofá</span>
                 <h2 class="text-3xl md:text-4xl font-extrabold text-white">¿Cómo funciona el Modo Duelo 1 vs 1?</h2>
                 <p class="text-zinc-400 text-sm md:text-base mt-2">
-                    Elegir qué ver en pareja o con un amigo suele llevar más tiempo que la propia película. Nuestro algoritmo resuelve la indecisión con un sistema táctil en 3 pasos en el mismo teléfono.
+                    Elegir qué ver en pareja suele tardar más que la propia película. Nuestro algoritmo resuelve la indecisión en 3 pasos usando un único teléfono Android por turnos.
                 </p>
             </div>
 
-            <!-- Pasos del Duelo -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
                 <div class="bento-card rounded-3xl p-7 flex flex-col justify-between">
                     <div>
                         <span class="text-xs font-mono font-bold text-red-400 bg-red-500/10 border border-red-500/25 px-3 py-1 rounded-lg inline-block mb-4">
                             PASO 01
                         </span>
-                        <h3 class="text-xl font-bold text-white mb-3">Definid los límites</h3>
+                        <h3 class="text-xl font-bold text-white mb-3">Elegid las reglas</h3>
                         <p class="text-sm text-zinc-400 leading-relaxed">
-                            Marcad qué plataformas tenéis disponibles en la televisión (ej. Netflix y Max) y si os apetece hoy una comedia ligera o un thriller con una duración máxima de 100 minutos.
+                            Seleccionad vuestras plataformas contratadas (ej. Netflix, Prime y Disney+) y los géneros o duración que os apetecen esta noche.
                         </p>
                     </div>
                     <div class="pt-6 border-t border-white/10 text-xs font-mono text-zinc-500">
@@ -554,13 +577,13 @@
                         <span class="text-xs font-mono font-bold text-rose-400 bg-rose-500/10 border border-rose-500/25 px-3 py-1 rounded-lg inline-block mb-4">
                             PASO 02
                         </span>
-                        <h3 class="text-xl font-bold text-white mb-3">Votación Secreta</h3>
+                        <h3 class="text-xl font-bold text-white mb-3">Votación por turnos</h3>
                         <p class="text-sm text-zinc-400 leading-relaxed">
-                            La Persona 1 toma el móvil y vota 10 títulos deslizando a la derecha (Sí) o izquierda (No). Al terminar, le pasa el teléfono a la Persona 2, que vota sin saber qué ha elegido la primera.
+                            La Persona 1 vota la tanda de tarjetas en secreto y pasa el mismo teléfono a la Persona 2, que vota sin ver las elecciones anteriores.
                         </p>
                     </div>
                     <div class="pt-6 border-t border-white/10 text-xs font-mono text-zinc-500">
-                        Un único teléfono Android
+                        En un único dispositivo
                     </div>
                 </div>
 
@@ -569,27 +592,15 @@
                         <span class="text-xs font-mono font-bold text-amber-400 bg-amber-500/10 border border-amber-500/25 px-3 py-1 rounded-lg inline-block mb-4">
                             PASO 03
                         </span>
-                        <h3 class="text-xl font-bold text-white mb-3">¡Match &amp; A Verla!</h3>
+                        <h3 class="text-xl font-bold text-white mb-3">¡Match Instantáneo!</h3>
                         <p class="text-sm text-zinc-400 leading-relaxed">
-                            La pantalla explota de emoción revelando la lista exacta de títulos donde ambos habéis votado favorablemente. Un toque y la película se abre directamente en tu app de televisión.
+                            CineMatch cruza ambas votaciones y celebra en pantalla las películas exactas en las que los dos habéis dicho "Sí".
                         </p>
                     </div>
                     <div class="pt-6 border-t border-white/10 text-xs font-mono text-zinc-500">
-                        100% de éxito garantizado
+                        Decisión justa y divertida
                     </div>
                 </div>
-
-            </div>
-
-            <!-- Banner Informativo -->
-            <div class="bento-card rounded-3xl p-8 border border-rose-500/25 bg-gradient-to-r from-red-500/5 via-rose-500/5 to-transparent flex flex-col sm:flex-row items-center justify-between gap-6">
-                <div>
-                    <h4 class="text-lg font-bold text-white mb-1">¿No tienes con quién jugar al Duelo?</h4>
-                    <p class="text-xs text-zinc-400">CineMatch también cuenta con el Modo Solitario y ruleta rápida para elegir al instante cuando estás solo.</p>
-                </div>
-                <a href="https://play.google.com/store/apps/details?id=com.artimadev.cinematch" target="_blank" rel="noopener" class="bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-6 py-3 rounded-full transition shrink-0">
-                    Probar en Google Play &rarr;
-                </a>
             </div>
         </section>
 
@@ -597,21 +608,19 @@
              SUB-PESTAÑA 3: 12 PLATAFORMAS & CANDADO PARENTAL
              ========================================== -->
         <section id="panel-plataformas" class="tab-panel hidden max-w-6xl mx-auto space-y-16">
-            
-            <!-- 12 Plataformas Soportadas -->
             <div>
                 <div class="text-center max-w-3xl mx-auto mb-10">
-                    <span class="text-xs font-mono uppercase text-red-400 tracking-wider block mb-2">Compatibilidad Universal</span>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-white">Integrado con las 12 Principales Plataformas</h2>
+                    <span class="text-xs font-mono uppercase text-red-400 tracking-wider block mb-2">Catálogo Oficial Sincronizado</span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white">Las 12 Plataformas de Streaming Soportadas</h2>
                     <p class="text-zinc-400 text-sm mt-2">
-                        Actualizamos dinámicamente qué proveedor tiene los derechos de emisión en España y Latinoamérica para que nunca recomiende algo que no puedas ver.
+                        Consulta la disponibilidad real de cada película o serie en tu país para no perder tiempo buscando dónde está incluida.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                     <div class="bento-card p-4 rounded-2xl text-center">
                         <span class="text-lg font-black text-red-500 block mb-1">Netflix</span>
-                        <span class="text-[10px] font-mono text-zinc-500">Global &bull; ES</span>
+                        <span class="text-[10px] font-mono text-zinc-500">Cine &amp; Series</span>
                     </div>
                     <div class="bento-card p-4 rounded-2xl text-center">
                         <span class="text-lg font-black text-blue-400 block mb-1">Prime Video</span>
@@ -627,7 +636,7 @@
                     </div>
                     <div class="bento-card p-4 rounded-2xl text-center">
                         <span class="text-lg font-black text-rose-400 block mb-1">SkyShowtime</span>
-                        <span class="text-[10px] font-mono text-zinc-500">Paramount &bull; Peac.</span>
+                        <span class="text-[10px] font-mono text-zinc-500">Paramount</span>
                     </div>
                     <div class="bento-card p-4 rounded-2xl text-center">
                         <span class="text-lg font-black text-zinc-200 block mb-1">Apple TV+</span>
@@ -635,11 +644,11 @@
                     </div>
                     <div class="bento-card p-4 rounded-2xl text-center">
                         <span class="text-lg font-black text-blue-500 block mb-1">Movistar Plus+</span>
-                        <span class="text-[10px] font-mono text-zinc-500">Cine &bull; Series</span>
+                        <span class="text-[10px] font-mono text-zinc-500">Estrenos ES</span>
                     </div>
                     <div class="bento-card p-4 rounded-2xl text-center">
                         <span class="text-lg font-black text-emerald-400 block mb-1">Filmin</span>
-                        <span class="text-[10px] font-mono text-zinc-500">Cine de Autor &bull; Clás.</span>
+                        <span class="text-[10px] font-mono text-zinc-500">Autor &bull; Indie</span>
                     </div>
                     <div class="bento-card p-4 rounded-2xl text-center">
                         <span class="text-lg font-black text-amber-400 block mb-1">Crunchyroll</span>
@@ -647,15 +656,15 @@
                     </div>
                     <div class="bento-card p-4 rounded-2xl text-center">
                         <span class="text-lg font-black text-red-400 block mb-1">Rakuten TV</span>
-                        <span class="text-[10px] font-mono text-zinc-500">Alquiler &bull; Gratis</span>
+                        <span class="text-[10px] font-mono text-zinc-500">Suscripción/Free</span>
                     </div>
                     <div class="bento-card p-4 rounded-2xl text-center">
                         <span class="text-lg font-black text-orange-400 block mb-1">Atresplayer</span>
-                        <span class="text-[10px] font-mono text-zinc-500">Nacional &bull; Series</span>
+                        <span class="text-[10px] font-mono text-zinc-500">Ficción ES</span>
                     </div>
                     <div class="bento-card p-4 rounded-2xl text-center">
-                        <span class="text-lg font-black text-cyan-400 block mb-1">Mitele / Pluto</span>
-                        <span class="text-[10px] font-mono text-zinc-500">FAST &bull; Abierto</span>
+                        <span class="text-lg font-black text-cyan-400 block mb-1">Pluto / Mitele</span>
+                        <span class="text-[10px] font-mono text-zinc-500">Canales FAST</span>
                     </div>
                 </div>
             </div>
@@ -663,10 +672,10 @@
             <!-- Candado Parental Detallado -->
             <div class="bento-card rounded-3xl p-8 md:p-10 border border-amber-500/30">
                 <div class="max-w-3xl mb-8">
-                    <span class="text-xs font-mono uppercase text-amber-400 tracking-wider block mb-2">Protección Infantil Rigurosa</span>
-                    <h3 class="text-2xl font-extrabold text-white mb-3">Candado Parental Basado en Certificaciones TMDB</h3>
+                    <span class="text-xs font-mono uppercase text-amber-400 tracking-wider block mb-2">Seguridad Familiar</span>
+                    <h3 class="text-2xl font-extrabold text-white mb-3">Candado Parental Certificado por TMDB</h3>
                     <p class="text-sm text-zinc-300 leading-relaxed">
-                        CineMatch lee las clasificaciones oficiales emitidas por organismos reguladores (ICAA en España, MPAA en EE.UU., etc.) indexadas en la base de datos de The Movie Database. Al fijar tu PIN, la aplicación oculta activamente cualquier carátula o sinopsis no apta.
+                        CineMatch consulta las certificaciones oficiales por edades de The Movie Database (ICAA en España, MPAA en EE.UU., etc.). Al activar tu PIN de 4 dígitos, la app filtra de raíz cualquier póster, tráiler o sinopsis superior al umbral elegido.
                     </p>
                 </div>
 
@@ -674,26 +683,25 @@
                     <div class="bg-[#09090e] border border-white/10 rounded-2xl p-5">
                         <span class="text-xs font-mono text-emerald-400 font-bold block mb-1">NIVEL 1 &bull; APTO</span>
                         <h4 class="text-base font-bold text-white mb-2">Todos los Públicos</h4>
-                        <p class="text-xs text-zinc-400 leading-relaxed">Animación infantil, documentales familiares y contenido sin violencia ni lenguaje soez.</p>
+                        <p class="text-xs text-zinc-400 leading-relaxed">Animación infantil, cine familiar y documentales aptos para cualquier edad.</p>
                     </div>
                     <div class="bg-[#09090e] border border-white/10 rounded-2xl p-5">
                         <span class="text-xs font-mono text-blue-400 font-bold block mb-1">NIVEL 2 &bull; +7 AÑOS</span>
                         <h4 class="text-base font-bold text-white mb-2">Mayores de 7 Años</h4>
-                        <p class="text-xs text-zinc-400 leading-relaxed">Aventuras con suspense leve o secuencias fantásticas suaves de acción.</p>
+                        <p class="text-xs text-zinc-400 leading-relaxed">Aventuras familiares y comedias infantiles con acción fantástica suave.</p>
                     </div>
                     <div class="bg-[#09090e] border border-white/10 rounded-2xl p-5">
                         <span class="text-xs font-mono text-amber-400 font-bold block mb-1">NIVEL 3 &bull; +12 / +16</span>
-                        <h4 class="text-base font-bold text-white mb-2">Público Juvenil</h4>
-                        <p class="text-xs text-zinc-400 leading-relaxed">Tramas complejas, drama psicológico, escenas de combate o terror moderado.</p>
+                        <h4 class="text-base font-bold text-white mb-2">Adolescentes</h4>
+                        <p class="text-xs text-zinc-400 leading-relaxed">Ciencia ficción, superhéroes, misterio y thrillers juveniles.</p>
                     </div>
                     <div class="bg-[#09090e] border border-white/10 rounded-2xl p-5">
                         <span class="text-xs font-mono text-red-400 font-bold block mb-1">NIVEL 4 &bull; +18 AÑOS</span>
-                        <h4 class="text-base font-bold text-white mb-2">Adultos Exclusivo</h4>
-                        <p class="text-xs text-zinc-400 leading-relaxed">Violencia gráfica explícita, contenido de terror extremo o lenguaje adulto estricto.</p>
+                        <h4 class="text-base font-bold text-white mb-2">Solo Adultos</h4>
+                        <p class="text-xs text-zinc-400 leading-relaxed">Bloqueado mediante PIN para evitar que menores accedan a terror o violencia explícita.</p>
                     </div>
                 </div>
             </div>
-
         </section>
 
         <!-- ==========================================
@@ -703,104 +711,109 @@
             <div class="text-center max-w-2xl mx-auto mb-8">
                 <span class="text-xs font-mono uppercase text-red-400 tracking-wider block mb-2">Centro de Respuestas</span>
                 <h2 class="text-3xl font-extrabold text-white">Preguntas Frecuentes sobre CineMatch</h2>
-                <p class="text-zinc-400 text-sm mt-2">Todo lo que necesitas saber sobre el recomendador de streaming.</p>
+                <p class="text-zinc-400 text-sm mt-2">7 preguntas reales sobre legalidad, idiomas, privacidad y Modo Duelo.</p>
             </div>
 
-            <!-- FAQ 1 -->
             <details class="bento-card rounded-2xl p-6 group cursor-pointer" open>
                 <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
-                    <span>¿Se pueden reproducir las películas o series completas dentro de CineMatch?</span>
+                    <span>1. ¿Se ven las películas gratis dentro de CineMatch o es una app de enlaces piratas?</span>
                     <span class="text-red-400 group-open:rotate-180 transition-transform">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </span>
                 </summary>
                 <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
-                    <strong>No.</strong> CineMatch es un motor de descubrimiento y recomendación legal. Cuando decides qué película ver, la aplicación te muestra los botones con enlaces oficiales hacia las aplicaciones de streaming que tengas instaladas (Netflix, Prime, Disney+, Max, etc.) para que comience la reproducción de forma oficial y en máxima calidad 4K.
+                    <strong>No es una app pirata.</strong> CineMatch es un recomendador y buscador inteligente 100% legal. No aloja ni transmite películas completas; te ayuda a decidir qué ver en segundos y te indica en cuál de tus plataformas oficiales (Netflix, Prime Video, Disney+, Max, Filmin, etc.) está disponible para reproducirla legalmente.
                 </p>
             </details>
 
-            <!-- FAQ 2 -->
             <details class="bento-card rounded-2xl p-6 group cursor-pointer">
                 <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
-                    <span>¿Necesito registrar una cuenta o dar contraseñas de mis suscripciones?</span>
+                    <span>2. ¿Tengo que crear una cuenta o introducir mis contraseñas de Netflix o Disney+?</span>
                     <span class="text-red-400 group-open:rotate-180 transition-transform">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </span>
                 </summary>
                 <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
-                    <strong>Absolutamente no.</strong> Jamás solicitamos correos, contraseñas ni acceso a tus cuentas de pago. Simplemente marcas con un clic las plataformas que tú tienes contratadas en casa para que el algoritmo filtre sobre ellas. Toda la información de tus plataformas activas permanece exclusivamente en tu móvil.
+                    <strong>Nunca.</strong> CineMatch funciona sin registro de usuario, sin pedir correos electrónicos y jamás solicita las credenciales de tus servicios de streaming. Solo marcas con un toque los iconos de las plataformas que tienes contratadas.
                 </p>
             </details>
 
-            <!-- FAQ 3 -->
             <details class="bento-card rounded-2xl p-6 group cursor-pointer">
                 <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
-                    <span>¿En qué países e idiomas está disponible CineMatch?</span>
+                    <span>3. ¿En cuántos idiomas y regiones funciona CineMatch?</span>
                     <span class="text-red-400 group-open:rotate-180 transition-transform">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </span>
                 </summary>
                 <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
-                    La interfaz está traducida nativamente a <strong>9 idiomas</strong> (Español, Catalán, Inglés, Francés, Alemán, Italiano, Portugués, Ruso y Japonés). Además, puedes cambiar tu país de residencia en los ajustes para que los catálogos y licencias de streaming se adapten al mercado de tu país (España, México, Argentina, Colombia, EE.UU., etc.).
+                    La aplicación está traducida de forma nativa a <strong>9 idiomas</strong> (Español, Catalán, Inglés, Francés, Alemán, Italiano, Portugués, Ruso y Japonés) y adapta automáticamente el catálogo de plataformas según el país seleccionado (España, Latinoamérica, EE.UU. y Europa).
                 </p>
             </details>
 
-            <!-- FAQ 4 -->
             <details class="bento-card rounded-2xl p-6 group cursor-pointer">
                 <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
-                    <span>¿Cómo funciona el Modo Duelo si solo tenemos un móvil?</span>
+                    <span>4. ¿Cómo funciona exactamente el Modo Duelo 1 vs 1 en pareja?</span>
                     <span class="text-red-400 group-open:rotate-180 transition-transform">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </span>
                 </summary>
                 <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
-                    El Modo Duelo está diseñado específicamente para usarse en un solo dispositivo en el sofá. La Persona 1 vota primero en privado y la app bloquea la pantalla con una cortinilla que dice *"Pásale el teléfono a tu pareja"*. La Persona 2 hace sus votos y, al terminar, el algoritmo calcula en milisegundos las coincidencias exactas.
+                    Está pensado para usarse en un solo teléfono Android en el sofá. La primera persona desliza las películas que le apetece ver; luego una pantalla intermedia oculta sus votos para pasar el móvil a la segunda persona. Al terminar ambos, CineMatch revela únicamente las coincidencias.
                 </p>
             </details>
 
-            <!-- FAQ 5 -->
             <details class="bento-card rounded-2xl p-6 group cursor-pointer">
                 <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
-                    <span>¿Con qué frecuencia se actualizan los catálogos de estrenos?</span>
+                    <span>5. ¿Dónde se guardan mis listas de "Favoritos" y "Ya vistas"?</span>
                     <span class="text-red-400 group-open:rotate-180 transition-transform">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </span>
                 </summary>
                 <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
-                    Las altas y bajas de películas en plataformas se sincronizan en tiempo real mediante los servicios de metadatos de TMDB y JustWatch. Cada vez que abres la app o filtras por novedades, la información refleja los últimos estrenos disponibles en streaming.
+                    Se almacenan de manera <strong>100% local en tu dispositivo Android</strong> mediante Room SQLite. Nadie externo tiene acceso a tus listas ni a tu historial de películas descartadas.
                 </p>
             </details>
 
-            <!-- FAQ 6 -->
             <details class="bento-card rounded-2xl p-6 group cursor-pointer">
                 <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
-                    <span>¿Qué ocurre si olvido el PIN de 4 dígitos del Candado Parental?</span>
+                    <span>6. ¿Cómo puedo restablecer el PIN del Candado Parental si lo olvido?</span>
                     <span class="text-red-400 group-open:rotate-180 transition-transform">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </span>
                 </summary>
                 <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
-                    Como medida estricta de privacidad, el PIN nunca se envía a internet. Si lo olvidas, basta con acceder a los Ajustes de Android de tu teléfono, ir a *Aplicaciones &gt; CineMatch &gt; Almacenamiento* y pulsar *Borrar Almacenamiento*. Esto restablecerá la app y te permitirá configurar un nuevo PIN desde cero.
+                    Dado que el PIN se guarda exclusivamente en local por privacidad, puedes restablecerlo entrando en los Ajustes de Android &gt; Aplicaciones &gt; CineMatch &gt; Almacenamiento &gt; Borrar datos, lo que te permitirá definir un PIN nuevo.
                 </p>
             </details>
 
+            <details class="bento-card rounded-2xl p-6 group cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center text-sm md:text-base">
+                    <span>7. ¿De dónde proceden las notas, carátulas y certificaciones por edad?</span>
+                    <span class="text-red-400 group-open:rotate-180 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="text-sm text-zinc-400 mt-4 pt-4 border-t border-white/10 leading-relaxed">
+                    Se consultan en tiempo real a través de la API oficial de <strong>TMDB (The Movie Database)</strong>, garantizando metadatos actualizados al día, tráilers oficiales y clasificaciones de edad verificadas por país.
+                </p>
+            </details>
         </section>
 
         <!-- ==========================================
-             BLOQUE FINAL: APOYO EN KO-FI & VENTA CRUZADA
+             BLOQUE FINAL: APOYO EN KO-FI & VENTA CRUZADA (LAS OTRAS 5 APPS)
              ========================================== -->
         <section class="max-w-6xl mx-auto mt-24 pt-16 border-t border-white/10">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                 
-                <!-- Tarjeta Ko-fi -->
-                <div class="bento-card p-8 rounded-3xl border border-amber-500/25 flex flex-col justify-between">
+                <!-- Tarjeta Ko-fi (4 cols) -->
+                <div class="lg:col-span-4 bento-card p-8 rounded-3xl border border-amber-500/25 flex flex-col justify-between">
                     <div>
                         <span class="inline-flex items-center gap-2 text-xs font-mono uppercase text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full mb-4">
                             ☕ Software Independiente
                         </span>
                         <h3 class="text-xl font-bold text-white mb-2">¿CineMatch os ha salvado la noche?</h3>
                         <p class="text-xs text-zinc-400 leading-relaxed mb-6">
-                            Desarrollamos aplicaciones honestas y limpias sin modelos de suscripción abusivos. Si gracias a CineMatch habéis encontrado qué ver en minutos, puedes invitarnos a un café en Ko-fi para apoyar nuestro trabajo en Barcelona.
+                            Desarrollamos aplicaciones honestas y limpias desde Barcelona sin modelos de suscripción abusivos. Si gracias a CineMatch habéis encontrado qué ver en minutos, puedes apoyarnos en Ko-fi.
                         </p>
                     </div>
                     <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs px-6 py-3.5 rounded-full transition shadow-lg shadow-amber-500/20">
@@ -811,29 +824,34 @@
                     </a>
                 </div>
 
-                <!-- Tarjetas de Venta Cruzada (Otras Apps de ArtimaDev) -->
-                <div class="lg:col-span-2 space-y-4">
-                    <span class="text-xs font-mono uppercase text-zinc-400 font-bold tracking-wider block">Descubre otras aplicaciones del estudio</span>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <a href="motorpedia.html" class="bento-card p-5 rounded-2xl block group hover:border-cyan-500/30 transition">
+                <!-- Venta Cruzada: Las otras 5 Apps del estudio (8 cols) -->
+                <div class="lg:col-span-8 space-y-4">
+                    <span class="text-xs font-mono uppercase text-zinc-400 font-bold tracking-wider block">Explora las otras 5 aplicaciones de ArtimaDev Studio</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <a href="motorpedia.html" class="bento-card p-4 rounded-2xl block group hover:border-cyan-500/35 transition">
                             <span class="text-[10px] font-mono font-bold uppercase text-cyan-400">Automoción &bull; OBD2</span>
-                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-cyan-400 transition">Motorpedia Pro</h4>
-                            <p class="text-xs text-zinc-400 leading-relaxed">Diagnóstico multimarca ELM327 y buscador de +50.000 DTCs.</p>
+                            <h4 class="font-bold text-white text-sm mt-1 mb-1 group-hover:text-cyan-400 transition">Motorpedia OBD2 Pro</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Diagnosis multimarca ELM327 y enciclopedia de +50.000 DTCs.</p>
                         </a>
-                        <a href="quickmute.html" class="bento-card p-5 rounded-2xl block group hover:border-purple-500/30 transition">
+                        <a href="baterix.html" class="bento-card p-4 rounded-2xl block group hover:border-emerald-500/35 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-emerald-400">Energía &bull; Salud Batería</span>
+                            <h4 class="font-bold text-white text-sm mt-1 mb-1 group-hover:text-emerald-400 transition">Baterix</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Telemetría en vivo (mA, mV, °C), alarma al 80% y widgets Glance.</p>
+                        </a>
+                        <a href="pluvio.html" class="bento-card p-4 rounded-2xl block group hover:border-sky-500/35 transition">
+                            <span class="text-[10px] font-mono font-bold uppercase text-sky-400">Meteorología &bull; Nowcasting</span>
+                            <h4 class="font-bold text-white text-sm mt-1 mb-1 group-hover:text-sky-400 transition">Pluvio</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Radar hiperlocal de lluvia a 60 minutos con avisos WorkManager.</p>
+                        </a>
+                        <a href="quickmute.html" class="bento-card p-4 rounded-2xl block group hover:border-purple-500/35 transition">
                             <span class="text-[10px] font-mono font-bold uppercase text-purple-400">Audio &bull; Productividad</span>
-                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-purple-400 transition">QuickMute</h4>
-                            <p class="text-xs text-zinc-400 leading-relaxed">Control táctil de volumen, Quick Settings Tile y silencio inteligente.</p>
+                            <h4 class="font-bold text-white text-sm mt-1 mb-1 group-hover:text-purple-400 transition">QuickMute</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Silencio instantáneo por Tile manteniendo alarmas y auto-restore.</p>
                         </a>
-                        <a href="baterix.html" class="bento-card p-5 rounded-2xl block group hover:border-emerald-500/30 transition">
-                            <span class="text-[10px] font-mono font-bold uppercase text-emerald-400">Energía &bull; Batería</span>
-                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-emerald-400 transition">Batterix</h4>
-                            <p class="text-xs text-zinc-400 leading-relaxed">Monitor de amperaje en tiempo real y alarma de protección al 80%.</p>
-                        </a>
-                        <a href="pluvio.html" class="bento-card p-5 rounded-2xl block group hover:border-sky-500/30 transition">
-                            <span class="text-[10px] font-mono font-bold uppercase text-sky-400">Clima &bull; Nowcasting</span>
-                            <h4 class="font-bold text-white text-base mt-1 mb-1 group-hover:text-sky-400 transition">Pluvio</h4>
-                            <p class="text-xs text-zinc-400 leading-relaxed">Radar de lluvia a 60 minutos con widget Jetpack Glance.</p>
+                        <a href="kippo.html" class="bento-card p-4 rounded-2xl block group hover:border-amber-500/35 transition sm:col-span-2 lg:col-span-2">
+                            <span class="text-[10px] font-mono font-bold uppercase text-amber-400">Organización &bull; Garantías Offline</span>
+                            <h4 class="font-bold text-white text-sm mt-1 mb-1 group-hover:text-amber-400 transition">Kippo — Gestor de Tickets, Garantías y Vencimientos</h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">Guarda tus tickets térmicos y facturas en privado y recibe alertas antes de que caduque la garantía.</p>
                         </a>
                     </div>
                 </div>
@@ -841,10 +859,10 @@
             </div>
         </section>
 
-        <!-- AVISO LEGAL DE ATRIBUCIÓN TMDB -->
+        <!-- AVISO LEGAL DE ATRIBUCIÓN OFICIAL TMDB -->
         <section class="max-w-6xl mx-auto mt-10 pt-6 border-t border-white/5 text-center">
             <p class="text-xs text-zinc-500 max-w-2xl mx-auto leading-relaxed">
-                Este producto utiliza la API de TMDB (The Movie Database) para metadatos de películas y clasificaciones por edad, pero no está avalado ni certificado por TMDB. Los nombres de plataformas de streaming (Netflix, HBO Max, Disney+, etc.) y sus logotipos pertenecen a sus respectivos propietarios legales.
+                <strong>Atribución Oficial TMDB:</strong> Este producto utiliza la API de TMDB (The Movie Database) para metadatos de películas, series y certificaciones de edad, pero no está avalado ni certificado por TMDB. Todas las marcas de servicios de streaming (Netflix, Prime Video, Disney+, Max, etc.) pertenecen a sus respectivos propietarios.
             </p>
         </section>
 
@@ -854,7 +872,6 @@
     <footer class="border-t border-white/10 bg-[#060608] pt-16 pb-12">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
-                <!-- Columna 1: Marca -->
                 <div class="md:col-span-1">
                     <a href="index.html" class="flex items-center gap-3 mb-4">
                         <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center font-black text-white text-sm">
@@ -863,39 +880,38 @@
                         <span class="text-lg font-extrabold text-white">Artima<span class="text-blue-400">Dev</span> Studio</span>
                     </a>
                     <p class="text-xs text-zinc-400 leading-relaxed mb-4">
-                        Estudio de Ingeniería Android independiente especializado en aplicaciones nativas en Kotlin, diagnóstico automotriz OBD2 y utilidades de sistema.
+                        Estudio independiente de ingeniería Android especializado en aplicaciones nativas en Kotlin, Jetpack Compose, diagnóstico automotriz OBD2 y utilidades Offline-First.
                     </p>
-                    <p class="text-xs font-mono text-zinc-500">Barcelona, España &bull; EU</p>
+                    <p class="text-xs font-mono text-zinc-500">Barcelona, España &bull; UE</p>
                 </div>
 
-                <!-- Columna 2: Catálogo de Apps -->
                 <div>
-                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Aplicaciones</h4>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Catálogo (6 Apps)</h4>
                     <ul class="space-y-2.5 text-xs text-zinc-400">
                         <li><a href="motorpedia.html" class="hover:text-cyan-400 transition">Motorpedia OBD2 Pro</a></li>
                         <li><a href="cinematch.html" class="text-red-400 font-semibold">CineMatch Streaming</a></li>
+                        <li><a href="baterix.html" class="hover:text-emerald-400 transition">Baterix Battery Health</a></li>
+                        <li><a href="pluvio.html" class="hover:text-sky-400 transition">Pluvio Rain Radar 60m</a></li>
                         <li><a href="quickmute.html" class="hover:text-purple-400 transition">QuickMute Audio Control</a></li>
-                        <li><a href="baterix.html" class="hover:text-emerald-400 transition">Batterix Battery Health</a></li>
-                        <li><a href="pluvio.html" class="hover:text-sky-400 transition">Pluvio Rain Radar</a></li>
+                        <li><a href="kippo.html" class="hover:text-amber-400 transition">Kippo Tickets &amp; Garantías</a></li>
                     </ul>
                 </div>
 
-                <!-- Columna 3: Recursos y Soporte -->
                 <div>
-                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Comunidad &amp; Legal</h4>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Soporte &amp; Legal</h4>
                     <ul class="space-y-2.5 text-xs text-zinc-400">
                         <li><a href="soporte.html" class="hover:text-white transition">Centro de Soporte Técnico</a></li>
                         <li><a href="soporte.html#testers" class="hover:text-blue-400 transition">Programa Oficial Beta Testers</a></li>
-                        <li><a href="privacidad.html" class="hover:text-white transition">Política de Privacidad Multi-App</a></li>
+                        <li><a href="privacidad.html#cinematch" class="hover:text-white transition">Política de Privacidad Multi-App</a></li>
+                        <li><a href="motorpedia.html#buscador" class="hover:text-cyan-400 transition">Buscador Web +50.000 DTCs</a></li>
                         <li><a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="hover:text-amber-400 transition">Apoyar Estudio en Ko-fi</a></li>
                     </ul>
                 </div>
 
-                <!-- Columna 4: Contacto Directo -->
                 <div>
                     <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Contacto Directo</h4>
                     <p class="text-xs text-zinc-400 leading-relaxed mb-3">
-                        Atención técnica directa por parte del equipo de desarrollo sin bots ni intermediarios.
+                        Atención técnica directa de ingeniero a usuario desde Barcelona sin intermediarios.
                     </p>
                     <a href="mailto:artimadev@gmail.com" class="inline-flex items-center gap-2 text-xs font-mono text-red-400 hover:text-red-300 bg-red-500/10 border border-red-500/20 px-3.5 py-2 rounded-lg transition mb-3">
                         <span>artimadev@gmail.com</span>
@@ -910,14 +926,13 @@
 
             <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
                 <p>&copy; 2026 ArtimaDev Studio (Barcelona, España). Todos los derechos reservados.</p>
-                <p class="font-mono text-[11px]">Google Play y el logotipo de Google Play son marcas comerciales de Google LLC.</p>
+                <p class="font-mono text-[11px]">This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
             </div>
         </div>
     </footer>
 
     <!-- LÓGICA JAVASCRIPT DE PESTAÑAS -->
     <script>
-        // Control de Menú Móvil
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         if (menuBtn && mobileMenu) {
@@ -926,7 +941,6 @@
             });
         }
 
-        // Cambio de sub-pestañas internas sin recargar la página
         function switchTab(tabId) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -937,10 +951,10 @@
             if (targetPanel && targetBtn) {
                 targetPanel.classList.remove('hidden');
                 targetBtn.classList.add('active');
+                history.replaceState(null, null, '#' + tabId);
             }
         }
 
-        // Soporte de hash inicial en la URL (#duelo, #plataformas, #faq, etc.)
         const initialHash = window.location.hash.replace('#', '').toLowerCase();
         if (['resumen', 'duelo', 'plataformas', 'faq'].includes(initialHash)) {
             switchTab(initialHash);
