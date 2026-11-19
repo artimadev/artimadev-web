@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMatch | Match en Pareja Remoto 1 vs 1 — ArtimaDev Studio</title>
+    <meta name="description" content="Vota la misma selección de películas y series desde tu móvil y descubrid en segundos qué ver juntos. Sin cuentas ni registros.">
+    <meta name="robots" content="noindex, follow">
+
+    <!-- Open Graph / WhatsApp & Telegram Preview -->
+    <meta property="og:title" content="🎬 ¿Qué vemos hoy? Te reto en CineMatch">
+    <meta property="og:description" content="Vota la misma selección de películas y series desde tu móvil y descubrid en segundos qué ver juntos. Sin cuentas ni registros.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://artimadev.com/cinematch/duel">
+    <meta property="og:image" content="https://artimadev.com/cinematch/og-cinematch.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ArtimaDev Studio — CineMatch">
+
+    <!-- Twitter / X Preview -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🎬 ¿Qué vemos hoy? Te reto en CineMatch">
+    <meta name="twitter:description" content="Vota la misma selección de películas y series desde tu móvil y descubrid en segundos qué ver juntos. Sin cuentas ni registros.">
+    <meta name="twitter:image" content="https://artimadev.com/cinematch/og-cinematch.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        dark: '#08080a',
+                        surface: '#0d0d12',
+                        card: '#111118',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #08080a;
+            color: #f4f4f5;
+            background-image: radial-gradient(rgba(239, 68, 68, 0.055) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.84);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .bento-card {
+            background: linear-gradient(180deg, rgba(22, 22, 30, 0.78) 0%, rgba(11, 11, 16, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bento-card:hover {
+            border-color: rgba(239, 68, 68, 0.32);
+        }
+        .hero-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(239, 68, 68, 0.15) 0%, rgba(244, 63, 94, 0.06) 40%, transparent 72%);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-red-500 selection:text-white">
+
+    <!-- HEADER / BARRA DE NAVEGACIÓN GLOBAL UNIFICADA -->
+    <header class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <!-- Logo ArtimaDev -->
+            <a href="/index.html" class="flex items-center gap-3 group shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 22 12 17 22 22 12 2"></polygon>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-extrabold tracking-tight text-white leading-none">Artima<span class="text-blue-400">Dev</span></span>
+                        <span class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-zinc-400">Barcelona &bull; ES</span>
+                    </div>
+                    <span class="text-[11px] text-zinc-500 font-mono block mt-0.5">Android Engineering Studio</span>
+                </div>
+            </a>
+
+            <!-- Navegación Escritorio -->
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-zinc-400">
+                <a href="/index.html" class="hover:text-white transition">Inicio</a>
+
+                <!-- Menú Desplegable de las 6 Aplicaciones -->
+                <div class="relative group">
+                    <button type="button" class="text-red-400 font-semibold transition flex items-center gap-1.5 py-2 focus:outline-none">
+                        <span>Aplicaciones</span>
+                        <span class="text-[10px] font-mono bg-red-500/15 text-red-400 border border-red-500/30 px-1.5 py-0.2 rounded-full">6</span>
+                        <svg class="w-4 h-4 text-red-400 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[540px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="bg-[#0d0d12]/95 border border-white/10 rounded-2xl p-3 shadow-2xl backdrop-blur-2xl">
+                            <div class="flex items-center justify-between px-2 pb-2 mb-2 border-b border-white/10">
+                                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Catálogo Oficial Android (6 Apps)</span>
+                                <a href="/index.html#catalogo" class="text-[11px] font-mono text-red-400 hover:underline">Ver todas &rarr;</a>
+                            </div>
+                            <div class="grid grid-cols-2 gap-1.5">
+                                <a href="/motorpedia.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center text-cyan-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-cyan-400 transition block">Motorpedia OBD2 Pro</span>
+                                        <span class="text-[11px] text-zinc-500">Diagnóstico ECU &amp; +50k DTCs</span>
+                                    </div>
+                                </a>
+                                <a href="/cinematch.html" class="flex items-center gap-3 p-2.5 rounded-xl bg-red-500/10 text-red-300 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-red-500/20 border border-red-500/35 flex items-center justify-center text-red-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-red-400 transition block">CineMatch</span>
+                                        <span class="text-[11px] text-zinc-400">Streaming, Duelo 1vs1 &amp; PIN</span>
+                                    </div>
+                                </a>
+                                <a href="/baterix.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-emerald-400 transition block">Baterix</span>
+                                        <span class="text-[11px] text-zinc-500">Telemetría mA/°C &amp; Alerta 80%</span>
+                                    </div>
+                                </a>
+                                <a href="/pluvio.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-sky-500/10 border border-sky-500/25 flex items-center justify-center text-sky-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-sky-400 transition block">Pluvio</span>
+                                        <span class="text-[11px] text-zinc-500">Radar de lluvia a 60 minutos</span>
+                                    </div>
+                                </a>
+                                <a href="/quickmute.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-purple-400 transition block">QuickMute</span>
+                                        <span class="text-[11px] text-zinc-500">Control instantáneo de audio</span>
+                                    </div>
+                                </a>
+                                <a href="/kippo.html" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition group/item">
+                                    <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white group-hover/item:text-amber-400 transition block">Kippo</span>
+                                        <span class="text-[11px] text-zinc-500">Tickets, garantías y vencimientos</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/motorpedia.html#buscador" class="hover:text-cyan-400 transition flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                    <span>Buscador DTC</span>
+                </a>
+                <a href="/soporte.html" class="hover:text-white transition">Soporte &amp; Testers</a>
+                <a href="/privacidad.html#cinematch" class="hover:text-white transition">Privacidad</a>
+            </nav>
+
+            <!-- Botones de Acción Derecha -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 transition shadow-sm shadow-amber-500/10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                    </svg>
+                    <span>Apoyar en Ko-fi</span>
+                </a>
+                <a href="mailto:artimadev@gmail.com" class="bg-white/5 hover:bg-white/10 text-zinc-200 px-4 py-2 rounded-full border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition">
+                    <svg class="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span>Contacto</span>
+                </a>
+            </div>
+
+            <!-- Botón Menú Móvil -->
+            <button id="menu-btn" aria-label="Abrir Menú de Navegación" class="lg:hidden text-zinc-300 hover:text-white p-2 rounded-lg border border-white/10 bg-white/5">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden lg:hidden border-b border-white/10 bg-[#08080a]/95 backdrop-blur-xl px-6 py-6 space-y-4 text-sm">
+            <div class="space-y-2">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Navegación Principal</span>
+                <a href="/index.html" class="block text-zinc-300 hover:text-white font-medium py-1.5">Inicio</a>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">Catálogo de 6 Aplicaciones</span>
+                <a href="/motorpedia.html" class="block text-cyan-400 font-semibold py-1">1. Motorpedia OBD2 Pro &mdash; Diagnóstico ECU</a>
+                <a href="/cinematch.html" class="block text-red-400 font-bold py-1">2. CineMatch &mdash; Recomendador Streaming</a>
+                <a href="/baterix.html" class="block text-emerald-400 font-semibold py-1">3. Baterix &mdash; Telemetría y Salud de Batería</a>
+                <a href="/pluvio.html" class="block text-sky-400 font-semibold py-1">4. Pluvio &mdash; Radar de Lluvia a 60 Minutos</a>
+                <a href="/quickmute.html" class="block text-purple-400 font-semibold py-1">5. QuickMute &mdash; Control Instantáneo de Audio</a>
+                <a href="/kippo.html" class="block text-amber-400 font-semibold py-1">6. Kippo &mdash; Gestor de Tickets y Garantías</a>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <a href="/soporte.html" class="block text-zinc-300 hover:text-white font-medium py-1">Soporte &amp; Programa Beta Testers</a>
+                <a href="/privacidad.html#cinematch" class="block text-zinc-300 hover:text-white font-medium py-1">Centro de Privacidad Legal</a>
+            </div>
+            <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-3">
+                <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="bg-amber-500/15 border border-amber-500/30 text-amber-400 px-4 py-2 rounded-full text-xs font-bold">
+                    ☕ Apoyar en Ko-fi
+                </a>
+                <a href="mailto:artimadev@gmail.com" class="bg-white/5 border border-white/10 text-zinc-300 px-4 py-2 rounded-full text-xs font-mono">
+                    artimadev@gmail.com
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow pt-32 pb-24 px-6 hero-glow flex items-center">
+        <section class="max-w-2xl mx-auto w-full">
+
+            <!-- Selector rápido de idioma ES / EN -->
+            <div class="flex justify-end mb-4">
+                <div class="inline-flex items-center gap-1 p-1 rounded-full bg-[#0e0e14] border border-white/10 text-[11px] font-mono">
+                    <button id="lang-btn-es" type="button" class="px-3 py-1 rounded-full font-bold transition">ES</button>
+                    <button id="lang-btn-en" type="button" class="px-3 py-1 rounded-full font-bold transition">EN</button>
+                </div>
+            </div>
+
+            <!-- ESTADO A: CON RETO VÁLIDO (?p=...) -->
+            <div id="duel-valid-state" class="hidden bento-card rounded-3xl p-8 sm:p-10 text-center border-red-500/30">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-red-500/20 to-rose-500/10 border border-red-500/35 flex items-center justify-center shadow-xl shadow-red-600/15">
+                    <svg class="w-10 h-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
+                    </svg>
+                </div>
+
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-[11px] font-mono uppercase tracking-wider mb-5">
+                    <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                    <span id="valid-badge">CINEMATCH &bull; DUELO REMOTO 1 VS 1</span>
+                </div>
+
+                <h1 id="valid-title" class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+                    ¡Te han retado a un Match en Pareja en CineMatch!
+                </h1>
+
+                <p id="valid-desc" class="text-sm sm:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed mb-8">
+                    Vota a ciegas las mismas películas y series desde tu móvil y descubrid al instante vuestras coincidencias, sin cuentas ni registros.
+                </p>
+
+                <div class="flex flex-col gap-3 max-w-md mx-auto">
+                    <a id="open-app-btn" href="cinematch://duel" class="w-full bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white font-extrabold px-7 py-4 rounded-2xl text-sm sm:text-base transition flex items-center justify-center gap-2.5 shadow-xl shadow-red-600/25">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                        <span id="open-app-label">Abrir reto en CineMatch</span>
+                    </a>
+
+                    <a id="play-store-btn-valid" href="https://play.google.com/store/apps/details?id=com.artimadev.cinematch" target="_blank" rel="noopener" class="w-full bg-white/5 hover:bg-white/10 text-white border border-white/15 font-bold px-7 py-3.5 rounded-2xl text-sm transition flex items-center justify-center gap-2.5">
+                        <svg class="w-4 h-4 text-red-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 20.5v-17c0-.83.67-1.5 1.5-1.5.31 0 .61.1.86.28l14.15 8.5c.71.43.94 1.35.51 2.06-.13.21-.3.38-.51.51l-14.15 8.5c-.71.43-1.63.2-2.06-.51-.18-.25-.28-.55-.28-.86z"/>
+                        </svg>
+                        <span id="play-store-label-valid">Descargar CineMatch en Google Play</span>
+                    </a>
+
+                    <button id="copy-challenge-btn" type="button" class="w-full bg-transparent hover:bg-white/5 text-zinc-400 hover:text-zinc-200 border border-white/10 font-mono text-xs px-5 py-2.5 rounded-xl transition">
+                        Copiar enlace del reto para pegar en la app
+                    </button>
+                </div>
+
+                <p id="valid-note" class="text-xs text-zinc-500 max-w-md mx-auto mt-6 leading-relaxed">
+                    ¿Ya tienes CineMatch instalada y no se abre automáticamente? Pulsa el botón principal o abre este enlace en Chrome.
+                </p>
+            </div>
+
+            <!-- ESTADO B: SIN PARÁMETRO ?p O ENLACE INVÁLIDO / TRUNCADO -->
+            <div id="duel-fallback-state" class="bento-card rounded-3xl p-8 sm:p-10 text-center">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-3xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 shadow-xl shadow-red-600/10">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                </div>
+
+                <div id="fallback-badge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-[11px] font-mono uppercase tracking-wider mb-5">
+                    MATCH EN PAREJA REMOTO &bull; CINEMATCH
+                </div>
+
+                <h1 id="fallback-title" class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+                    Match en Pareja Remoto en CineMatch
+                </h1>
+
+                <p id="fallback-desc" class="text-sm sm:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed mb-6">
+                    Elige películas o series con tu pareja o amigos incluso a distancia: uno vota primero, envía un enlace cifrado sin servidores ni cuentas, y el otro vota a ciegas en su propio móvil.
+                </p>
+
+                <div id="invalid-link-notice" class="hidden max-w-md mx-auto mb-6 px-4 py-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs leading-relaxed">
+                    El enlace del reto está incompleto o truncado. Pide a la otra persona que vuelva a enviarte la invitación completa desde CineMatch.
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left mb-8">
+                    <div class="bg-[#09090e] border border-white/10 rounded-2xl p-4">
+                        <span id="step-1-badge" class="text-[10px] font-mono font-bold text-red-400 block mb-1">01 &bull; ANFITRIÓN</span>
+                        <p id="step-1-text" class="text-xs text-zinc-300 leading-relaxed">Vota la selección desde CineMatch y pulsa Compartir Duelo Remoto.</p>
+                    </div>
+                    <div class="bg-[#09090e] border border-white/10 rounded-2xl p-4">
+                        <span id="step-2-badge" class="text-[10px] font-mono font-bold text-rose-400 block mb-1">02 &bull; INVITADO</span>
+                        <p id="step-2-text" class="text-xs text-zinc-300 leading-relaxed">Abre el enlace recibido por WhatsApp o Telegram para votar a ciegas.</p>
+                    </div>
+                    <div class="bg-[#09090e] border border-white/10 rounded-2xl p-4">
+                        <span id="step-3-badge" class="text-[10px] font-mono font-bold text-amber-400 block mb-1">03 &bull; MATCH</span>
+                        <p id="step-3-text" class="text-xs text-zinc-300 leading-relaxed">Descubrid vuestras coincidencias al instante y compartid la tarjeta.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a id="play-store-btn-fallback" href="https://play.google.com/store/apps/details?id=com.artimadev.cinematch" target="_blank" rel="noopener" class="w-full sm:w-auto bg-red-600 hover:bg-red-500 text-white font-extrabold px-7 py-3.5 rounded-full text-sm transition flex items-center justify-center gap-2 shadow-xl shadow-red-600/25">
+                        <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 20.5v-17c0-.83.67-1.5 1.5-1.5.31 0 .61.1.86.28l14.15 8.5c.71.43.94 1.35.51 2.06-.13.21-.3.38-.51.51l-14.15 8.5c-.71.43-1.63.2-2.06-.51-.18-.25-.28-.55-.28-.86z"/>
+                        </svg>
+                        <span id="play-store-label-fallback">Descargar en Google Play</span>
+                    </a>
+                    <a id="back-cinematch-btn" href="/cinematch.html" class="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/15 font-semibold px-7 py-3.5 rounded-full text-sm transition flex items-center justify-center gap-2">
+                        <span id="back-cinematch-label">Ver ficha de CineMatch</span>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- FOOTER GLOBAL UNIFICADO -->
+    <footer class="border-t border-white/10 bg-[#060608] pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+                <div class="md:col-span-1">
+                    <a href="/index.html" class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center font-black text-white text-sm">
+                            A
+                        </div>
+                        <span class="text-lg font-extrabold text-white">Artima<span class="text-blue-400">Dev</span> Studio</span>
+                    </a>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+                        Estudio independiente de ingeniería Android especializado en aplicaciones nativas en Kotlin, Jetpack Compose, diagnóstico automotriz OBD2 y utilidades Offline-First.
+                    </p>
+                    <p class="text-xs font-mono text-zinc-500">Barcelona, España &bull; UE</p>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Catálogo (6 Apps)</h4>
+                    <ul class="space-y-2.5 text-xs text-zinc-400">
+                        <li><a href="/motorpedia.html" class="hover:text-cyan-400 transition">Motorpedia OBD2 Pro</a></li>
+                        <li><a href="/cinematch.html" class="text-red-400 font-semibold">CineMatch Streaming</a></li>
+                        <li><a href="/baterix.html" class="hover:text-emerald-400 transition">Baterix Battery Health</a></li>
+                        <li><a href="/pluvio.html" class="hover:text-sky-400 transition">Pluvio Rain Radar 60m</a></li>
+                        <li><a href="/quickmute.html" class="hover:text-purple-400 transition">QuickMute Audio Control</a></li>
+                        <li><a href="/kippo.html" class="hover:text-amber-400 transition">Kippo Tickets &amp; Garantías</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Soporte &amp; Legal</h4>
+                    <ul class="space-y-2.5 text-xs text-zinc-400">
+                        <li><a href="/soporte.html" class="hover:text-white transition">Centro de Soporte Técnico</a></li>
+                        <li><a href="/soporte.html#testers" class="hover:text-blue-400 transition">Programa Oficial Beta Testers</a></li>
+                        <li><a href="/privacidad.html#cinematch" class="hover:text-white transition">Política de Privacidad Multi-App</a></li>
+                        <li><a href="/motorpedia.html#buscador" class="hover:text-cyan-400 transition">Buscador Web +50.000 DTCs</a></li>
+                        <li><a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="hover:text-amber-400 transition">Apoyar Estudio en Ko-fi</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-bold mb-4">Contacto Directo</h4>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-3">
+                        Atención técnica directa de ingeniero a usuario desde Barcelona sin intermediarios.
+                    </p>
+                    <a href="mailto:artimadev@gmail.com" class="inline-flex items-center gap-2 text-xs font-mono text-red-400 hover:text-red-300 bg-red-500/10 border border-red-500/20 px-3.5 py-2 rounded-lg transition mb-3">
+                        <span>artimadev@gmail.com</span>
+                    </a>
+                    <div class="block">
+                        <a href="https://ko-fi.com/artimadev" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 transition">
+                            <span>☕ ko-fi.com/artimadev</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+                <p>&copy; 2026 ArtimaDev Studio (Barcelona, España). Todos los derechos reservados.</p>
+                <p class="font-mono text-[11px]">This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const rawPayload = params.get('p');
+            const hasPayloadParam = params.has('p');
+            const base64UrlSafeRegex = /^[A-Za-z0-9\-_=]+$/;
+            const isPayloadValid =
+                typeof rawPayload === 'string' &&
+                rawPayload.length >= 12 &&
+                rawPayload.length <= 4096 &&
+                base64UrlSafeRegex.test(rawPayload);
+
+            const validStateEl = document.getElementById('duel-valid-state');
+            const fallbackStateEl = document.getElementById('duel-fallback-state');
+            const invalidNoticeEl = document.getElementById('invalid-link-notice');
+            const openAppBtn = document.getElementById('open-app-btn');
+            const copyBtn = document.getElementById('copy-challenge-btn');
+
+            if (isPayloadValid && openAppBtn) {
+                const deepLinkUrl = 'cinematch://duel?p=' + encodeURIComponent(rawPayload);
+                openAppBtn.setAttribute('href', deepLinkUrl);
+                if (validStateEl) validStateEl.classList.remove('hidden');
+                if (fallbackStateEl) fallbackStateEl.classList.add('hidden');
+            } else {
+                if (validStateEl) validStateEl.classList.add('hidden');
+                if (fallbackStateEl) fallbackStateEl.classList.remove('hidden');
+                if (hasPayloadParam && invalidNoticeEl) {
+                    invalidNoticeEl.classList.remove('hidden');
+                }
+            }
+
+            const i18n = {
+                es: {
+                    htmlLang: 'es',
+                    validBadge: 'CINEMATCH \u2022 DUELO REMOTO 1 VS 1',
+                    validTitle: '¡Te han retado a un Match en Pareja en CineMatch!',
+                    validDesc: 'Vota a ciegas las mismas películas y series desde tu móvil y descubrid al instante vuestras coincidencias, sin cuentas ni registros.',
+                    openAppLabel: 'Abrir reto en CineMatch',
+                    playStoreValid: 'Descargar CineMatch en Google Play',
+                    copyBtn: 'Copiar enlace del reto para pegar en la app',
+                    copiedBtn: '✓ Enlace copiado al portapapeles',
+                    validNote: '¿Ya tienes CineMatch instalada y no se abre automáticamente? Pulsa el botón principal o abre este enlace en Chrome.',
+                    fallbackBadgeValid: 'MATCH EN PAREJA REMOTO \u2022 CINEMATCH',
+                    fallbackBadgeInvalid: 'ENLACE INCOMPLETO O INVÁLIDO',
+                    fallbackTitle: 'Match en Pareja Remoto en CineMatch',
+                    fallbackDesc: 'Elige películas o series con tu pareja o amigos incluso a distancia: uno vota primero, envía un enlace compacto sin servidores ni cuentas, y el otro vota a ciegas en su propio móvil.',
+                    invalidNotice: 'El enlace del reto está incompleto o truncado. Pide a la otra persona que vuelva a enviarte la invitación completa desde CineMatch.',
+                    step1Badge: '01 \u2022 ANFITRIÓN',
+                    step2Badge: '02 \u2022 INVITADO',
+                    step3Badge: '03 \u2022 MATCH',
+                    step1: 'Vota la selección desde CineMatch y pulsa Compartir Duelo Remoto.',
+                    step2: 'Abre el enlace recibido por WhatsApp o Telegram para votar a ciegas.',
+                    step3: 'Descubrid vuestras coincidencias al instante y compartid la tarjeta.',
+                    playStoreFallback: 'Descargar en Google Play',
+                    backCinematch: 'Ver ficha de CineMatch'
+                },
+                en: {
+                    htmlLang: 'en',
+                    validBadge: 'CINEMATCH \u2022 REMOTE 1V1 DUEL',
+                    validTitle: "You've been challenged to a Couple Match on CineMatch!",
+                    validDesc: 'Blind-vote on the exact same movies and series from your phone and discover your matches in seconds — no accounts or sign-ups required.',
+                    openAppLabel: 'Open challenge in CineMatch',
+                    playStoreValid: 'Get CineMatch on Google Play',
+                    copyBtn: 'Copy challenge link to paste in the app',
+                    copiedBtn: '✓ Challenge link copied',
+                    validNote: "Already have CineMatch installed and it didn't open automatically? Tap the main button above or open this link in Chrome.",
+                    fallbackBadgeValid: 'REMOTE COUPLE MATCH \u2022 CINEMATCH',
+                    fallbackBadgeInvalid: 'INCOMPLETE OR INVALID LINK',
+                    fallbackTitle: 'Remote Couple Match on CineMatch',
+                    fallbackDesc: 'Pick movies or TV shows together even from afar: one person votes first, shares a compact serverless link, and the other blind-votes on their own phone.',
+                    invalidNotice: 'This challenge link looks incomplete or truncated. Ask your partner to share the full invitation again from CineMatch.',
+                    step1Badge: '01 \u2022 HOST',
+                    step2Badge: '02 \u2022 GUEST',
+                    step3Badge: '03 \u2022 MATCH',
+                    step1: 'Vote on a deck inside CineMatch and tap Share Remote Duel.',
+                    step2: 'Open the link received via WhatsApp or Telegram to blind-vote.',
+                    step3: 'Reveal your instant matches and share the final CineCard.',
+                    playStoreFallback: 'Get it on Google Play',
+                    backCinematch: 'Back to CineMatch overview'
+                }
+            };
+
+            const btnEs = document.getElementById('lang-btn-es');
+            const btnEn = document.getElementById('lang-btn-en');
+            let currentLang = (navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'es';
+
+            function applyLanguage(lang) {
+                currentLang = lang === 'en' ? 'en' : 'es';
+                const copy = i18n[currentLang];
+                document.documentElement.setAttribute('lang', copy.htmlLang);
+
+                const setText = function (id, text) {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = text;
+                };
+
+                setText('valid-badge', copy.validBadge);
+                setText('valid-title', copy.validTitle);
+                setText('valid-desc', copy.validDesc);
+                setText('open-app-label', copy.openAppLabel);
+                setText('play-store-label-valid', copy.playStoreValid);
+                setText('copy-challenge-btn', copy.copyBtn);
+                setText('valid-note', copy.validNote);
+                setText('fallback-badge', hasPayloadParam ? copy.fallbackBadgeInvalid : copy.fallbackBadgeValid);
+                setText('fallback-title', copy.fallbackTitle);
+                setText('fallback-desc', copy.fallbackDesc);
+                setText('invalid-link-notice', copy.invalidNotice);
+                setText('step-1-badge', copy.step1Badge);
+                setText('step-2-badge', copy.step2Badge);
+                setText('step-3-badge', copy.step3Badge);
+                setText('step-1-text', copy.step1);
+                setText('step-2-text', copy.step2);
+                setText('step-3-text', copy.step3);
+                setText('play-store-label-fallback', copy.playStoreFallback);
+                setText('back-cinematch-label', copy.backCinematch);
+
+                if (btnEs && btnEn) {
+                    const activeClasses = ['bg-red-500/20', 'text-red-300', 'border', 'border-red-500/35'];
+                    const inactiveClasses = ['text-zinc-400', 'hover:text-white', 'border', 'border-transparent'];
+                    if (currentLang === 'es') {
+                        btnEs.className = 'px-3 py-1 rounded-full font-bold transition ' + activeClasses.join(' ');
+                        btnEn.className = 'px-3 py-1 rounded-full font-bold transition ' + inactiveClasses.join(' ');
+                    } else {
+                        btnEn.className = 'px-3 py-1 rounded-full font-bold transition ' + activeClasses.join(' ');
+                        btnEs.className = 'px-3 py-1 rounded-full font-bold transition ' + inactiveClasses.join(' ');
+                    }
+                }
+            }
+
+            if (btnEs) btnEs.addEventListener('click', function () { applyLanguage('es'); });
+            if (btnEn) btnEn.addEventListener('click', function () { applyLanguage('en'); });
+
+            if (copyBtn && isPayloadValid) {
+                copyBtn.addEventListener('click', function () {
+                    const shareUrl = window.location.href;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(shareUrl).then(function () {
+                            copyBtn.textContent = i18n[currentLang].copiedBtn;
+                            setTimeout(function () {
+                                copyBtn.textContent = i18n[currentLang].copyBtn;
+                            }, 2500);
+                        }).catch(function () {});
+                    }
+                });
+            }
+
+            applyLanguage(currentLang);
+        })();
+    </script>
+</body>
+</html>
