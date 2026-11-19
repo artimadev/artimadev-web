@@ -5,8 +5,7 @@
       "namespace": "android_app",
       "package_name": "com.artimadev.cinematch",
       "sha256_cert_fingerprints": [
-        "REEMPLAZAR_CON_SHA256_GOOGLE_PLAY_APP_SIGNING",
-        "REEMPLAZAR_CON_SHA256_KEYSTORE_LOCAL_OPCIONAL"
+        "59:90:FB:CC:F5:AD:B7:6D:28:1B:B3:97:BC:CF:EE:8E:03:28:3E:B3:09:27:FE:B7:38:7D:1F:DA:58:28:99:62"
       ]
     }
   }
