@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.artimadev.cinematch",
+      "sha256_cert_fingerprints": [
+        "REEMPLAZAR_CON_SHA256_GOOGLE_PLAY_APP_SIGNING",
+        "REEMPLAZAR_CON_SHA256_KEYSTORE_LOCAL_OPCIONAL"
+      ]
+    }
+  }
+]
